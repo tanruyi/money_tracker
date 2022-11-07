@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Users {
+    id         Int          @id @default(autoincrement())
+    username   String       @unique @db.VarChar(20)
+    password   String       @db.VarChar(20)
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @updatedAt
+    Categories Categories[]
+    Income     Income[]
+    Expenses   Expenses[]
+    Budget     Budget[]
+}
+
+model RecordTypes {
+    id         Int          @id @default(autoincrement())
+    type       String       @unique @db.VarChar(10)
+    Categories Categories[]
+}
+
+model Categories {
+    id           Int         @id @default(autoincrement())
+    userId       Int
+    user         Users       @relation(fields: [userId], references: [id])
+    typeId       Int
+    type         RecordTypes @relation(fields: [typeId], references: [id])
+    categoryName String      @db.VarChar(30)
+    Budget       Budget[]
+}
+
+model Income {
+    id       Int      @id @default(autoincrement())
+    userId   Int
+    user     Users    @relation(fields: [userId], references: [id])
+    date     DateTime @db.Date
+    category String   @db.VarChar(30)
+    amount   Decimal  @db.Decimal(10, 2)
+    detail   String   @db.VarChar(50)
+    note     String   @db.VarChar(200)
+}
+
+model Expenses {
+    id       Int      @id @default(autoincrement())
+    userId   Int
+    user     Users    @relation(fields: [userId], references: [id])
+    date     DateTime @db.Date
+    category String   @db.VarChar(30)
+    amount   Decimal  @db.Decimal(10, 2)
+    detail   String   @db.VarChar(50)
+    note     String   @db.VarChar(200)
+}
+
+model PeriodTypes {
+    id     Int      @id @default(autoincrement())
+    type   String   @db.VarChar(20)
+    Budget Budget[]
+}
+
+model Budget {
+    id         Int         @id @default(autoincrement())
+    userId     Int
+    user       Users       @relation(fields: [userId], references: [id])
+    categoryId Int
+    category   Categories  @relation(fields: [categoryId], references: [id])
+    amount     Decimal     @db.Decimal(10, 2)
+    periodId   Int
+    periodType PeriodTypes @relation(fields: [periodId], references: [id])
+}
