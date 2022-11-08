@@ -12,12 +12,12 @@ Money Tracker
 
     -   HTML
     -   CSS
-    -   TypeScript
+    -   React with TypeScript
 
 -   Back-end:
+    -   Node.js
     -   Express
     -   Prisma
-    -   Node.js
     -   PostgreSQL
     -   Bcrypt
     -   JWT
