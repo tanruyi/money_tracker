@@ -15,18 +15,15 @@ const cors = require("cors");
 // Imports body-parser
 const bodyParser = require("body-parser");
 
-// Import Prisma Client
-const { PrismaClient } = require("@prisma/client");
-
-// Instantiate PrismaClient
-const prisma = new PrismaClient();
-
 // Import Express
 const express = require("express");
 const { response } = require("express");
 
 // Instantiates a express server
 const app = express();
+
+// Import users router
+const usersRouter = require("./router/users");
 
 /* ==============================================
 // MIDDLEWARE
@@ -43,20 +40,8 @@ app.use(bodyParser.json());
 // ROUTES
 ============================================== */
 
-async function main() {
-	const allUsers = await prisma.users.findMany();
-	console.log(allUsers);
-}
-
-main()
-	.then(async () => {
-		await prisma.$disconnect();
-	})
-	.catch(async (e) => {
-		console.error(e);
-		await prisma.$disconnect();
-		process.exit(1);
-	});
+// Users route
+app.use("/users", usersRouter);
 
 /* ==============================================
 // CONNECTIONS

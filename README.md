@@ -19,5 +19,8 @@ Money Tracker
     -   Prisma
     -   Node.js
     -   PostgreSQL
+    -   Bcrypt
+    -   JWT
+    -   UUID
 
 # Acknowledgements & Credits
