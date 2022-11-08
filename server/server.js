@@ -25,6 +25,9 @@ const app = express();
 // Import users router
 const usersRouter = require("./router/users");
 
+// Import budget router
+const budgetRouter = require("./router/budget");
+
 /* ==============================================
 // MIDDLEWARE
 ============================================== */
@@ -40,8 +43,11 @@ app.use(bodyParser.json());
 // ROUTES
 ============================================== */
 
-// Users route
+// Users router
 app.use("/users", usersRouter);
+
+// Budget router
+app.use("/budget", budgetRouter);
 
 /* ==============================================
 // CONNECTIONS
