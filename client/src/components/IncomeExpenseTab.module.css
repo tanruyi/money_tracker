@@ -1,5 +1,10 @@
 /** @format */
 
+.container,
+.tab {
+	height: 5vh;
+}
+
 .container {
 	display: flex;
 	width: 100%;
@@ -10,7 +15,7 @@
 	width: 50%;
 	text-align: center;
 	background-color: #45a29e;
-	border-radius: 1.5rem 1.5rem 0 0;
+	border-radius: 2rem 2rem 0 0;
 	cursor: pointer;
 	color: #0b0c10;
 }
@@ -19,4 +24,9 @@
 .tab:active {
 	background-color: #66fcf1;
 	border-radius: 2rem 2rem 0 0;
+}
+
+.tab h1 {
+	line-height: 5vh;
+	margin: 0;
 }
