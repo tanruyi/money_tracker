@@ -1,0 +1,22 @@
+/** @format */
+
+.container {
+	display: flex;
+	width: 100%;
+	background-color: #1f2833;
+}
+
+.tab {
+	width: 50%;
+	text-align: center;
+	background-color: #45a29e;
+	border-radius: 1.5rem 1.5rem 0 0;
+	cursor: pointer;
+	color: #0b0c10;
+}
+
+.tab:hover,
+.tab:active {
+	background-color: #66fcf1;
+	border-radius: 2rem 2rem 0 0;
+}
