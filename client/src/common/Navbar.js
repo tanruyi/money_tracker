@@ -13,6 +13,7 @@ const Navbar = () => {
 
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
+				{/* TODO: Add routes for below */}
 				<div className={styles.pageLink}>
 					<h1>Daily</h1>
 				</div>
