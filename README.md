@@ -27,3 +27,4 @@ Money Tracker
 # Acknowledgements & Credits
 
 -   https://www.flaticon.com/free-icon/cocoa_290419?related_id=290419&origin=pack
+-   https://fonts.google.com/specimen/League+Spartan
