@@ -6,10 +6,12 @@ import styles from "./Home.module.css";
 import fetchAPI from "../utilities/fetchAPI";
 
 const Home = () => {
+	// States for username & pw
 	const [username, setUsername] = useState("");
 
 	const [password, setPassword] = useState("");
 
+	// Set username & pw as controlled inputs
 	const handleUsernameInput = (e) => {
 		setUsername(e.target.value);
 	};
@@ -18,6 +20,7 @@ const Home = () => {
 		setPassword(e.target.value);
 	};
 
+	// Sends login credentials to API
 	const handleLogInClick = () => {
 		if (username && password) {
 			const credentials = JSON.stringify({ username: username, password: password });
@@ -26,16 +29,23 @@ const Home = () => {
 			window.alert("Username or password is empty. Please try again.");
 		}
 	};
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>Money Tracker</h1>
 			<div className={styles.logInBox}>
 				<h2>Login</h2>
-				<TextField required label="Username" value={username} onChange={handleUsernameInput} />
-				<TextField required label="Password" value={password} onChange={handlePasswordInput} />
-				<Button variant="contained" onClick={handleLogInClick}>
-					Login
-				</Button>
+				<div className={styles.textField}>
+					<TextField required label="Username" sx={{ width: "25vw" }} value={username} onChange={handleUsernameInput} />
+				</div>
+				<div className={styles.textField}>
+					<TextField required label="Password" type="password" sx={{ width: "25vw" }} value={password} onChange={handlePasswordInput} />
+				</div>
+				<div className={styles.logInButton}>
+					<Button variant="contained" size="large" sx={{fontSize: "1.3rem", fontWeight: "bold"}} onClick={handleLogInClick}>
+						Login
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
