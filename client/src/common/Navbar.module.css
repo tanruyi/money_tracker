@@ -1,0 +1,25 @@
+/** @format */
+
+.container,
+.logo,
+.pageLinkContainer {
+	height: 8vh;
+}
+
+.container {
+	background-color: #0b0c10;
+	display: flex;
+}
+
+.pageLinkContainer {
+	display: flex;
+	justify-content: space-around;
+}
+
+.pageLink {
+	margin: 1vw;
+}
+
+.pageLink h1 {
+	color: #c5c6c7;
+}
