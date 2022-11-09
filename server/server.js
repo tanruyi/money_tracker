@@ -37,6 +37,9 @@ const expenseRouter = require("./router/expenses");
 // Import budget router
 const budgetRouter = require("./router/budget");
 
+// Import admin router
+const adminRouter = require("./router/admin");
+
 const auth = require("./middleware/auth");
 
 /* ==============================================
@@ -68,6 +71,9 @@ app.use("/expense", expenseRouter);
 
 // Budget router
 app.use("/budget", budgetRouter);
+
+// Admin router
+app.use("/admin", adminRouter);
 
 // Catch all
 app.get("/", (req, res) => {
