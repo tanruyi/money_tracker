@@ -98,7 +98,7 @@ const Home = () => {
 			if (username && password) {
 				const response = await axiosInstance.put(loginURL, data);
 
-				// Upon success confirmation from API, inform user & change back to login box
+				// Upon success confirmation from API, inform user, reset username & pw states, and change back to display login box
 				window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
 				setUsername("");
 				setPassword("");
