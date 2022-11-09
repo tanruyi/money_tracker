@@ -29,7 +29,7 @@ budgetRouter.get("/:userId", getBudgetRecords);
 budgetRouter.put("/:budgetId", updateBudgetRecord);
 
 // Delete a budget record
-budgetRouter.delete("/:budgetId", deleteBudgetRecord);
+budgetRouter.delete("/delete", deleteBudgetRecord);
 
 /* =========================================
 // EXPORTS

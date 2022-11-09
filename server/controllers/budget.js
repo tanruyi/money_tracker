@@ -84,19 +84,24 @@ const updateBudgetRecord = async (req, res) => {
 // Delete a budget record
 const deleteBudgetRecord = async (req, res) => {
 	// Convert budgetId passed via req.params from string to integer, which is the value type of id in budget in db
-	const targetBudgetRecord = parseInt(req.params.budgetId);
+	// const targetBudgetRecord = parseInt(req.params.budgetId);
+
+	// Checks whether id is provided, if not throw error
+	if (!req?.body?.id) {
+		return res.status(400).json({ status: "error", message: "id not provided" });
+	}
 
 	try {
 		const deletedBudgetRecord = await prisma.budget.delete({
 			where: {
-				id: targetBudgetRecord,
+				id: req.body.id,
 			},
 		});
 
 		console.log(`Budget record deleted for budgetId ${deletedBudgetRecord.id}`);
 		res.json({ status: "success", message: "budget record deleted" });
 	} catch (err) {
-		console.error("DELETE /budget/:budgetId", err);
+		console.error("DELETE /budget/delete", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };
