@@ -30,6 +30,11 @@ const { v4: uuidv4 } = require("uuid");
 
 // New user creation
 const createUser = async (req, res) => {
+	// Checks whether username & password is provided, if not throw error
+	if (!req?.body?.username || !req?.body?.password) {
+		return res.status(400).json({ status: "error", message: "username or password not provided" });
+	}
+
 	try {
 		// check if the username already exists
 		const userExists = await prisma.users.findUnique({
@@ -63,6 +68,11 @@ const createUser = async (req, res) => {
 
 // Log in
 const logIn = async (req, res) => {
+	// Checks whether username & password is provided, if not throw error
+	if (!req?.body?.username || !req?.body?.password) {
+		return res.status(400).json({ status: "error", message: "username or password not provided" });
+	}
+
 	try {
 		// check if the username already exists, and returns null if none found
 		const user = await prisma.users.findUnique({
@@ -120,6 +130,11 @@ const logIn = async (req, res) => {
 
 // Refresh JWT access token
 const refreshAccessToken = (req, res) => {
+	// Checks whether refresh is provided, if not throw error
+	if (!req?.body?.refresh) {
+		return res.status(400).json({ status: "error", message: "req.body.refresh is required" });
+	}
+
 	try {
 		// Check that refresh token is correct
 		const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);

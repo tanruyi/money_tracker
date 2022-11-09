@@ -37,6 +37,7 @@ const createCategory = async (req, res) => {
 
 // Get all categories for a user
 const getCategories = async (req, res) => {
+
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in categories in db
 	const targetUser = parseInt(req.params.userId);
 
