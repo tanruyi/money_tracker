@@ -13,9 +13,7 @@ const express = require("express");
 const budgetRouter = express.Router();
 
 // Import routes
-const { createBudget } = require("../controllers/budget");
-
-const auth = require("../middleware/auth");
+const { createBudget, getBudgetRecords, updateBudgetRecord, deleteBudgetRecord } = require("../controllers/budget");
 
 /* =========================================
 // ROUTER
@@ -23,6 +21,15 @@ const auth = require("../middleware/auth");
 
 // Create new budget record
 budgetRouter.post("/create", createBudget);
+
+// Get all budget records for a user based on userId
+budgetRouter.get("/:userId", getBudgetRecords);
+
+// Update a budget record
+budgetRouter.put("/:budgetId", updateBudgetRecord);
+
+// Delete a budget record
+budgetRouter.delete("/:budgetId", deleteBudgetRecord);
 
 /* =========================================
 // EXPORTS
