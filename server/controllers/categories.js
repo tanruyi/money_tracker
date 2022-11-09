@@ -37,7 +37,6 @@ const createCategory = async (req, res) => {
 
 // Get all categories for a user
 const getCategories = async (req, res) => {
-
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in categories in db
 	const targetUser = parseInt(req.params.userId);
 
@@ -83,19 +82,24 @@ const updateCategory = async (req, res) => {
 // Delete a category
 const deleteCategory = async (req, res) => {
 	// Convert categoryId passed via req.params from string to integer, which is the value type of id in categories in db
-	const targetCategory = parseInt(req.params.categoryId);
+	// const targetCategory = parseInt(req.params.categoryId);
+
+	// Checks whether id is provided, if not throw error
+	if (!req?.body?.id) {
+		return res.status(400).json({ status: "error", message: "id not provided" });
+	}
 
 	try {
 		const deletedCategory = await prisma.categories.delete({
 			where: {
-				id: targetCategory,
+				id: req.body.id,
 			},
 		});
 
 		console.log(`Category deleted for categoryId ${deletedCategory.id}`);
 		res.json({ status: "success", message: "category deleted" });
 	} catch (err) {
-		console.error("DELETE /category/:categoryId", err);
+		console.error("DELETE /category/delete", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };

@@ -29,7 +29,7 @@ categoriesRouter.get("/:userId", getCategories);
 categoriesRouter.put("/:categoryId", updateCategory);
 
 // Delete a category
-categoriesRouter.delete("/:categoryId", deleteCategory);
+categoriesRouter.delete("/delete", deleteCategory);
 
 /* =========================================
 // EXPORTS
