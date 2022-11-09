@@ -31,6 +31,9 @@ const categoriesRouter = require("./router/categories");
 // Import income router
 const incomeRouter = require("./router/income");
 
+// Import expense router
+const expenseRouter = require("./router/expenses");
+
 // Import budget router
 const budgetRouter = require("./router/budget");
 
@@ -59,6 +62,9 @@ app.use("/categories", categoriesRouter);
 
 // Income router
 app.use("/income", incomeRouter);
+
+// Expenses router
+app.use("/expense", expenseRouter);
 
 // Budget router
 app.use("/budget", budgetRouter);
