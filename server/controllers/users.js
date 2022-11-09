@@ -100,7 +100,7 @@ const logIn = async (req, res) => {
 
 		// Create JWT refresh token
 		const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
-			expiresIn: "20m",
+			expiresIn: "24h",
 			jwtid: uuidv4(),
 		});
 
