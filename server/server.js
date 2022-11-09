@@ -49,6 +49,11 @@ app.use("/users", usersRouter);
 // Budget router
 app.use("/budget", budgetRouter);
 
+app.get("/", (req, res) => {
+	console.log("connected!");
+	res.send("Express server is up!");
+});
+
 /* ==============================================
 // CONNECTIONS
 ============================================== */
