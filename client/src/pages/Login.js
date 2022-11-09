@@ -1,14 +1,19 @@
 /** @format */
 
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Login.module.css";
 import axiosInstance from "../utilities/axios";
+import CurrentUserContext from "../context/currentUserContext";
 
 const Home = () => {
+	const userContext = useContext(CurrentUserContext);
+
 	/* ====================================================
     // Log In
     ==================================================== */
+
+	const [error, setError] = useState(null);
 
 	// States for username & pw
 	const [username, setUsername] = useState("");
@@ -25,7 +30,7 @@ const Home = () => {
 	};
 
 	// Sends login credentials to API
-	const handleLogInClick = () => {
+	const handleLogInClick = async () => {
 		const data = {
 			username,
 			password,
@@ -37,21 +42,26 @@ const Home = () => {
 		try {
 			// Check if username & pw is provided before proceeding
 			if (username && password) {
-				const response = axiosInstance.post(loginURL, data);
+				// Sends login credentials to API
+				const response = await axiosInstance.post(loginURL, data);
+
+				// On login, updates user id as context
+				userContext.setCurrentUserId(response.data.id);
 			} else {
 				window.alert("Username or password is empty. Please try again.");
 			}
 		} catch (err) {
+			setError(err.message);
 			// Create alerts based on error msg from server
-			if (err.response.status === 400) {
-				window.alert("Username or password not provided.");
-			} else if (err.response.message === "no such username exists") {
-				window.alert("No account found with this username");
-			} else if (err.response.message === "username or password incorrect") {
-				window.alert("Username or password incorrect");
-			} else {
-				window.alert("Login failed");
-			}
+			// if (err.response.status === 400) {
+			// 	window.alert("Username or password not provided.");
+			// } else if (err.response.message === "no such username exists") {
+			// 	window.alert("No account found with this username");
+			// } else if (err.response.message === "username or password incorrect") {
+			// 	window.alert("Username or password incorrect");
+			// } else {
+			// 	window.alert("Login failed");
+			// }
 		}
 	};
 
@@ -68,7 +78,7 @@ const Home = () => {
 	};
 
 	// Sends registration details to API
-	const handleRegistration = () => {
+	const handleRegistration = async () => {
 		const data = {
 			username,
 			password,
@@ -80,7 +90,7 @@ const Home = () => {
 		try {
 			// Check if username & pw is provided before proceeding
 			if (username && password) {
-				const response = axiosInstance.put(loginURL, data);
+				const response = await axiosInstance.put(loginURL, data);
 
 				// Upon success confirmation from API, inform user & change back to login box
 				window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
@@ -91,14 +101,16 @@ const Home = () => {
 				window.alert("Username or password is empty.");
 			}
 		} catch (err) {
+			setError(err.message);
+
 			// Create alerts based on error msg from server
-			if (err.response.message === "username or password not provided") {
-				window.alert("Username or password not provided.");
-			} else if (err.response.message === "this username is already taken!") {
-				window.alert("This username is already taken!");
-			} else {
-				window.alert("Registration failed");
-			}
+			// if (err.response.message === "username or password not provided") {
+			// 	window.alert("Username or password not provided.");
+			// } else if (err.response.message === "this username is already taken!") {
+			// 	window.alert("This username is already taken!");
+			// } else {
+			// 	window.alert("Registration failed");
+			// }
 		}
 	};
 

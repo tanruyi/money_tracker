@@ -118,9 +118,10 @@ const logIn = async (req, res) => {
 		const response = {
 			access,
 			refresh,
+			id: user.id,
 		};
 
-		console.log(`login success for ${user.username}`);
+		console.log(`login success for ${user.username} id: ${user.id}`);
 		res.json(response);
 	} catch (err) {
 		console.error("POST /users/login", err);
