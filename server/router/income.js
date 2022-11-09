@@ -29,7 +29,7 @@ incomeRouter.get("/:userId", getIncomeRecords);
 incomeRouter.put("/:incomeId", updateIncomeRecord);
 
 // Delete a income record
-incomeRouter.delete("/:incomeId", deleteIncomeRecord);
+incomeRouter.delete("/delete", deleteIncomeRecord);
 
 /* =========================================
 // EXPORTS

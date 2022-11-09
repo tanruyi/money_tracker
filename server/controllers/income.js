@@ -93,20 +93,22 @@ const updateIncomeRecord = async (req, res) => {
 
 // Delete a income record
 const deleteIncomeRecord = async (req, res) => {
-	// Convert incomeId passed via req.params from string to integer, which is the value type of id in income in db
-	const targetIncomeRecord = parseInt(req.params.incomeId);
+	// Checks whether id is provided, if not throw error
+	if (!req?.body?.id) {
+		return res.status(400).json({ status: "error", message: "id not provided" });
+	}
 
 	try {
 		const deletedIncomeRecord = await prisma.income.delete({
 			where: {
-				id: targetIncomeRecord,
+				id: req.body.id,
 			},
 		});
 
 		console.log(`Income record deleted for incomeId ${deletedIncomeRecord.id}`);
 		res.json({ status: "success", message: "income record deleted" });
 	} catch (err) {
-		console.error("DELETE /income/:incomeId", err);
+		console.error("DELETE /income/delete", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };
