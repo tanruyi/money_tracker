@@ -1,13 +1,16 @@
 /** @format */
 
 import { Button, TextField } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import axiosInstance from "../utilities/axios";
 import CurrentUserContext from "../context/currentUserContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 	const userContext = useContext(CurrentUserContext);
+
+	const navigate = useNavigate();
 
 	/* ====================================================
     // Log In
@@ -47,6 +50,9 @@ const Home = () => {
 
 				// On login, updates user id as context
 				userContext.setCurrentUserId(response.data.id);
+
+				// Navigates to monthly view page on log in
+				navigate("/monthly");
 			} else {
 				window.alert("Username or password is empty. Please try again.");
 			}

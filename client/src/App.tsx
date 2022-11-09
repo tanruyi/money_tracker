@@ -12,9 +12,20 @@ import Login from "./pages/Login";
 function App() {
 	const [currentUserId, setCurrentUserId] = useState<number>(0);
 
+	const mainPages = (
+		<>
+			<Navbar />
+			<Routes>
+				<Route path="/monthly" element={<MonthlyView />} />
+			</Routes>{" "}
+		</>
+	);
+
 	return (
 		<CurrentUserContext.Provider value={{ currentUserId, setCurrentUserId }}>
-			<Login />
+			{currentUserId === 0 ? <Login /> : mainPages}
+
+			{/* <Login /> */}
 			{/* <Navbar />
 			<Routes>
 				<Route path="/monthly" element={<MonthlyView />} />
