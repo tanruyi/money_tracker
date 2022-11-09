@@ -29,7 +29,7 @@ expenseRouter.get("/:userId", getExpenseRecords);
 expenseRouter.put("/:expenseId", updateExpenseRecord);
 
 // Delete a expense record
-expenseRouter.delete("/:expenseId", deleteExpenseRecord);
+expenseRouter.delete("/delete", deleteExpenseRecord);
 
 /* =========================================
 // EXPORTS

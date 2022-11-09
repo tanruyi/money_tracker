@@ -94,19 +94,24 @@ const updateExpenseRecord = async (req, res) => {
 // Delete a expense record
 const deleteExpenseRecord = async (req, res) => {
 	// Convert expenseId passed via req.params from string to integer, which is the value type of id in expenses in db
-	const targetExpenseRecord = parseInt(req.params.expenseId);
+	// const targetExpenseRecord = parseInt(req.params.expenseId);
+
+	// Checks whether id is provided, if not throw error
+	if (!req?.body?.id) {
+		return res.status(400).json({ status: "error", message: "id not provided" });
+	}
 
 	try {
 		const deletedExpenseRecord = await prisma.expenses.delete({
 			where: {
-				id: targetExpenseRecord,
+				id: req.body.id,
 			},
 		});
 
 		console.log(`Expense record deleted for expenseId ${deletedExpenseRecord.id}`);
 		res.json({ status: "success", message: "expense record deleted" });
 	} catch (err) {
-		console.error("DELETE /expense/:expenseId", err);
+		console.error("DELETE /expense/delete", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };

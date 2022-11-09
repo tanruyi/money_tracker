@@ -81,9 +81,6 @@ const updateCategory = async (req, res) => {
 
 // Delete a category
 const deleteCategory = async (req, res) => {
-	// Convert categoryId passed via req.params from string to integer, which is the value type of id in categories in db
-	// const targetCategory = parseInt(req.params.categoryId);
-
 	// Checks whether id is provided, if not throw error
 	if (!req?.body?.id) {
 		return res.status(400).json({ status: "error", message: "id not provided" });
