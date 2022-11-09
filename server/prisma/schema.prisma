@@ -45,6 +45,7 @@ model Income {
     userId     Int
     user       Users       @relation(fields: [userId], references: [id])
     date       DateTime    @db.Date
+    // Set to optional relations so that deletion of categories tied to this as FK will save categoryId as null
     categoryId Int?
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
