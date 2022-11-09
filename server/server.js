@@ -25,8 +25,13 @@ const app = express();
 // Import users router
 const usersRouter = require("./router/users");
 
+// Import categories router
+const categoriesRouter = require("./router/categories");
+
 // Import budget router
 const budgetRouter = require("./router/budget");
+
+const auth = require("./middleware/auth");
 
 /* ==============================================
 // MIDDLEWARE
@@ -46,9 +51,13 @@ app.use(bodyParser.json());
 // Users router
 app.use("/users", usersRouter);
 
+// Categories router
+app.use("/categories", categoriesRouter);
+
 // Budget router
 app.use("/budget", budgetRouter);
 
+// Catch all
 app.get("/", (req, res) => {
 	console.log("connected!");
 	res.send("Express server is up!");

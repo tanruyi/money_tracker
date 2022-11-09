@@ -56,7 +56,7 @@ const createUser = async (req, res) => {
 		console.log(`New user created: ${newUser.username}`);
 		res.json({ status: "success", message: "new user created" });
 	} catch (err) {
-		console.log(`PUT /users/create ${err}`);
+		console.error("PUT /users/create", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };
@@ -110,10 +110,10 @@ const logIn = async (req, res) => {
 			refresh,
 		};
 
-		console.log("login success");
+		console.log(`login success for ${user.username}`);
 		res.json(response);
 	} catch (err) {
-		console.log("POST /users/login", err);
+		console.error("POST /users/login", err);
 		res.status(400).json({ status: "error", message: "login failed" });
 	}
 };
@@ -141,10 +141,10 @@ const refreshAccessToken = (req, res) => {
 			access,
 		};
 
-		console.log("refresh success");
+		console.log(`refresh success for ${payload.username}`);
 		res.json(response);
 	} catch (err) {
-		console.log("POST /users/refresh", err);
+		console.error("POST /users/refresh", err);
 		res.status(401).json({
 			status: "error",
 			message: "unauthorised",

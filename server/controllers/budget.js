@@ -32,7 +32,7 @@ const createBudget = async (req, res) => {
 		console.log(`New budget record created: ${newBudgetRecord.id}`);
 		res.json({ status: "success", message: "new budget record created" });
 	} catch (err) {
-		console.log(`POST /budget/create ${err}`);
+		console.error("POST /budget/create", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
 	}
 };

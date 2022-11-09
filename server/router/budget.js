@@ -15,6 +15,8 @@ const budgetRouter = express.Router();
 // Import routes
 const { createBudget } = require("../controllers/budget");
 
+const auth = require("../middleware/auth");
+
 /* =========================================
 // ROUTER
 ========================================= */
