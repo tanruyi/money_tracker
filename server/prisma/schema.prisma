@@ -41,27 +41,27 @@ model Categories {
 }
 
 model Income {
-    id         Int        @id @default(autoincrement())
+    id         Int         @id @default(autoincrement())
     userId     Int
-    user       Users      @relation(fields: [userId], references: [id])
-    date       DateTime   @db.Date
-    categoryId Int
-    category   Categories @relation(fields: [categoryId], references: [id])
-    amount     Decimal    @db.Decimal(10, 2)
-    detail     String     @db.VarChar(50)
-    note       String     @db.VarChar(200)
+    user       Users       @relation(fields: [userId], references: [id])
+    date       DateTime    @db.Date
+    categoryId Int?
+    category   Categories? @relation(fields: [categoryId], references: [id])
+    amount     Decimal     @db.Decimal(10, 2)
+    detail     String      @db.VarChar(50)
+    note       String      @db.VarChar(200)
 }
 
 model Expenses {
-    id         Int        @id @default(autoincrement())
+    id         Int         @id @default(autoincrement())
     userId     Int
-    user       Users      @relation(fields: [userId], references: [id])
-    date       DateTime   @db.Date
-    categoryId Int
-    category   Categories @relation(fields: [categoryId], references: [id])
-    amount     Decimal    @db.Decimal(10, 2)
-    detail     String     @db.VarChar(50)
-    note       String     @db.VarChar(200)
+    user       Users       @relation(fields: [userId], references: [id])
+    date       DateTime    @db.Date
+    categoryId Int?
+    category   Categories? @relation(fields: [categoryId], references: [id])
+    amount     Decimal     @db.Decimal(10, 2)
+    detail     String      @db.VarChar(50)
+    note       String      @db.VarChar(200)
 }
 
 model PeriodTypes {
@@ -74,8 +74,8 @@ model Budget {
     id         Int         @id @default(autoincrement())
     userId     Int
     user       Users       @relation(fields: [userId], references: [id])
-    categoryId Int
-    category   Categories  @relation(fields: [categoryId], references: [id])
+    categoryId Int?
+    category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
     periodId   Int
     periodType PeriodTypes @relation(fields: [periodId], references: [id])
