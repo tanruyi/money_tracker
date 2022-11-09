@@ -14,6 +14,7 @@ Money Tracker
     -   CSS
     -   React with TypeScript
     -   Material UI
+    -   Axios
 
 -   Back-end:
     -   Node.js
