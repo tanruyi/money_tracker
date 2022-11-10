@@ -48,11 +48,13 @@ const Home = () => {
 				// Sends login credentials to API
 				const response = await axiosInstance.post(loginURL, data);
 
-				// On login, updates user id as context
-				userContext.setCurrentUserId(response.data.id);
+				if (response.status === 200) {
+					// On login, updates user id as context
+					userContext.setCurrentUserId(response.data.id);
 
-				// Navigates to monthly view page on log in
-				navigate("/monthly");
+					// Navigates to monthly view page on log in
+					navigate("/monthly");
+				}
 			} else {
 				window.alert("Username or password is empty. Please try again.");
 			}
@@ -99,10 +101,12 @@ const Home = () => {
 				const response = await axiosInstance.put(loginURL, data);
 
 				// Upon success confirmation from API, inform user, reset username & pw states, and change back to display login box
-				window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
-				setUsername("");
-				setPassword("");
-				setRegistrationNeeded(false);
+				if (response.status === 200) {
+					window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
+					setUsername("");
+					setPassword("");
+					setRegistrationNeeded(false);
+				}
 			} else {
 				window.alert("Username or password is empty.");
 			}
