@@ -5,7 +5,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./common/Navbar";
 import MonthlyView from "./pages/MonthlyView";
-import Login from "./pages/Login.js";
+import Login from "./pages/Login";
 import { useCurrentUserContext } from "./context/currentUserContext";
 
 function App() {
