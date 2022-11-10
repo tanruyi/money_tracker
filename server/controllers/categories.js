@@ -22,7 +22,7 @@ const createCategory = async (req, res) => {
 		const newCategory = await prisma.categories.create({
 			data: {
 				userId: req.body.userId,
-				typeId: req.body.typeId,
+				recordId: req.body.recordId,
 				categoryName: req.body.categoryName,
 			},
 		});
@@ -66,7 +66,7 @@ const updateCategory = async (req, res) => {
 				id: targetCategory,
 			},
 			data: {
-				typeId: req.body.typeId,
+				recordId: req.body.recordId,
 				categoryName: req.body.categoryName,
 			},
 		});

@@ -14,13 +14,13 @@ const Home = () => {
     // Context
     ==================================================== */
 
-	const { setCurrentUserId } = useCurrentUserContext();
+	const { updateCurrentUser } = useCurrentUserContext();
 
 	/* ====================================================
     // Log In
     ==================================================== */
 
-	const [error, setError] = useState(null);
+	const [error, setError] = useState<any>();
 
 	// States for username & pw
 	const [username, setUsername] = useState("");
@@ -28,11 +28,11 @@ const Home = () => {
 	const [password, setPassword] = useState("");
 
 	// Set username & pw as controlled inputs
-	const handleUsernameInput = (e) => {
+	const handleUsernameInput = (e: any) => {
 		setUsername(e.target.value);
 	};
 
-	const handlePasswordInput = (e) => {
+	const handlePasswordInput = (e: any) => {
 		setPassword(e.target.value);
 	};
 
@@ -54,7 +54,7 @@ const Home = () => {
 
 				if (response.status === 200) {
 					// On login, updates user id as context
-					setCurrentUserId(response.data.id);
+					updateCurrentUser(response.data.id);
 
 					// Navigates to monthly view page on log in
 					navigate("/monthly");
@@ -63,7 +63,11 @@ const Home = () => {
 				window.alert("Username or password is empty. Please try again.");
 			}
 		} catch (err) {
-			setError(err.message);
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
+			}
 			// Create alerts based on error msg from server
 			// if (err.response.status === 400) {
 			// 	window.alert("Username or password not provided.");
@@ -89,6 +93,16 @@ const Home = () => {
 		setRegistrationNeeded(!registrationNeeded);
 	};
 
+	interface Category {
+		userId: Number;
+		recordId: Number;
+		categoryName: String;
+	}
+
+	const createDefaultCategories = () => {
+		const defaultCategories = {};
+	};
+
 	// Sends registration details to API
 	const handleRegistration = async () => {
 		const data = {
@@ -98,6 +112,8 @@ const Home = () => {
 
 		// registration API url to append to base URL
 		const loginURL = "/users/create";
+
+		// categories creation URL to append to base URL
 
 		try {
 			// Check if username & pw is provided before proceeding
@@ -115,8 +131,11 @@ const Home = () => {
 				window.alert("Username or password is empty.");
 			}
 		} catch (err) {
-			setError(err.message);
-
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
+			}
 			// Create alerts based on error msg from server
 			// if (err.response.message === "username or password not provided") {
 			// 	window.alert("Username or password not provided.");

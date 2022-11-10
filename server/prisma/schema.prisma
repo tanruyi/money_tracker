@@ -32,8 +32,8 @@ model Categories {
     id           Int         @id @default(autoincrement())
     userId       Int
     user         Users       @relation(fields: [userId], references: [id])
-    typeId       Int
-    type         RecordTypes @relation(fields: [typeId], references: [id])
+    recordId     Int
+    recordType   RecordTypes @relation(fields: [recordId], references: [id])
     categoryName String      @db.VarChar(30)
     Budget       Budget[]
     Income       Income[]
