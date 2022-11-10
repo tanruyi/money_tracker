@@ -3,6 +3,7 @@
 import React from "react";
 import styles from "./Navbar.module.css";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 	return (
@@ -21,7 +22,9 @@ const Navbar = () => {
 					<h1>Weekly</h1>
 				</div>
 				<div className={styles.pageLink}>
-					<h1>Monthly</h1>
+					<Link to="/monthly">
+						<h1>Monthly</h1>
+					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<h1>YTD</h1>
@@ -33,7 +36,9 @@ const Navbar = () => {
 					<h1>Analyse</h1>
 				</div>
 				<div className={styles.pageLink}>
-					<h1>Settings</h1>
+					<Link to="/settings">
+						<h1>Settings</h1>
+					</Link>
 				</div>
 			</div>
 		</div>
