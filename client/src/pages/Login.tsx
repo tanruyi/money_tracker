@@ -99,8 +99,35 @@ const Home = () => {
 		categoryName: String;
 	}
 
-	const createDefaultCategories = () => {
-		const defaultCategories = {};
+	const createDefaultCategories = async (userId: number) => {
+		const defaultCategories: Category[] = [
+			{ userId: userId, recordId: 1, categoryName: "Salary" },
+			{ userId: userId, recordId: 1, categoryName: "Government Payouts" },
+			{ userId: userId, recordId: 1, categoryName: "Interest" },
+			{ userId: userId, recordId: 1, categoryName: "Dividends" },
+			{ userId: userId, recordId: 2, categoryName: "Food" },
+			{ userId: userId, recordId: 2, categoryName: "Groceries" },
+			{ userId: userId, recordId: 2, categoryName: "Electronics" },
+			{ userId: userId, recordId: 2, categoryName: "Entertainment" },
+			{ userId: userId, recordId: 2, categoryName: "Transport" },
+		];
+
+		// categories creation URL to append to base URL
+		const manyCategoriesCreationURL = "/categories/create_multiple";
+
+		const data = {
+			newCategories: defaultCategories,
+		};
+
+		try {
+			const response = await axiosInstance.post(manyCategoriesCreationURL, data);
+		} catch (err) {
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
+			}
+		}
 	};
 
 	// Sends registration details to API
@@ -113,8 +140,6 @@ const Home = () => {
 		// registration API url to append to base URL
 		const loginURL = "/users/create";
 
-		// categories creation URL to append to base URL
-
 		try {
 			// Check if username & pw is provided before proceeding
 			if (username && password) {
@@ -126,6 +151,7 @@ const Home = () => {
 					setUsername("");
 					setPassword("");
 					setRegistrationNeeded(false);
+					createDefaultCategories(response.data.userId);
 				}
 			} else {
 				window.alert("Username or password is empty.");

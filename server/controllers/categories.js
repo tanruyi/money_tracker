@@ -35,6 +35,21 @@ const createCategory = async (req, res) => {
 	}
 };
 
+// Create multiple categories (only used during user registration)
+const createDefaultCategories = async (req, res) => {
+	try {
+		const newCategories = await prisma.categories.createMany({
+			data: req.body.newCategories,
+		});
+
+		console.log("Default categories created");
+		res.json({ status: "success", message: "default categories created" });
+	} catch (err) {
+		console.error("POST /category/create", err);
+		res.status(400).json({ status: "error", message: "an error has occurred" });
+	}
+};
+
 // Get all categories for a user
 const getCategories = async (req, res) => {
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in categories in db
@@ -106,6 +121,7 @@ const deleteCategory = async (req, res) => {
 ========================================= */
 module.exports = {
 	createCategory,
+	createDefaultCategories,
 	getCategories,
 	updateCategory,
 	deleteCategory,

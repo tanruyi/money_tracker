@@ -13,11 +13,14 @@ const express = require("express");
 const categoriesRouter = express.Router();
 
 // Import routes
-const { createCategory, getCategories, updateCategory, deleteCategory } = require("../controllers/categories");
+const { createCategory, createDefaultCategories, getCategories, updateCategory, deleteCategory } = require("../controllers/categories");
 
 /* =========================================
 // ROUTER
 ========================================= */
+
+// Create default categories
+categoriesRouter.post("/create_multiple", createDefaultCategories);
 
 // Create new category
 categoriesRouter.post("/create", createCategory);

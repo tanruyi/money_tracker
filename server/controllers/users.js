@@ -59,7 +59,7 @@ const createUser = async (req, res) => {
 		});
 
 		console.log(`New user created: ${newUser.username}`);
-		res.json({ status: "success", message: "new user created" });
+		res.json({ status: "success", message: "new user created", userId: newUser.id });
 	} catch (err) {
 		console.error("PUT /users/create", err);
 		res.status(400).json({ status: "error", message: "an error has occurred" });
