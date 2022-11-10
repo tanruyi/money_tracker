@@ -78,6 +78,12 @@ const Home = () => {
 		}
 	};
 
+	const enterKeyLogin = (e: any) => {
+		if (e.key === "Enter") {
+			handleLogInClick();
+		}
+	};
+
 	/* ====================================================
     // Registration
     ==================================================== */
@@ -142,7 +148,8 @@ const Home = () => {
 					setUsername("");
 					setPassword("");
 					setRegistrationNeeded(false);
-                    createDefaultCategories((await response).data.userId);				}
+					createDefaultCategories((await response).data.userId);
+				}
 			} else {
 				window.alert("Username or password is empty.");
 			}
@@ -163,6 +170,12 @@ const Home = () => {
 		}
 	};
 
+	const enterKeyRegistration = (e: any) => {
+		if (e.key === "Enter") {
+			handleRegistration();
+		}
+	};
+
 	/* ====================================================
     // HTML Components
     ==================================================== */
@@ -171,10 +184,10 @@ const Home = () => {
 		<div className={styles.box}>
 			<h2>Login</h2>
 			<div className={styles.textField}>
-				<TextField required label="Username" sx={{ width: "25vw" }} value={username} onChange={handleUsernameInput} />
+				<TextField required label="Username" sx={{ width: "25vw" }} value={username} onChange={handleUsernameInput} onKeyUp={enterKeyLogin} />
 			</div>
 			<div className={styles.textField}>
-				<TextField required label="Password" type="password" sx={{ width: "25vw" }} value={password} onChange={handlePasswordInput} />
+				<TextField required label="Password" type="password" sx={{ width: "25vw" }} value={password} onChange={handlePasswordInput} onKeyUp={enterKeyLogin} />
 			</div>
 			<div className={styles.button}>
 				<Button variant="contained" size="large" sx={{ fontSize: "1.3rem", fontWeight: "bold" }} onClick={handleLogInClick}>
@@ -193,10 +206,10 @@ const Home = () => {
 		<div className={styles.box}>
 			<h2>Register</h2>
 			<div className={styles.textField}>
-				<TextField required label="Username" sx={{ width: "25vw" }} value={username} onChange={handleUsernameInput} />
+				<TextField required label="Username" sx={{ width: "25vw" }} value={username} onChange={handleUsernameInput} onKeyUp={enterKeyRegistration} />
 			</div>
 			<div className={styles.textField}>
-				<TextField required label="Password" type="password" sx={{ width: "25vw" }} value={password} onChange={handlePasswordInput} />
+				<TextField required label="Password" type="password" sx={{ width: "25vw" }} value={password} onChange={handlePasswordInput} onKeyUp={enterKeyRegistration} />
 			</div>
 			<div className={styles.button}>
 				<Button variant="contained" size="large" sx={{ fontSize: "1.3rem", fontWeight: "bold" }} onClick={handleRegistration}>
