@@ -3,7 +3,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
-import axiosInstance from "../utilities/axios";
+import axiosInstance from "../utilities/axiosInstance";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
 
