@@ -3,9 +3,9 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
+import axiosInstance from "../utilities/axios";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, registrationAPI, createDefaultCategoriesAPI } from "../utilities/axiosAPIs";
 
 const Home = () => {
 	const navigate = useNavigate();
@@ -43,14 +43,18 @@ const Home = () => {
 			password,
 		};
 
+		// login API url to append to base URL
+		const loginURL = "/users/login";
+
 		try {
 			// Check if username & pw is provided before proceeding
 			if (username && password) {
 				// Sends login credentials to API
-				const response = loginAPI(data);
-				if ((await response).status === 200) {
+				const response = await axiosInstance.post(loginURL, data);
+
+				if (response.status === 200) {
 					// On login, updates user id as context
-					updateCurrentUser((await response).data.id);
+					updateCurrentUser(response.data.id);
 
 					// Navigates to monthly view page on log in
 					navigate("/monthly");
@@ -108,12 +112,15 @@ const Home = () => {
 			{ userId: userId, recordId: 2, categoryName: "Transport" },
 		];
 
+		// categories creation URL to append to base URL
+		const manyCategoriesCreationURL = "/categories/create_multiple";
+
 		const data = {
 			newCategories: defaultCategories,
 		};
 
 		try {
-			const response = createDefaultCategoriesAPI(data);
+			const response = await axiosInstance.post(manyCategoriesCreationURL, data);
 		} catch (err) {
 			if (typeof err === "string") {
 				setError(err);
@@ -130,18 +137,21 @@ const Home = () => {
 			password,
 		};
 
+		// registration API url to append to base URL
+		const loginURL = "/users/create";
+
 		try {
 			// Check if username & pw is provided before proceeding
 			if (username && password) {
-				const response = registrationAPI(data);
+				const response = await axiosInstance.put(loginURL, data);
 
 				// Upon success confirmation from API, inform user, reset username & pw states, and change back to display login box
-				if ((await response).status === 200) {
+				if (response.status === 200) {
 					window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
 					setUsername("");
 					setPassword("");
 					setRegistrationNeeded(false);
-					createDefaultCategories((await response).data.userId);
+					createDefaultCategories(response.data.userId);
 				}
 			} else {
 				window.alert("Username or password is empty.");
