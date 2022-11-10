@@ -1,13 +1,23 @@
 /** @format */
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
+import { getAllCategories } from "../utilities/axiosAPIs";
 
 /* ====================================================
-// Type
+// Type Declaration
 ==================================================== */
 
+// For state currentUserId
 type UserId = number;
+
+// For state categories
+export interface Category {
+	id: number;
+	userId: number;
+	recordId: number;
+	categoryName: string;
+}
 
 interface CurrentUserContextProviderProps {
 	children: ReactNode;
@@ -16,7 +26,12 @@ interface CurrentUserContextProviderProps {
 interface CurrentUserContextType {
 	currentUserId: UserId;
 	updateCurrentUser: (id: number) => void;
+	categories: Category[];
 }
+
+/* ====================================================
+// Context Creation
+==================================================== */
 
 const CurrentUserContext = React.createContext({} as CurrentUserContextType);
 
@@ -33,9 +48,38 @@ export function useCurrentUserContext() {
 ==================================================== */
 
 export function CurrentUserContextProvider({ children }: CurrentUserContextProviderProps) {
+	const [error, setError] = useState<any>();
+
+	// This stores the id of the current logged in user
 	const [currentUserId, setCurrentUserId] = useState<UserId>(0);
 
 	const updateCurrentUser = (id: number) => setCurrentUserId(id);
 
-	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser }}>{children}</CurrentUserContext.Provider>;
+	// The states below store the API data for the current logged in user
+	const [categories, setCategories] = useState<Category[]>([]);
+
+	const [incomeRecords, setIncomeRecords] = useState([]);
+
+	const [expenseRecords, setExpenseRecords] = useState([]);
+
+	const [budgets, setBudgets] = useState([]);
+
+	async function getAllUserData() {
+		const allCategoriesResponse = getAllCategories(currentUserId);
+		setCategories((await allCategoriesResponse).data);
+	}
+
+	useEffect(() => {
+		try {
+			const response = getAllUserData();
+		} catch (err) {
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
+			}
+		}
+	}, [currentUserId]);
+
+	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, categories }}>{children}</CurrentUserContext.Provider>;
 }
