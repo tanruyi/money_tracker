@@ -36,8 +36,8 @@ function App() {
 
 	return (
 		<>
-			{/* {currentUserId === 0 ? defaultPages : mainPages} */}
-			{mainPages}
+			{currentUserId === 0 ? defaultPages : mainPages}
+			{/* {mainPages} */}
 		</>
 	);
 }
