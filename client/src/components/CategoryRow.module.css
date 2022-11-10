@@ -1,0 +1,25 @@
+/** @format */
+
+.rowContainer {
+	height: 12vh;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2vh;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.rowIcon img {
+	width: 3vw;
+	margin: 1vw;
+}
+
+.rowInfo {
+	width: 30vw;
+}
+
+.rowButton {
+	width: 5vw;
+}

@@ -34,7 +34,12 @@ function App() {
 		</>
 	);
 
-	return <>{currentUserId === 0 ? defaultPages : mainPages}</>;
+	return (
+		<>
+			{/* {currentUserId === 0 ? defaultPages : mainPages} */}
+			{mainPages}
+		</>
+	);
 }
 
 export default App;
