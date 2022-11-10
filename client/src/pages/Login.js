@@ -1,16 +1,20 @@
 /** @format */
 
 import { Button, TextField } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.css";
 import axiosInstance from "../utilities/axios";
-import CurrentUserContext from "../context/currentUserContext";
+import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-	const userContext = useContext(CurrentUserContext);
-
 	const navigate = useNavigate();
+
+	/* ====================================================
+    // Context
+    ==================================================== */
+
+	const { setCurrentUserId } = useCurrentUserContext();
 
 	/* ====================================================
     // Log In
@@ -50,7 +54,7 @@ const Home = () => {
 
 				if (response.status === 200) {
 					// On login, updates user id as context
-					userContext.setCurrentUserId(response.data.id);
+					setCurrentUserId(response.data.id);
 
 					// Navigates to monthly view page on log in
 					navigate("/monthly");

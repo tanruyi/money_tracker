@@ -3,15 +3,21 @@
 import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
-import CurrentUserContext from "./context/currentUserContext";
 import Navbar from "./common/Navbar";
 import MonthlyView from "./pages/MonthlyView";
 import Login from "./pages/Login";
+import { useCurrentUserContext } from "./context/currentUserContext";
 
 function App() {
-	const [currentUserId, setCurrentUserId] = useState<number>(0);
 
+    /* ====================================================
+    // Context
+    ==================================================== */
+	const { currentUserId } = useCurrentUserContext();
+
+    /* ====================================================
+    // HTML Components
+    ==================================================== */
 	const mainPages = (
 		<>
 			<Navbar />
@@ -21,17 +27,7 @@ function App() {
 		</>
 	);
 
-	return (
-		<CurrentUserContext.Provider value={{ currentUserId, setCurrentUserId }}>
-			{currentUserId === 0 ? <Login /> : mainPages}
-
-			{/* <Login /> */}
-			{/* <Navbar />
-			<Routes>
-				<Route path="/monthly" element={<MonthlyView />} />
-			</Routes> */}
-		</CurrentUserContext.Provider>
-	);
+	return <>{currentUserId === 0 ? <Login /> : mainPages}</>;
 }
 
 export default App;
