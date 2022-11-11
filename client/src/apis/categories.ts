@@ -43,11 +43,11 @@ export const updateCategoryAPI = async (categoryId: number, data: any) => {
 /* ====================================================
 // Delete a category for logged in user
 ==================================================== */
-export const deleteCategoryAPI = async (categoryId: number) => {
+export const deleteCategoryAPI = async (requestBody: any) => {
 	// delete category URL to append to base URL
 	const deleteCategoryURL = "/categories/delete";
 
-	const response = await axiosInstance.delete(deleteCategoryURL);
+	const response = await axiosInstance.delete(deleteCategoryURL, requestBody);
 
 	return response;
 };

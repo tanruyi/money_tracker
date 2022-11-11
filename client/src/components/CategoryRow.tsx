@@ -37,6 +37,16 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
+	// Opens dialog
+	const handleClickOpen = () => {
+		setOpenModal(true);
+	};
+
+	// Closes dialog
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 	let incomeOrExpense = "";
 
 	if (category.recordId === 1) {
@@ -45,17 +55,11 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		incomeOrExpense = "Expenses";
 	}
 
+	// Controls the value of select field
 	const [recordType, setRecordType] = useState(incomeOrExpense);
 
+	// Controls the value for text field
 	const [categoryName, setCategoryName] = useState<string>(category.categoryName);
-
-	const handleClickOpen = () => {
-		setOpenModal(true);
-	};
-
-	const handleClose = () => {
-		setOpenModal(false);
-	};
 
 	const handleRecordType = (e: any) => {
 		setRecordType(e.target.value);
@@ -65,7 +69,8 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		setCategoryName(e.target.value);
 	};
 
-	const handleUpdate = () => {
+	// Runs on click of update button
+	const handleUpdate = async () => {
 		// This is the req.body for API
 		let data: Partial<newCategoryData> = {};
 
@@ -89,8 +94,9 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		// Check if there is anything to update, if yes run API
 		if (data) {
 			try {
-				const response = updateCategoryAPI(category.id, data);
+				const response = await updateCategoryAPI(category.id, data);
 
+				// Refreshes the data on page
 				refreshData();
 
 				// Close modal upon successful update
@@ -105,7 +111,30 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		}
 	};
 
-	const handleDelete = () => {};
+	// Runs on click of delete button
+	const handleDelete = async () => {
+		const requestBody = {
+			data: {
+				id: category.id,
+			},
+		};
+
+		try {
+			const response = await deleteCategoryAPI(requestBody);
+
+			// Refreshes the data on page
+			refreshData();
+
+			// Close modal upon successful update
+			handleClose();
+		} catch (err) {
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
+			}
+		}
+	};
 
 	return (
 		<div id={"categoryId" + category.id.toString()} className={styles.rowContainer}>

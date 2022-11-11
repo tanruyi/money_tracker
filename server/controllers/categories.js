@@ -97,7 +97,8 @@ const updateCategory = async (req, res) => {
 // Delete a category
 const deleteCategory = async (req, res) => {
 	// Checks whether id is provided, if not throw error
-	if (!req?.body?.id) {
+	if (!req.body.id) {
+		console.error("delete failed, id not provided: ", req.body.id);
 		return res.status(400).json({ status: "error", message: "id not provided" });
 	}
 

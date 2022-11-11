@@ -76,6 +76,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	async function getAllUserData() {
 		const allCategoriesResponse = getAllCategoriesAPI(currentUserId);
 		setCategories((await allCategoriesResponse).data);
+		console.log("getAllUserData");
 	}
 
 	useEffect(() => {
