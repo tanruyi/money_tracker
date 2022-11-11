@@ -16,6 +16,20 @@ export const createDefaultCategoriesAPI = async (data: any) => {
 };
 
 /* ====================================================
+// Create new category for a user
+==================================================== */
+
+export const createCategoryAPI = async (data: any) => {
+	// categories creation URL to append to base URL
+	const categoryCreationURL = "/categories/create";
+
+	const response = await axiosInstance.post(categoryCreationURL, data);
+
+	return response;
+};
+
+
+/* ====================================================
 // Get all categories for logged in user
 ==================================================== */
 

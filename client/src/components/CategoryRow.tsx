@@ -148,6 +148,7 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 				<IconButton onClick={handleClickOpen}>
 					<EditIcon fontSize="large" />
 				</IconButton>
+				{/* Form Dialog, only visible when open */}
 				<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
 					<DialogTitle>Edit Category</DialogTitle>
 					<DialogContent>
