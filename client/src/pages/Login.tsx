@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, registrationAPI, createDefaultCategoriesAPI } from "../utilities/axiosAPIs";
+import { loginAPI, registrationAPI } from "../apis/users";
+import { createDefaultCategoriesAPI } from "../apis/categories";
 
 const Home = () => {
 	const navigate = useNavigate();

@@ -3,33 +3,13 @@
 import axiosInstance from "./axiosInstance";
 
 /* ====================================================
-// Login
+// Default categories creation during registration
 ==================================================== */
-// login API url to append to base URL
-const loginURL = "/users/login";
-
-export const loginAPI = async (data: any) => {
-	const response = await axiosInstance.post(loginURL, data);
-
-	return response;
-};
-
-/* ====================================================
-// Registration
-==================================================== */
-// registration API url to append to base URL
-const registrationURL = "/users/create";
-
-export const registrationAPI = async (data: any) => {
-	const response = await axiosInstance.put(registrationURL, data);
-
-	return response;
-};
-
-// categories creation URL to append to base URL
-const manyCategoriesCreationURL = "/categories/create_multiple";
 
 export const createDefaultCategoriesAPI = async (data: any) => {
+	// categories creation URL to append to base URL
+	const manyCategoriesCreationURL = "/categories/create_multiple";
+
 	const response = await axiosInstance.post(manyCategoriesCreationURL, data);
 
 	return response;
@@ -40,6 +20,8 @@ export const createDefaultCategoriesAPI = async (data: any) => {
 ==================================================== */
 
 export const getAllCategories = async (currentUserId: number) => {
+	// get categories URL to append to base URL
+
 	const getCategoriesURL = `/categories/${currentUserId.toString()}`;
 
 	const response = await axiosInstance.get(getCategoriesURL);

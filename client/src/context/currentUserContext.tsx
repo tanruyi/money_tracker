@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
-import { getAllCategories } from "../utilities/axiosAPIs";
+import { getAllCategories } from "../apis/categories";
 
 /* ====================================================
 // Type Declaration
