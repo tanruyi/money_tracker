@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { getAllCategoriesAPI } from "../apis/categories";
+import { getAllIncomeAPI } from "../apis/income";
 
 /* ====================================================
 // Type Declaration
@@ -19,6 +20,17 @@ export interface Category {
 	categoryName: string;
 }
 
+// For state income
+interface Income {
+	id: number;
+	userId: number;
+	date: Date;
+	categoryId: number;
+	amount: number;
+	detail: string;
+	note: string;
+}
+
 interface CurrentUserContextProviderProps {
 	children: ReactNode;
 }
@@ -28,6 +40,7 @@ interface CurrentUserContextType {
 	updateCurrentUser: (id: number) => void;
 	refreshData: () => void;
 	categories: Category[];
+	incomeRecords: Income[];
 }
 
 /* ====================================================
@@ -67,15 +80,22 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	// The states below store the API data for the current logged in user
 	const [categories, setCategories] = useState<Category[]>([]);
 
-	const [incomeRecords, setIncomeRecords] = useState([]);
+	const [incomeRecords, setIncomeRecords] = useState<Income[]>([]);
 
 	const [expenseRecords, setExpenseRecords] = useState([]);
 
 	const [budgets, setBudgets] = useState([]);
 
 	async function getAllUserData() {
+		// get categories data
 		const allCategoriesResponse = getAllCategoriesAPI(currentUserId);
+
 		setCategories((await allCategoriesResponse).data);
+
+		// get income data
+		const allIncomeResponse = getAllIncomeAPI(currentUserId);
+		setIncomeRecords((await allIncomeResponse).data);
+
 		console.log("getAllUserData");
 	}
 
@@ -91,5 +111,5 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		}
 	}, [currentUserId, refreshCurrentUserData]);
 
-	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories }}>{children}</CurrentUserContext.Provider>;
+	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories, incomeRecords }}>{children}</CurrentUserContext.Provider>;
 }
