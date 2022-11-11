@@ -19,7 +19,7 @@ export const createDefaultCategoriesAPI = async (data: any) => {
 // Get all categories for logged in user
 ==================================================== */
 
-export const getAllCategories = async (currentUserId: number) => {
+export const getAllCategoriesAPI = async (currentUserId: number) => {
 	// get categories URL to append to base URL
 	const getCategoriesURL = `/categories/${currentUserId.toString()}`;
 
@@ -31,7 +31,7 @@ export const getAllCategories = async (currentUserId: number) => {
 /* ====================================================
 // Update a category for logged in user
 ==================================================== */
-export const updateCategory = async (categoryId: number, data: any) => {
+export const updateCategoryAPI = async (categoryId: number, data: any) => {
 	// update category URL to append to base URL
 	const updateCategoryURL = `/categories/${categoryId.toString()}`;
 
@@ -43,7 +43,7 @@ export const updateCategory = async (categoryId: number, data: any) => {
 /* ====================================================
 // Delete a category for logged in user
 ==================================================== */
-export const deleteCategory = async (categoryId: number) => {
+export const deleteCategoryAPI = async (categoryId: number) => {
 	// delete category URL to append to base URL
 	const deleteCategoryURL = "/categories/delete";
 

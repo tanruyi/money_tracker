@@ -6,15 +6,27 @@ import icon from "../assets/cocoa.png";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
 import { Category } from "../context/currentUserContext";
+import { updateCategoryAPI, deleteCategoryAPI } from "../apis/categories";
+
+/* ====================================================
+// Type Declaration
+==================================================== */
 
 type CategoryRowProps = {
 	category: Category;
 };
 
+interface newCategoryData {
+	recordId: number;
+	categoryName: string;
+}
+
 const CategoryRow = ({ category }: CategoryRowProps) => {
 	/* ====================================================
     // Handles form dialog
     ==================================================== */
+
+	const [error, setError] = useState<any>();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -46,7 +58,43 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		setCategoryName(e.target.value);
 	};
 
-	const handleUpdate = () => {};
+    const handleUpdate = () => {
+        // This is the req.body for API
+		let data: Partial<newCategoryData> = {};
+
+		// Convert state for recordType to id stored in db for comparison below
+		let newRecordType;
+
+		if (recordType === "Income") {
+			newRecordType = 1;
+		} else if (recordType === "Expenses") {
+			newRecordType = 2;
+		}
+
+		// If there are updates made, add to the data object
+		if (newRecordType !== category.recordId) {
+			data.recordId = newRecordType;
+		}
+		if (categoryName !== category.categoryName) {
+			data.categoryName = categoryName;
+		}
+
+		// Check if there is anything to update, if yes run API
+		if (data) {
+			try {
+				const response = updateCategoryAPI(category.id, data);
+
+				// Close modal upon successful update
+				handleClose();
+			} catch (err) {
+				if (typeof err === "string") {
+					setError(err);
+				} else if (err instanceof Error) {
+					setError(err.message);
+				}
+			}
+		}
+	};
 
 	const handleDelete = () => {};
 

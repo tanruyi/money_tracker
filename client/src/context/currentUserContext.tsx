@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
-import { getAllCategories } from "../apis/categories";
+import { getAllCategoriesAPI } from "../apis/categories";
 
 /* ====================================================
 // Type Declaration
@@ -26,6 +26,7 @@ interface CurrentUserContextProviderProps {
 interface CurrentUserContextType {
 	currentUserId: UserId;
 	updateCurrentUser: (id: number) => void;
+	refreshData: () => void;
 	categories: Category[];
 }
 
@@ -55,6 +56,11 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	const updateCurrentUser = (id: number) => setCurrentUserId(id);
 
+    // If this is true, rerun getAllUserData to get updated data from db
+	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<boolean>(false);
+
+	const refreshData = () => setRefreshCurrentUserData((prevState) => !prevState);
+
 	// The states below store the API data for the current logged in user
 	const [categories, setCategories] = useState<Category[]>([]);
 
@@ -65,8 +71,9 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	const [budgets, setBudgets] = useState([]);
 
 	async function getAllUserData() {
-		const allCategoriesResponse = getAllCategories(currentUserId);
+		const allCategoriesResponse = getAllCategoriesAPI(currentUserId);
 		setCategories((await allCategoriesResponse).data);
+		refreshData();
 	}
 
 	useEffect(() => {
@@ -79,7 +86,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 				setError(err.message);
 			}
 		}
-	}, [currentUserId]);
+	}, [currentUserId, refreshCurrentUserData]);
 
-	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, categories }}>{children}</CurrentUserContext.Provider>;
+	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories }}>{children}</CurrentUserContext.Provider>;
 }
