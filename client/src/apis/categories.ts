@@ -21,10 +21,33 @@ export const createDefaultCategoriesAPI = async (data: any) => {
 
 export const getAllCategories = async (currentUserId: number) => {
 	// get categories URL to append to base URL
-
 	const getCategoriesURL = `/categories/${currentUserId.toString()}`;
 
 	const response = await axiosInstance.get(getCategoriesURL);
+
+	return response;
+};
+
+/* ====================================================
+// Update a category for logged in user
+==================================================== */
+export const updateCategory = async (categoryId: number, data: any) => {
+	// update category URL to append to base URL
+	const updateCategoryURL = `/categories/${categoryId.toString()}`;
+
+	const response = await axiosInstance.put(updateCategoryURL, data);
+
+	return response;
+};
+
+/* ====================================================
+// Delete a category for logged in user
+==================================================== */
+export const deleteCategory = async (categoryId: number) => {
+	// delete category URL to append to base URL
+	const deleteCategoryURL = "/categories/delete";
+
+	const response = await axiosInstance.delete(deleteCategoryURL);
 
 	return response;
 };
