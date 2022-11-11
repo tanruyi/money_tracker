@@ -56,10 +56,13 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	const updateCurrentUser = (id: number) => setCurrentUserId(id);
 
-    // If this is true, rerun getAllUserData to get updated data from db
-	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<boolean>(false);
+	// If this is true, rerun getAllUserData to get updated data from db
+	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
 
-	const refreshData = () => setRefreshCurrentUserData((prevState) => !prevState);
+	const refreshData = () => {
+		// Change to true
+		setRefreshCurrentUserData((prevState) => (prevState += 1));
+	};
 
 	// The states below store the API data for the current logged in user
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -73,7 +76,6 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	async function getAllUserData() {
 		const allCategoriesResponse = getAllCategoriesAPI(currentUserId);
 		setCategories((await allCategoriesResponse).data);
-		refreshData();
 	}
 
 	useEffect(() => {

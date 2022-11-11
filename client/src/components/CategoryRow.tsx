@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
 import { Category } from "../context/currentUserContext";
 import { updateCategoryAPI, deleteCategoryAPI } from "../apis/categories";
+import { useCurrentUserContext } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -22,6 +23,12 @@ interface newCategoryData {
 }
 
 const CategoryRow = ({ category }: CategoryRowProps) => {
+	/* ====================================================
+    // Context
+    ==================================================== */
+
+	const { refreshData } = useCurrentUserContext();
+
 	/* ====================================================
     // Handles form dialog
     ==================================================== */
@@ -58,8 +65,8 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 		setCategoryName(e.target.value);
 	};
 
-    const handleUpdate = () => {
-        // This is the req.body for API
+	const handleUpdate = () => {
+		// This is the req.body for API
 		let data: Partial<newCategoryData> = {};
 
 		// Convert state for recordType to id stored in db for comparison below
@@ -84,6 +91,8 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 			try {
 				const response = updateCategoryAPI(category.id, data);
 
+				refreshData();
+
 				// Close modal upon successful update
 				handleClose();
 			} catch (err) {
@@ -107,8 +116,8 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 				<h2>{category.categoryName}</h2>
 			</div>
 			<div className={styles.rowButton}>
-				<IconButton>
-					<EditIcon fontSize="large" onClick={handleClickOpen} />
+				<IconButton onClick={handleClickOpen}>
+					<EditIcon fontSize="large" />
 				</IconButton>
 				<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
 					<DialogTitle>Edit Category</DialogTitle>
