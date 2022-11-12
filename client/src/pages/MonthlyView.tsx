@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./MonthlyView.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../components/IncomeExpenseDashboard";
 import IncomeExpenseTab from "../components/IncomeExpenseTab";
@@ -36,7 +36,7 @@ const MonthlyView = () => {
 	const [monthToDisplay, setMonthToDisplay] = useState(dayjs().month() + 1);
 
 	/* ====================================================
-    // Total Income for Displayed Month
+    // Filtered Income Records for Month to Display
     ==================================================== */
 
 	// Filter income records to those with mth & yr we want to display
@@ -45,6 +45,10 @@ const MonthlyView = () => {
 		const recordMonth = dayjs(record.date).get("month") + 1;
 		return recordYear === yearToDisplay && recordMonth === monthToDisplay;
 	});
+
+	/* ====================================================
+    // Total Income for Displayed Month
+    ==================================================== */
 
 	let totalIncome = 0;
 
@@ -56,7 +60,27 @@ const MonthlyView = () => {
 	const totalIncomeString = intToCurrencyString(totalIncome);
 
 	/* ====================================================
-    // Total Expenses for Displayed Month
+    // List of Dates with Income Records for Displayed Month
+    ==================================================== */
+
+	const datesWithIncomeRecordsSet = new Set();
+
+	for (let i = 0; i < incomeRecordsToDisplay.length; i++) {
+		datesWithIncomeRecordsSet.add(incomeRecordsToDisplay[i].date);
+	}
+
+	const datesWithIncomeRecords = Array.from(datesWithIncomeRecordsSet);
+
+	/* ====================================================
+    // Income Rows to Display
+    ==================================================== */
+
+    const incomeRecordRows = datesWithIncomeRecords.map((date, index) => (
+        <IncomeExpenseRow key={index} date={date} incomeRecordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />
+    ));
+
+	/* ====================================================
+    // Filtered Expense Records for Month to Display
     ==================================================== */
 
 	// Filter expense records to those with mth & yr we want to display
@@ -65,6 +89,10 @@ const MonthlyView = () => {
 		const recordMonth = dayjs(record.date).get("month") + 1;
 		return recordYear === yearToDisplay && recordMonth === monthToDisplay;
 	});
+
+	/* ====================================================
+    // Total Expenses for Displayed Month
+    ==================================================== */
 
 	let totalExpenses = 0;
 
@@ -81,7 +109,7 @@ const MonthlyView = () => {
 			<IncomeExpenseDashboard totalIncomeString={totalIncomeString} totalExpensesString={totalExpensesString} />
 			<IncomeExpenseTab changeDisplayRecord={changeDisplayRecord} />
 			<div className={styles.rowsContainer}>
-				<IncomeExpenseRow />
+				{incomeRecordRows}
 			</div>
 		</div>
 	);

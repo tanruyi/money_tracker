@@ -3,12 +3,13 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import { createIncomeAPI } from "../apis/income";
-import { createExpenseAPI } from "../apis/expenses";
+import { updateIncomeAPI, deleteIncomeAPI } from "../apis/income";
+import { updateExpenseAPI, deleteExpenseAPI } from "../apis/expenses";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { Income, Category } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -28,7 +29,6 @@ interface newRecordInputState {
 }
 
 interface newRecordData {
-	userId: number;
 	date: Dayjs;
 	categoryId: number;
 	amount: number | undefined;
@@ -36,12 +36,15 @@ interface newRecordData {
 	note: string;
 }
 
-interface IncomeExpenseCreationModalProps {
+interface IncomeExpenseEditModalProps {
 	openModal: boolean;
 	handleClose: () => void;
+	record: Income;
+	categoryRecord: Category;
+	displayRecord: string;
 }
 
-const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCreationModalProps) => {
+const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord, displayRecord }: IncomeExpenseEditModalProps) => {
 	/* ====================================================
 	// Context
 	==================================================== */
@@ -49,23 +52,23 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 	const { currentUserId, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Create new category modal
+    // Edit record modal
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
 	// Controls inputs
 	const [newRecordInput, setNewRecordInput] = useState<newRecordInputState>({
-		recordType: "",
-		recordId: 0,
-		categoryName: "",
-		categoryId: 0,
-		date: dayjs(),
-		amount: "",
-		detail: "",
-		detailCharacterCount: 0,
-		note: "",
-		noteCharacterCount: 0,
+		recordType: displayRecord,
+		recordId: categoryRecord.recordId,
+		categoryName: categoryRecord.categoryName,
+		categoryId: record.categoryId,
+		date: record.date,
+		amount: String(record.amount),
+		detail: record.detail,
+		detailCharacterCount: record.detail.length,
+		note: record.note,
+		noteCharacterCount: record.note.length,
 	});
 
 	const handleRecordType = (e: any) => {
@@ -159,10 +162,11 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 		}
 	};
 
-	// Runs on click of create button
-	const handleCreateRecord = async () => {
+	// Runs on click of update button
+	const handleUpdateRecord = async () => {
+		const id = record.id;
+
 		let data: newRecordData = {
-			userId: currentUserId,
 			date: newRecordInput.date,
 			categoryId: newRecordInput.categoryId,
 			amount: Number(newRecordInput.amount),
@@ -170,30 +174,16 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 			note: newRecordInput.note,
 		};
 
-		if (data.userId || data.date || data.categoryId || data.amount) {
+		if (id || data.date || data.categoryId || data.amount) {
 			if (newRecordInput.recordType === "Income") {
 				try {
-					const response = await createIncomeAPI(data);
+					const response = await updateIncomeAPI(id, data);
 
 					// Refreshes the data on page
 					refreshData();
 
 					// Close modal upon successful update
 					handleClose();
-
-					// Clear submitted info from state after creation
-					setNewRecordInput({
-						recordType: "",
-						recordId: 0,
-						categoryName: "",
-						categoryId: 0,
-						date: dayjs(),
-						amount: "",
-						detail: "",
-						detailCharacterCount: 0,
-						note: "",
-						noteCharacterCount: 0,
-					});
 				} catch (err) {
 					if (typeof err === "string") {
 						setError(err);
@@ -203,33 +193,61 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				}
 			} else if (newRecordInput.recordType === "Expenses") {
 				try {
-					const response = await createExpenseAPI(data);
+					const response = await updateExpenseAPI(id, data);
 
 					// Refreshes the data on page
 					refreshData();
 
 					// Close modal upon successful update
 					handleClose();
-
-					// Clear submitted info from state after creation
-					setNewRecordInput({
-						recordType: "",
-						recordId: 0,
-						categoryName: "",
-						categoryId: 0,
-						date: dayjs(),
-						amount: "",
-						detail: "",
-						detailCharacterCount: 0,
-						note: "",
-						noteCharacterCount: 0,
-					});
 				} catch (err) {
 					if (typeof err === "string") {
 						setError(err);
 					} else if (err instanceof Error) {
 						setError(err.message);
 					}
+				}
+			}
+		}
+	};
+
+	const handleDeleteRecord = async () => {
+		const requestBody = {
+			data: {
+				id: record.id,
+			},
+		};
+
+		if (newRecordInput.recordType === "Income") {
+			try {
+				const response = await deleteIncomeAPI(requestBody);
+
+				// Refreshes the data on page
+				refreshData();
+
+				// Close modal upon successful update
+				handleClose();
+			} catch (err) {
+				if (typeof err === "string") {
+					setError(err);
+				} else if (err instanceof Error) {
+					setError(err.message);
+				}
+			}
+		} else if (newRecordInput.recordType === "Expenses") {
+			try {
+				const response = await deleteExpenseAPI(requestBody);
+
+				// Refreshes the data on page
+				refreshData();
+
+				// Close modal upon successful update
+				handleClose();
+			} catch (err) {
+				if (typeof err === "string") {
+					setError(err);
+				} else if (err instanceof Error) {
+					setError(err.message);
 				}
 			}
 		}
@@ -297,12 +315,15 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleCreateRecord}>
-					Create
+				<Button variant="contained" size="large" onClick={handleUpdateRecord}>
+					Update
+				</Button>
+				<Button variant="contained" size="large" onClick={handleDeleteRecord}>
+					Delete
 				</Button>
 			</DialogActions>
 		</Dialog>
 	);
 };
 
-export default IncomeExpenseCreationModal;
+export default IncomeExpenseEditModal;

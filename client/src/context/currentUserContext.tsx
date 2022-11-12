@@ -22,7 +22,7 @@ export interface Category {
 }
 
 // For state income
-interface Income {
+export interface Income {
 	id: number;
 	userId: number;
 	date: Date;
