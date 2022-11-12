@@ -17,6 +17,15 @@ const MonthlyView = () => {
 	const { currentUserId, categories, incomeRecords, expenseRecords, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
+    // Income or expense to be displayed
+    ==================================================== */
+	const [displayRecord, setDisplayRecord] = useState<string>("Income");
+
+	const changeDisplayRecord = (type: string) => {
+		setDisplayRecord(type);
+	};
+
+	/* ====================================================
     // Month & year for display
     ==================================================== */
 
@@ -70,7 +79,7 @@ const MonthlyView = () => {
 	return (
 		<div>
 			<IncomeExpenseDashboard totalIncomeString={totalIncomeString} totalExpensesString={totalExpensesString} />
-			<IncomeExpenseTab />
+			<IncomeExpenseTab changeDisplayRecord={changeDisplayRecord} />
 			<IncomeExpenseRowDisplay />
 		</div>
 	);
