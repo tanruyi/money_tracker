@@ -49,8 +49,8 @@ model Income {
     categoryId Int?
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
-    detail     String      @db.VarChar(50)
-    note       String      @db.VarChar(200)
+    detail     String?     @db.VarChar(50)
+    note       String?     @db.VarChar(200)
 }
 
 model Expenses {
@@ -61,8 +61,8 @@ model Expenses {
     categoryId Int?
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
-    detail     String      @db.VarChar(50)
-    note       String      @db.VarChar(200)
+    detail     String?     @db.VarChar(50)
+    note       String?     @db.VarChar(200)
 }
 
 model PeriodTypes {

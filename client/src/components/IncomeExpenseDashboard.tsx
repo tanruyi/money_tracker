@@ -10,6 +10,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { createIncomeAPI } from "../apis/income";
+import { createExpenseAPI } from "../apis/expenses";
 
 /* ====================================================
 // Type Declaration
@@ -19,6 +21,7 @@ interface newRecordInputState {
 	recordType: string;
 	recordId: number;
 	categoryName: string;
+	categoryId: number;
 	date: Dayjs;
 	amount: number | undefined;
 	detail: string;
@@ -27,12 +30,21 @@ interface newRecordInputState {
 	noteCharacterCount: number;
 }
 
+interface newRecordData {
+	userId: number;
+	date: Dayjs;
+	categoryId: number;
+	amount: number | undefined;
+	detail: string;
+	note: string;
+}
+
 const IncomeExpenseDashboard = () => {
 	/* ====================================================
     // Context
     ==================================================== */
 
-	const { currentUserId, categories, incomeRecords, expenseRecords } = useCurrentUserContext();
+	const { currentUserId, categories, incomeRecords, expenseRecords, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Month & year for display
@@ -108,6 +120,7 @@ const IncomeExpenseDashboard = () => {
 		recordType: "",
 		recordId: 0,
 		categoryName: "",
+		categoryId: 0,
 		date: dayjs(),
 		amount: undefined,
 		detail: "",
@@ -142,10 +155,21 @@ const IncomeExpenseDashboard = () => {
 	};
 
 	const handleCategoryName = (e: any) => {
+		let categoryId: number;
+
+		for (let i = 0; i < categories.length; i++) {
+			if (categories[i].categoryName === e.target.value) {
+				categoryId = categories[i].id;
+				break;
+			}
+			continue;
+		}
+
 		setNewRecordInput((prevState) => {
 			return {
 				...prevState,
 				categoryName: e.target.value,
+				categoryId: categoryId,
 			};
 		});
 	};
@@ -197,7 +221,80 @@ const IncomeExpenseDashboard = () => {
 	};
 
 	// Runs on click of create button
-	const handleCreateRecord = async () => {};
+	const handleCreateRecord = async () => {
+		let data: newRecordData = {
+			userId: currentUserId,
+			date: newRecordInput.date,
+			categoryId: newRecordInput.categoryId,
+			amount: newRecordInput.amount,
+			detail: newRecordInput.detail,
+			note: newRecordInput.note,
+		};
+
+		if (data.userId || data.date || data.categoryId || data.amount) {
+			if (newRecordInput.recordType === "Income") {
+				try {
+					const response = await createIncomeAPI(data);
+
+					// Refreshes the data on page
+					refreshData();
+
+					// Close modal upon successful update
+					handleClose();
+
+					// Clear submitted info from state after creation
+					setNewRecordInput({
+						recordType: "",
+						recordId: 0,
+						categoryName: "",
+						categoryId: 0,
+						date: dayjs(),
+						amount: undefined,
+						detail: "",
+						detailCharacterCount: 0,
+						note: "",
+						noteCharacterCount: 0,
+					});
+				} catch (err) {
+					if (typeof err === "string") {
+						setError(err);
+					} else if (err instanceof Error) {
+						setError(err.message);
+					}
+				}
+			} else if (newRecordInput.recordType === "Expenses") {
+				try {
+					const response = await createExpenseAPI(data);
+
+					// Refreshes the data on page
+					refreshData();
+
+					// Close modal upon successful update
+					handleClose();
+
+					// Clear submitted info from state after creation
+					setNewRecordInput({
+						recordType: "",
+						recordId: 0,
+						categoryName: "",
+						categoryId: 0,
+						date: dayjs(),
+						amount: undefined,
+						detail: "",
+						detailCharacterCount: 0,
+						note: "",
+						noteCharacterCount: 0,
+					});
+				} catch (err) {
+					if (typeof err === "string") {
+						setError(err);
+					} else if (err instanceof Error) {
+						setError(err.message);
+					}
+				}
+			}
+		}
+	};
 
 	/* ====================================================
     // Filters the category names to display for selection in modal based on record type selected
@@ -275,7 +372,7 @@ const IncomeExpenseDashboard = () => {
 								<OutlinedInput id="amount" label="Amount" value={newRecordInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
 							</FormControl>
 							{/* Detail text field */}
-							<TextField id="detail" label="etail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
+							<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
 							<p>{newRecordInput.detailCharacterCount}/50</p>
 							{/* Note text field */}
 							<TextField label="Note" multiline minRows={5} value={newRecordInput.note} onChange={handleNote} />
