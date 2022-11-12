@@ -1,0 +1,8 @@
+/** @format */
+
+.rowsContainer {
+	background-color: #c5c6c7;
+	width: 100%;
+	min-height: 47vh;
+	padding: 2vh 0;
+}

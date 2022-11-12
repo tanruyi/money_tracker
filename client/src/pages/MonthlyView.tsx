@@ -1,13 +1,13 @@
 /** @format */
 
 import React, { useState } from "react";
+import styles from "./MonthlyView.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import dayjs, { Dayjs } from "dayjs";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
-
 import IncomeExpenseDashboard from "../components/IncomeExpenseDashboard";
-import IncomeExpenseRowDisplay from "../components/IncomeExpenseRowDisplay";
 import IncomeExpenseTab from "../components/IncomeExpenseTab";
+import IncomeExpenseRow from "../components/IncomeExpenseRow";
 
 const MonthlyView = () => {
 	/* ====================================================
@@ -80,7 +80,9 @@ const MonthlyView = () => {
 		<div>
 			<IncomeExpenseDashboard totalIncomeString={totalIncomeString} totalExpensesString={totalExpensesString} />
 			<IncomeExpenseTab changeDisplayRecord={changeDisplayRecord} />
-			<IncomeExpenseRowDisplay />
+			<div className={styles.rowsContainer}>
+				<IncomeExpenseRow />
+			</div>
 		</div>
 	);
 };
