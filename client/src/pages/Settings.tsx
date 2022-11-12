@@ -5,7 +5,7 @@ import CategoryRow from "../components/CategoryRow";
 import styles from "./Settings.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import whyMeme from "../assets/confused-white-persian-guardian.gif";
-import { Fab, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
+import { Fab, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { createCategoryAPI } from "../apis/categories";
 
@@ -84,7 +84,7 @@ const Settings = () => {
 	};
 
 	// Runs on click of create button
-	const handleCreate = async () => {
+	const handleCreateCategory = async () => {
 		// Convert state for recordType to id stored in db for comparison below
 		let newRecordType = 0;
 
@@ -110,7 +110,7 @@ const Settings = () => {
 				// Close modal upon successful update
 				handleClose();
 
-                // Clear submitted info from state after creation
+				// Clear submitted info from state after creation
 				setRecordType("");
 				setCategoryName("");
 			} catch (err) {
@@ -147,18 +147,20 @@ const Settings = () => {
 				<DialogTitle>Create Category</DialogTitle>
 				<DialogContent>
 					<Box component="form" sx={{ marginTop: "1rem" }}>
-						<FormControl sx={{ width: "100%", marginBottom: "1rem" }}>
-							<InputLabel htmlFor="income-or-expense">Type</InputLabel>
-							<Select value={recordType} onChange={handleRecordType} input={<OutlinedInput label="Type" id="income-or-expense" />}>
-								<MenuItem value={"Income"}>Income</MenuItem>
-								<MenuItem value={"Expenses"}>Expenses</MenuItem>
-							</Select>
-						</FormControl>
-						<TextField id="categoryName" label="Category Name" variant="outlined" sx={{ width: "100%" }} value={categoryName} onChange={handleCategoryName} />
+						<Stack spacing={3}>
+							<FormControl sx={{ width: "100%", marginBottom: "1rem" }}>
+								<InputLabel htmlFor="income-or-expense">Type</InputLabel>
+								<Select value={recordType} onChange={handleRecordType} input={<OutlinedInput label="Type" id="income-or-expense" />}>
+									<MenuItem value={"Income"}>Income</MenuItem>
+									<MenuItem value={"Expenses"}>Expenses</MenuItem>
+								</Select>
+							</FormControl>
+							<TextField id="categoryName" label="Category Name" variant="outlined" sx={{ width: "100%" }} value={categoryName} onChange={handleCategoryName} />
+						</Stack>
 					</Box>
 				</DialogContent>
 				<DialogActions>
-					<Button variant="contained" size="large" onClick={handleCreate}>
+					<Button variant="contained" size="large" onClick={handleCreateCategory}>
 						Create
 					</Button>
 				</DialogActions>
