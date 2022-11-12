@@ -2,20 +2,26 @@
 
 import React, { useState } from "react";
 import styles from "./IncomeExpenseDashboard.module.css";
-import { Fab } from "@mui/material";
+import { Fab, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IncomeExpenseCreationModal from "./IncomeExpenseCreationModal";
+import { Dayjs } from "dayjs";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
 
 interface IncomeExpenseDashboardProps {
+	dateToDisplay: Dayjs;
 	totalIncomeString: string;
 	totalExpensesString: string;
+	handleBackArrow: () => void;
+	handleForwardArrow: () => void;
 }
 
-const IncomeExpenseDashboard = ({ totalIncomeString, totalExpensesString }: IncomeExpenseDashboardProps) => {
+const IncomeExpenseDashboard = ({ dateToDisplay, totalIncomeString, totalExpensesString, handleBackArrow, handleForwardArrow }: IncomeExpenseDashboardProps) => {
 	/* ====================================================
     // Handle category creation modal
     ==================================================== */
@@ -35,8 +41,11 @@ const IncomeExpenseDashboard = ({ totalIncomeString, totalExpensesString }: Inco
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
+				<IconButton onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon sx={{ color: "white" }} />
+				</IconButton>
 				<div className={styles.dashboardHeader}>
-					<h1>This Month's View</h1>
+					<h1>{dateToDisplay.format("MMM YYYY")}</h1>
 					<div className={styles.dashboardInfo}>
 						{/* Split the dashboard info to 2 columns displayed side by side */}
 						<div className={styles.dashboardInfoColumn}>
@@ -50,6 +59,9 @@ const IncomeExpenseDashboard = ({ totalIncomeString, totalExpensesString }: Inco
 						</div>
 					</div>
 				</div>
+				<IconButton onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon sx={{ color: "white" }} />
+				</IconButton>
 			</div>
 			{/* Create new record button */}
 			<Fab sx={{ margin: "0 48.8vw", bgcolor: "#66fcf1" }} onClick={handleClickOpen}>

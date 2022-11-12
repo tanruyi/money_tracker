@@ -9,6 +9,7 @@
 	margin-right: auto;
 	padding: 6vh 0;
 	width: 40vw;
+	display: flex;
 }
 
 .dashboardHeader {

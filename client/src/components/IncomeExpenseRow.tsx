@@ -17,16 +17,26 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 
 interface IncomeExpenseRowProps {
 	date: any;
-	incomeRecordsToDisplay: Income[];
+	recordsToDisplay: Income[];
 	displayRecord: string;
 }
 
-const IncomeExpenseRow = ({ date, incomeRecordsToDisplay, displayRecord }: IncomeExpenseRowProps) => {
+const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpenseRowProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
 
 	const { categories } = useCurrentUserContext();
+
+	/* ====================================================
+    // Row Header - Date
+    ==================================================== */
+
+	// const [refreshPage, setRefreshPage] = useState(0);
+
+	// const handleRefresh = () => {
+	// 	setRefreshPage((prevState) => (prevState += 1));
+	// };
 
 	/* ====================================================
     // Row Header - Date
@@ -51,16 +61,12 @@ const IncomeExpenseRow = ({ date, incomeRecordsToDisplay, displayRecord }: Incom
 	};
 
 	/* ====================================================
-    // Handle Click on Edit Button
-    ==================================================== */
-
-	/* ====================================================
     // Row Expense Line HTML Component
     ==================================================== */
 
-	const incomeRecordsForDate = incomeRecordsToDisplay.filter((record) => record.date === date);
+	const recordsForDate = recordsToDisplay.filter((record) => record.date === date);
 
-	const incomeRecordsLines = incomeRecordsForDate.map((record) => {
+	const recordsLines = recordsForDate.map((record) => {
 		// const categoryRecord = categories.find((category) => category.id === record.categoryId);
 
 		let categoryRecord: any;
@@ -101,22 +107,21 @@ const IncomeExpenseRow = ({ date, incomeRecordsToDisplay, displayRecord }: Incom
 	/* ====================================================
     // Row Header - Date
     ==================================================== */
+
 	let totalAmountForDate = 0;
 
-	for (let i = 0; i < incomeRecordsForDate.length; i++) {
-		totalAmountForDate += incomeRecordsForDate[i].amount;
+	for (let i = 0; i < recordsForDate.length; i++) {
+		totalAmountForDate += Number(recordsForDate[i].amount);
 	}
-
-	const totalAmountForDateString = intToCurrencyString(totalAmountForDate);
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
 				<h1>{dateHeader}</h1>
-				<h1>${totalAmountForDateString}</h1>
+				<h1>${intToCurrencyString(totalAmountForDate)}</h1>
 			</div>
 
-			{incomeRecordsLines}
+			{recordsLines}
 		</div>
 	);
 };
