@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import styles from "./IncomeExpenseDashboard.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import { intToCurrencyString } from "../utilities/utilityFunctions";
 import { Fab, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import dayjs, { Dayjs } from "dayjs";
@@ -12,96 +11,51 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { createIncomeAPI } from "../apis/income";
 import { createExpenseAPI } from "../apis/expenses";
+import IncomeExpenseCreationModal from "./IncomeExpenseCreationModal";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
 
-interface newRecordInputState {
-	recordType: string;
-	recordId: number;
-	categoryName: string;
-	categoryId: number;
-	date: Dayjs;
-	amount: number | undefined;
-	detail: string;
-	detailCharacterCount: number;
-	note: string;
-	noteCharacterCount: number;
+// interface newRecordInputState {
+// 	recordType: string;
+// 	recordId: number;
+// 	categoryName: string;
+// 	categoryId: number;
+// 	date: Dayjs;
+// 	amount: number | undefined;
+// 	detail: string;
+// 	detailCharacterCount: number;
+// 	note: string;
+// 	noteCharacterCount: number;
+// }
+
+// interface newRecordData {
+// 	userId: number;
+// 	date: Dayjs;
+// 	categoryId: number;
+// 	amount: number | undefined;
+// 	detail: string;
+// 	note: string;
+// }
+
+interface IncomeExpenseDashboardProps {
+	totalIncomeString: string;
+	totalExpensesString: string;
 }
 
-interface newRecordData {
-	userId: number;
-	date: Dayjs;
-	categoryId: number;
-	amount: number | undefined;
-	detail: string;
-	note: string;
-}
-
-const IncomeExpenseDashboard = () => {
+const IncomeExpenseDashboard = ({totalIncomeString, totalExpensesString}: IncomeExpenseDashboardProps) => {
 	/* ====================================================
-    // Context
-    ==================================================== */
+	// Context
+	==================================================== */
 
-	const { currentUserId, categories, incomeRecords, expenseRecords, refreshData } = useCurrentUserContext();
-
-	/* ====================================================
-    // Month & year for display
-    ==================================================== */
-
-	// Set year to display to current year by default
-	const [yearToDisplay, setYearToDisplay] = useState(dayjs().year());
-
-	// Set month to display to current month by default
-	const [monthToDisplay, setMonthToDisplay] = useState(dayjs().month() + 1);
-
-	/* ====================================================
-    // Total Income for Displayed Month
-    ==================================================== */
-
-	// Filter income records to those with mth & yr we want to display
-	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
-		const recordYear = dayjs(record.date).get("year");
-		const recordMonth = dayjs(record.date).get("month") + 1;
-		return recordYear === yearToDisplay && recordMonth === monthToDisplay;
-	});
-
-	let totalIncome = 0;
-
-	for (let i = 0; i < incomeRecordsToDisplay.length; i++) {
-		totalIncome += Number(incomeRecordsToDisplay[i].amount);
-	}
-
-	// this will be displayed in HTML
-	const totalIncomeString = intToCurrencyString(totalIncome);
-
-	/* ====================================================
-    // Total Expenses for Displayed Month
-    ==================================================== */
-
-	// Filter expense records to those with mth & yr we want to display
-	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
-		const recordYear = dayjs(record.date).get("year");
-		const recordMonth = dayjs(record.date).get("month") + 1;
-		return recordYear === yearToDisplay && recordMonth === monthToDisplay;
-	});
-
-	let totalExpenses = 0;
-
-	if (expenseRecordsToDisplay.length > 0) {
-		for (let i = 0; i < expenseRecordsToDisplay.length; i++) {
-			totalExpenses += Number(expenseRecordsToDisplay[i].amount);
-		}
-	}
-
-	const totalExpensesString = intToCurrencyString(totalExpenses);
+	const { currentUserId, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Create new category modal
     ==================================================== */
 
-	const [error, setError] = useState<any>();
+	// const [error, setError] = useState<any>();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -115,208 +69,208 @@ const IncomeExpenseDashboard = () => {
 		setOpenModal(false);
 	};
 
-	// Controls inputs
-	const [newRecordInput, setNewRecordInput] = useState<newRecordInputState>({
-		recordType: "",
-		recordId: 0,
-		categoryName: "",
-		categoryId: 0,
-		date: dayjs(),
-		amount: undefined,
-		detail: "",
-		detailCharacterCount: 0,
-		note: "",
-		noteCharacterCount: 0,
-	});
+	// // Controls inputs
+	// const [newRecordInput, setNewRecordInput] = useState<newRecordInputState>({
+	// 	recordType: "",
+	// 	recordId: 0,
+	// 	categoryName: "",
+	// 	categoryId: 0,
+	// 	date: dayjs(),
+	// 	amount: undefined,
+	// 	detail: "",
+	// 	detailCharacterCount: 0,
+	// 	note: "",
+	// 	noteCharacterCount: 0,
+	// });
 
-	const handleRecordType = (e: any) => {
-		setNewRecordInput((prevState) => {
-			return {
-				...prevState,
-				recordType: e.target.value,
-			};
-		});
+	// const handleRecordType = (e: any) => {
+	// 	setNewRecordInput((prevState) => {
+	// 		return {
+	// 			...prevState,
+	// 			recordType: e.target.value,
+	// 		};
+	// 	});
 
-		if (e.target.value === "Income") {
-			setNewRecordInput((prevState) => {
-				return {
-					...prevState,
-					recordId: 1,
-				};
-			});
-		} else if (e.target.value === "Expenses") {
-			setNewRecordInput((prevState) => {
-				return {
-					...prevState,
-					recordId: 2,
-				};
-			});
-		}
-	};
+	// 	if (e.target.value === "Income") {
+	// 		setNewRecordInput((prevState) => {
+	// 			return {
+	// 				...prevState,
+	// 				recordId: 1,
+	// 			};
+	// 		});
+	// 	} else if (e.target.value === "Expenses") {
+	// 		setNewRecordInput((prevState) => {
+	// 			return {
+	// 				...prevState,
+	// 				recordId: 2,
+	// 			};
+	// 		});
+	// 	}
+	// };
 
-	const handleCategoryName = (e: any) => {
-		let categoryId: number;
+	// const handleCategoryName = (e: any) => {
+	// 	let categoryId: number;
 
-		for (let i = 0; i < categories.length; i++) {
-			if (categories[i].categoryName === e.target.value) {
-				categoryId = categories[i].id;
-				break;
-			}
-			continue;
-		}
+	// 	for (let i = 0; i < categories.length; i++) {
+	// 		if (categories[i].categoryName === e.target.value) {
+	// 			categoryId = categories[i].id;
+	// 			break;
+	// 		}
+	// 		continue;
+	// 	}
 
-		setNewRecordInput((prevState) => {
-			return {
-				...prevState,
-				categoryName: e.target.value,
-				categoryId: categoryId,
-			};
-		});
-	};
+	// 	setNewRecordInput((prevState) => {
+	// 		return {
+	// 			...prevState,
+	// 			categoryName: e.target.value,
+	// 			categoryId: categoryId,
+	// 		};
+	// 	});
+	// };
 
-	const handleDate = (e: any) => {
-		setNewRecordInput((prevState) => {
-			return {
-				...prevState,
-				date: e.target.value,
-			};
-		});
-	};
+	// const handleDate = (e: any) => {
+	// 	setNewRecordInput((prevState) => {
+	// 		return {
+	// 			...prevState,
+	// 			date: e.target.value,
+	// 		};
+	// 	});
+	// };
 
-	const handleAmount = (e: any) => {
-		setNewRecordInput((prevState) => {
-			return {
-				...prevState,
-				amount: e.target.value,
-			};
-		});
-	};
+	// const handleAmount = (e: any) => {
+	// 	setNewRecordInput((prevState) => {
+	// 		return {
+	// 			...prevState,
+	// 			amount: e.target.value,
+	// 		};
+	// 	});
+	// };
 
-	const handleDetail = (e: any) => {
-		if (e.target.value.length <= 50) {
-			setNewRecordInput((prevState) => {
-				return {
-					...prevState,
-					detail: e.target.value,
-					detailCharacterCount: e.target.value.length,
-				};
-			});
-		} else {
-			window.alert("You have exceeded the character limit.");
-		}
-	};
+	// const handleDetail = (e: any) => {
+	// 	if (e.target.value.length <= 50) {
+	// 		setNewRecordInput((prevState) => {
+	// 			return {
+	// 				...prevState,
+	// 				detail: e.target.value,
+	// 				detailCharacterCount: e.target.value.length,
+	// 			};
+	// 		});
+	// 	} else {
+	// 		window.alert("You have exceeded the character limit.");
+	// 	}
+	// };
 
-	const handleNote = (e: any) => {
-		if (e.target.value.length <= 200) {
-			setNewRecordInput((prevState) => {
-				return {
-					...prevState,
-					note: e.target.value,
-					noteCharacterCount: e.target.value.length,
-				};
-			});
-		} else {
-			window.alert("You have exceeded the character limit.");
-		}
-	};
+	// const handleNote = (e: any) => {
+	// 	if (e.target.value.length <= 200) {
+	// 		setNewRecordInput((prevState) => {
+	// 			return {
+	// 				...prevState,
+	// 				note: e.target.value,
+	// 				noteCharacterCount: e.target.value.length,
+	// 			};
+	// 		});
+	// 	} else {
+	// 		window.alert("You have exceeded the character limit.");
+	// 	}
+	// };
 
-	// Runs on click of create button
-	const handleCreateRecord = async () => {
-		let data: newRecordData = {
-			userId: currentUserId,
-			date: newRecordInput.date,
-			categoryId: newRecordInput.categoryId,
-			amount: newRecordInput.amount,
-			detail: newRecordInput.detail,
-			note: newRecordInput.note,
-		};
+	// // Runs on click of create button
+	// const handleCreateRecord = async () => {
+	// 	let data: newRecordData = {
+	// 		userId: currentUserId,
+	// 		date: newRecordInput.date,
+	// 		categoryId: newRecordInput.categoryId,
+	// 		amount: newRecordInput.amount,
+	// 		detail: newRecordInput.detail,
+	// 		note: newRecordInput.note,
+	// 	};
 
-		if (data.userId || data.date || data.categoryId || data.amount) {
-			if (newRecordInput.recordType === "Income") {
-				try {
-					const response = await createIncomeAPI(data);
+	// 	if (data.userId || data.date || data.categoryId || data.amount) {
+	// 		if (newRecordInput.recordType === "Income") {
+	// 			try {
+	// 				const response = await createIncomeAPI(data);
 
-					// Refreshes the data on page
-					refreshData();
+	// 				// Refreshes the data on page
+	// 				refreshData();
 
-					// Close modal upon successful update
-					handleClose();
+	// 				// Close modal upon successful update
+	// 				handleClose();
 
-					// Clear submitted info from state after creation
-					setNewRecordInput({
-						recordType: "",
-						recordId: 0,
-						categoryName: "",
-						categoryId: 0,
-						date: dayjs(),
-						amount: undefined,
-						detail: "",
-						detailCharacterCount: 0,
-						note: "",
-						noteCharacterCount: 0,
-					});
-				} catch (err) {
-					if (typeof err === "string") {
-						setError(err);
-					} else if (err instanceof Error) {
-						setError(err.message);
-					}
-				}
-			} else if (newRecordInput.recordType === "Expenses") {
-				try {
-					const response = await createExpenseAPI(data);
+	// 				// Clear submitted info from state after creation
+	// 				setNewRecordInput({
+	// 					recordType: "",
+	// 					recordId: 0,
+	// 					categoryName: "",
+	// 					categoryId: 0,
+	// 					date: dayjs(),
+	// 					amount: undefined,
+	// 					detail: "",
+	// 					detailCharacterCount: 0,
+	// 					note: "",
+	// 					noteCharacterCount: 0,
+	// 				});
+	// 			} catch (err) {
+	// 				if (typeof err === "string") {
+	// 					setError(err);
+	// 				} else if (err instanceof Error) {
+	// 					setError(err.message);
+	// 				}
+	// 			}
+	// 		} else if (newRecordInput.recordType === "Expenses") {
+	// 			try {
+	// 				const response = await createExpenseAPI(data);
 
-					// Refreshes the data on page
-					refreshData();
+	// 				// Refreshes the data on page
+	// 				refreshData();
 
-					// Close modal upon successful update
-					handleClose();
+	// 				// Close modal upon successful update
+	// 				handleClose();
 
-					// Clear submitted info from state after creation
-					setNewRecordInput({
-						recordType: "",
-						recordId: 0,
-						categoryName: "",
-						categoryId: 0,
-						date: dayjs(),
-						amount: undefined,
-						detail: "",
-						detailCharacterCount: 0,
-						note: "",
-						noteCharacterCount: 0,
-					});
-				} catch (err) {
-					if (typeof err === "string") {
-						setError(err);
-					} else if (err instanceof Error) {
-						setError(err.message);
-					}
-				}
-			}
-		}
-	};
+	// 				// Clear submitted info from state after creation
+	// 				setNewRecordInput({
+	// 					recordType: "",
+	// 					recordId: 0,
+	// 					categoryName: "",
+	// 					categoryId: 0,
+	// 					date: dayjs(),
+	// 					amount: undefined,
+	// 					detail: "",
+	// 					detailCharacterCount: 0,
+	// 					note: "",
+	// 					noteCharacterCount: 0,
+	// 				});
+	// 			} catch (err) {
+	// 				if (typeof err === "string") {
+	// 					setError(err);
+	// 				} else if (err instanceof Error) {
+	// 					setError(err.message);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// };
 
 	/* ====================================================
     // Filters the category names to display for selection in modal based on record type selected
     ==================================================== */
 
-	const categoryNamesForSelection = categories.filter((category) => category.recordId === newRecordInput.recordId);
+	// const categoryNamesForSelection = categories.filter((category) => category.recordId === newRecordInput.recordId);
 
-	let categoryNamesToDisplay;
+	// let categoryNamesToDisplay;
 
-	if (categoryNamesForSelection.length > 0) {
-		categoryNamesToDisplay = categoryNamesForSelection.map((category) => (
-			<MenuItem value={category.categoryName} key={`categoryId${category.id}`}>
-				{category.categoryName}
-			</MenuItem>
-		));
-	} else {
-		categoryNamesToDisplay = (
-			<MenuItem value="" disabled>
-				Please select a record type first
-			</MenuItem>
-		);
-	}
+	// if (categoryNamesForSelection.length > 0) {
+	// 	categoryNamesToDisplay = categoryNamesForSelection.map((category) => (
+	// 		<MenuItem value={category.categoryName} key={`categoryId${category.id}`}>
+	// 			{category.categoryName}
+	// 		</MenuItem>
+	// 	));
+	// } else {
+	// 	categoryNamesToDisplay = (
+	// 		<MenuItem value="" disabled>
+	// 			Please select a record type first
+	// 		</MenuItem>
+	// 	);
+	// }
 
 	return (
 		<div className={styles.container}>
@@ -341,41 +295,42 @@ const IncomeExpenseDashboard = () => {
 			<Fab sx={{ margin: "0 48.8vw", bgcolor: "#66fcf1" }} onClick={handleClickOpen}>
 				<AddIcon />
 			</Fab>
-			{/* Form dialog for new record - opens on click of new record button */}
-			<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
+            {/* Form dialog for new record - opens on click of new record button */}
+            <IncomeExpenseCreationModal openModal={openModal} handleClose={handleClose} />
+			{/* <Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
 				<DialogTitle>Create Category</DialogTitle>
 				<DialogContent>
 					<Box component="form" sx={{ marginTop: "1rem" }}>
-						<Stack spacing={3}>
+						<Stack spacing={3}> */}
 							{/* Dropdown for record type */}
-							<FormControl>
+							{/* <FormControl>
 								<InputLabel htmlFor="income-or-expense">Record Type</InputLabel>
 								<Select value={newRecordInput.recordType} onChange={handleRecordType} input={<OutlinedInput label="Record Type" id="income-or-expense" />}>
 									<MenuItem value={"Income"}>Income</MenuItem>
 									<MenuItem value={"Expenses"}>Expenses</MenuItem>
 								</Select>
-							</FormControl>
+							</FormControl> */}
 							{/* Dropdown for category name */}
-							<FormControl>
+							{/* <FormControl>
 								<InputLabel htmlFor="categoryName">Category Name</InputLabel>
 								<Select value={newRecordInput.categoryName} onChange={handleCategoryName} input={<OutlinedInput label="Category Name" id="categoryName" />}>
 									{categoryNamesToDisplay}
 								</Select>
-							</FormControl>
+							</FormControl> */}
 							{/* Date picker */}
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
+							{/* <LocalizationProvider dateAdapter={AdapterDayjs}>
 								<DesktopDatePicker label="date" inputFormat="DD/MM/YYYY" value={newRecordInput.date} onChange={handleDate} renderInput={(params) => <TextField {...params} />} />
-							</LocalizationProvider>
+							</LocalizationProvider> */}
 							{/* Amount text field */}
-							<FormControl>
+							{/* <FormControl>
 								<InputLabel htmlFor="amount">Amount</InputLabel>
 								<OutlinedInput id="amount" label="Amount" value={newRecordInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
-							</FormControl>
+							</FormControl> */}
 							{/* Detail text field */}
-							<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
-							<p>{newRecordInput.detailCharacterCount}/50</p>
+							{/* <TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
+							<p>{newRecordInput.detailCharacterCount}/50</p> */}
 							{/* Note text field */}
-							<TextField label="Note" multiline minRows={5} value={newRecordInput.note} onChange={handleNote} />
+							{/* <TextField label="Note" multiline minRows={5} value={newRecordInput.note} onChange={handleNote} />
 							<p>{newRecordInput.noteCharacterCount}/200</p>
 						</Stack>
 					</Box>
@@ -385,7 +340,7 @@ const IncomeExpenseDashboard = () => {
 						Create
 					</Button>
 				</DialogActions>
-			</Dialog>
+			</Dialog> */}
 		</div>
 	);
 };
