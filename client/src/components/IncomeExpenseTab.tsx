@@ -8,10 +8,11 @@ import styles from "./IncomeExpenseTab.module.css";
 ==================================================== */
 
 interface IncomeExpenseTabProps {
+	displayRecord: string;
 	changeDisplayRecord: (type: string) => void;
 }
 
-const IncomeExpenseTab = ({ changeDisplayRecord }: IncomeExpenseTabProps) => {
+const IncomeExpenseTab = ({ displayRecord, changeDisplayRecord }: IncomeExpenseTabProps) => {
 	const handleIncomeClick = () => {
 		changeDisplayRecord("Income");
 	};
@@ -22,10 +23,10 @@ const IncomeExpenseTab = ({ changeDisplayRecord }: IncomeExpenseTabProps) => {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.tab} onClick={handleIncomeClick}>
+			<div className={displayRecord === "Income" ? styles.tabActive : styles.tab} onClick={handleIncomeClick}>
 				<h1>Income</h1>
 			</div>
-			<div className={styles.tab} onClick={handleExpensesClick}>
+			<div className={displayRecord === "Expenses" ? styles.tabActive : styles.tab} onClick={handleExpensesClick}>
 				<h1>Expenses</h1>
 			</div>
 		</div>

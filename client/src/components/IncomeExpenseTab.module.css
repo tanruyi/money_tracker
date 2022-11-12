@@ -11,7 +11,9 @@
 	background-color: #1f2833;
 }
 
-.tab {
+.tab,
+.tab:hover,
+.tabActive {
 	width: 50%;
 	text-align: center;
 	background-color: #45a29e;
@@ -20,10 +22,13 @@
 	color: #0b0c10;
 }
 
+.tab {
+	background-color: #45a29e;
+}
+
 .tab:hover,
-.tab:active {
+.tabActive {
 	background-color: #66fcf1;
-	border-radius: 2rem 2rem 0 0;
 }
 
 .tab h1 {
