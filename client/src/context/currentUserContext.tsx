@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { getAllCategoriesAPI } from "../apis/categories";
 import { getAllIncomeAPI } from "../apis/income";
+import { getAllExpensesAPI } from "../apis/expenses";
 
 /* ====================================================
 // Type Declaration
@@ -31,6 +32,17 @@ interface Income {
 	note: string;
 }
 
+// For state expenses
+interface Expense {
+	id: number;
+	userId: number;
+	date: Date;
+	categoryId: number;
+	amount: number;
+	detail: string;
+	note: string;
+}
+
 interface CurrentUserContextProviderProps {
 	children: ReactNode;
 }
@@ -41,6 +53,7 @@ interface CurrentUserContextType {
 	refreshData: () => void;
 	categories: Category[];
 	incomeRecords: Income[];
+	expenseRecords: Expense[];
 }
 
 /* ====================================================
@@ -82,7 +95,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	const [incomeRecords, setIncomeRecords] = useState<Income[]>([]);
 
-	const [expenseRecords, setExpenseRecords] = useState([]);
+	const [expenseRecords, setExpenseRecords] = useState<Expense[]>([]);
 
 	const [budgets, setBudgets] = useState([]);
 
@@ -95,6 +108,10 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		// get income data
 		const allIncomeResponse = getAllIncomeAPI(currentUserId);
 		setIncomeRecords((await allIncomeResponse).data);
+
+		// get expenses data
+		const allExpensesResponse = getAllExpensesAPI(currentUserId);
+		setExpenseRecords((await allExpensesResponse).data);
 
 		console.log("getAllUserData");
 	}
@@ -111,5 +128,5 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		}
 	}, [currentUserId, refreshCurrentUserData]);
 
-	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories, incomeRecords }}>{children}</CurrentUserContext.Provider>;
+	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories, incomeRecords, expenseRecords }}>{children}</CurrentUserContext.Provider>;
 }

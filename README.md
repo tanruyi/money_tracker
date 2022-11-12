@@ -15,6 +15,8 @@ Money Tracker
     -   React with TypeScript
     -   Material UI
     -   Axios
+    -   Dayjs
+    -   React Router
 
 -   Back-end:
     -   Node.js
