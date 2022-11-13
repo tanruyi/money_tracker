@@ -26,6 +26,7 @@ model RecordTypes {
     id         Int          @id @default(autoincrement())
     type       String       @unique @db.VarChar(10)
     Categories Categories[]
+    Budget     Budget[]
 }
 
 model Categories {
@@ -65,12 +66,6 @@ model Expenses {
     note       String?     @db.VarChar(200)
 }
 
-model PeriodTypes {
-    id     Int      @id @default(autoincrement())
-    type   String   @db.VarChar(20)
-    Budget Budget[]
-}
-
 model Budget {
     id         Int         @id @default(autoincrement())
     userId     Int
@@ -78,6 +73,8 @@ model Budget {
     categoryId Int?
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
-    periodId   Int
-    periodType PeriodTypes @relation(fields: [periodId], references: [id])
+    recordId   Int
+    recordType RecordTypes @relation(fields: [recordId], references: [id])
+    startMonth DateTime    @db.Date
+    endMonth   DateTime    @db.Date
 }

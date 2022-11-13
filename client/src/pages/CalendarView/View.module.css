@@ -1,5 +1,41 @@
 /** @format */
 
+.tabContainer,
+.tab {
+	height: 5vh;
+}
+
+.tabContainer {
+	display: flex;
+	width: 100%;
+	background-color: #1f2833;
+}
+
+.tab,
+.tab:hover,
+.tabActive {
+	width: 50%;
+	text-align: center;
+	background-color: #45a29e;
+	border-radius: 2rem 2rem 0 0;
+	cursor: pointer;
+	color: #0b0c10;
+}
+
+.tab {
+	background-color: #45a29e;
+}
+
+.tab:hover,
+.tabActive {
+	background-color: #66fcf1;
+}
+
+.tab h1 {
+	line-height: 5vh;
+	margin: 0;
+}
+
 .rowsContainer {
 	background-color: #c5c6c7;
 	width: 100%;

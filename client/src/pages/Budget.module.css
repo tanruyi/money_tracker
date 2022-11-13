@@ -1,11 +1,11 @@
 /** @format */
 
-.container,
+.tabContainer,
 .tab {
 	height: 5vh;
 }
 
-.container {
+.tabContainer {
 	display: flex;
 	width: 100%;
 	background-color: #1f2833;
@@ -34,4 +34,18 @@
 .tab h1 {
 	line-height: 5vh;
 	margin: 0;
+}
+
+.budgetRowsContainer {
+	background-color: #c5c6c7;
+	width: 100%;
+	min-height: 47vh;
+	padding: 6vh;
+	display: flex;
+    justify-content: space-between;
+}
+
+.budgetRowsColumn {
+	background-color: white;
+	width: 40vw;
 }

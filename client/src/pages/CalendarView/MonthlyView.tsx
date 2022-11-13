@@ -6,18 +6,17 @@ import { useCurrentUserContext } from "../../context/currentUserContext";
 import dayjs from "dayjs";
 import { intToCurrencyString } from "../../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../../components/IncomeExpenseDashboard";
-import IncomeExpenseTab from "../../components/IncomeExpenseTab";
 import IncomeExpenseRow from "../../components/IncomeExpenseRow";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
 
-interface DailyViewProps {
+interface MonthlyViewProps {
 	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
 }
 
-const MonthlyView = ({ currentViewPage }: DailyViewProps) => {
+const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -28,10 +27,6 @@ const MonthlyView = ({ currentViewPage }: DailyViewProps) => {
     // Income or expense to be displayed
     ==================================================== */
 	const [displayRecord, setDisplayRecord] = useState<"Income" | "Expenses">("Income");
-
-	const changeDisplayRecord = (type: "Income" | "Expenses") => {
-		setDisplayRecord(type);
-	};
 
 	/* ====================================================
     // Date for display
@@ -132,8 +127,20 @@ const MonthlyView = ({ currentViewPage }: DailyViewProps) => {
 
 	const expenseRecordRows = datesWithExpenseRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
 
+	/* ====================================================
+    // Handle Clicks on Income or Expense Tabs
+    ==================================================== */
+	const handleIncomeClick = () => {
+		setDisplayRecord("Income");
+	};
+
+	const handleExpensesClick = () => {
+		setDisplayRecord("Expenses");
+	};
+
 	return (
 		<div>
+			{/* Dashboard */}
 			<IncomeExpenseDashboard
 				currentViewPage={currentViewPage}
 				dateToDisplay={dateToDisplay}
@@ -142,7 +149,17 @@ const MonthlyView = ({ currentViewPage }: DailyViewProps) => {
 				handleBackArrow={handleBackArrow}
 				handleForwardArrow={handleForwardArrow}
 			/>
-			<IncomeExpenseTab displayRecord={displayRecord} changeDisplayRecord={changeDisplayRecord} />
+			{/* Income or Expense Tab */}
+			<div className={styles.tabContainer}>
+				<div className={displayRecord === "Income" ? styles.tabActive : styles.tab} onClick={handleIncomeClick}>
+					<h1>Income</h1>
+				</div>
+				<div className={displayRecord === "Expenses" ? styles.tabActive : styles.tab} onClick={handleExpensesClick}>
+					<h1>Expenses</h1>
+				</div>
+			</div>
+			{/* Income or Expense Records */}
+
 			<div className={styles.rowsContainer}>{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}</div>
 		</div>
 	);

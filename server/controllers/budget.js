@@ -24,7 +24,9 @@ const createBudget = async (req, res) => {
 				userId: req.body.userId,
 				categoryId: req.body.categoryId,
 				amount: req.body.amount,
-				periodId: req.body.periodId,
+				recordId: req.body.recordId,
+				startMonth: req.body.startMonth,
+				endMonth: req.body.endMonth,
 			},
 		});
 
@@ -69,7 +71,9 @@ const updateBudgetRecord = async (req, res) => {
 			data: {
 				categoryId: req.body.categoryId,
 				amount: req.body.amount,
-				periodId: req.body.periodId,
+				recordId: req.body.recordId,
+				startMonth: req.body.startMonth,
+				endMonth: req.body.endMonth,
 			},
 		});
 
