@@ -6,22 +6,21 @@ import icon from "../assets/cocoa.png";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import dayjs from "dayjs";
-import { Income } from "../context/currentUserContext";
+import { Budget } from "../context/currentUserContext";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
-import IncomeExpenseEditModal from "./IncomeExpenseEditModal";
+import BudgetEditModal from "./BudgetEditModal";
 import { useCurrentUserContext } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
 
-interface IncomeExpenseRowProps {
-	date: any;
-	recordsToDisplay: Income[];
-	displayRecord: "Income" | "Expenses";
+interface BudgetRowProps {
+	record: Budget;
+	type: string;
 }
 
-const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpenseRowProps) => {
+const BudgetRow = ({ record, type }: BudgetRowProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -29,23 +28,7 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	const { categories } = useCurrentUserContext();
 
 	/* ====================================================
-    // Row Header - Date
-    ==================================================== */
-
-	// const [refreshPage, setRefreshPage] = useState(0);
-
-	// const handleRefresh = () => {
-	// 	setRefreshPage((prevState) => (prevState += 1));
-	// };
-
-	/* ====================================================
-    // Row Header - Date
-    ==================================================== */
-
-	const dateHeader = dayjs(date).format("DD MMM YYYY");
-
-	/* ====================================================
-    // Handle category creation modal
+    // Handle budget creation modal
     ==================================================== */
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
@@ -61,84 +44,55 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	};
 
 	/* ====================================================
-    // Row Expense Line HTML Component
+    // Text to display in row
     ==================================================== */
 
-	// Filter records to those that match the date to be displayed
-	const recordsForDate = recordsToDisplay.filter((record) => record.date === date);
+	// Get the category name for categoryId given
+	let categoryRecord: any;
 
-	// Create HTML component for each line of record
-	const recordsLines = recordsForDate.map((record) => {
-		// Get the category name for categoryId given
-		let categoryRecord: any;
-
-		for (let i = 0; i < categories.length; i++) {
-			if (categories[i].id === record.categoryId) {
-				categoryRecord = categories[i];
-				break;
-			}
-			continue;
+	for (let i = 0; i < categories.length; i++) {
+		if (categories[i].id === record.categoryId) {
+			categoryRecord = categories[i];
+			break;
 		}
-
-		const categoryName = categoryRecord.categoryName;
-
-		// This is the amount to display, will show "-" sign if expenses
-		let amountToDisplay = `$${intToCurrencyString(record.amount)}`;
-
-		if (displayRecord === "Expenses") {
-			amountToDisplay = `-$${intToCurrencyString(record.amount)}`;
-		}
-
-		return (
-			<div className={styles.rowContainer}>
-				<div className={styles.rowIcon}>
-					<img src={icon} alt="icon" />
-				</div>
-				<div className={styles.rowInfo}>
-					<h2>{record.detail}</h2>
-					<h3>{categoryName}</h3>
-				</div>
-				<div className={styles.rowAmount}>
-					<h2>{amountToDisplay}</h2>
-				</div>
-				<div className={styles.rowButton}>
-					<IconButton onClick={handleClickOpen}>
-						<EditIcon fontSize="large" />
-					</IconButton>
-					{/* Form dialog for edit of record - opens on click of edit button */}
-					<IncomeExpenseEditModal openModal={openModal} handleClose={handleClose} record={record} categoryRecord={categoryRecord} displayRecord={displayRecord} />
-				</div>
-			</div>
-		);
-	});
-
-	/* ====================================================
-    // Row Header - Date
-    ==================================================== */
-
-	// This is the total amount to display, will show "-" sign if expenses
-	let totalAmountForDate = 0;
-
-	for (let i = 0; i < recordsForDate.length; i++) {
-		totalAmountForDate += Number(recordsForDate[i].amount);
+		continue;
 	}
 
-	let totalAmountForDateString = `$${intToCurrencyString(totalAmountForDate)}`;
+	const categoryName = categoryRecord.categoryName;
 
-	if (displayRecord === "Expenses") {
-		totalAmountForDateString = `-$${intToCurrencyString(totalAmountForDate)}`;
+	// This is the amount to display, will show "-" sign if expenses
+	let amountToDisplay = `$${intToCurrencyString(record.amount)}`;
+
+	if (type === "Expenses") {
+		amountToDisplay = `-$${intToCurrencyString(record.amount)}`;
 	}
+
+	const startMonthToDisplay = dayjs(record.startMonth).format("MMM YYYY");
+	const endMonthToDisplay = dayjs(record.endMonth).format("MMM YYYY");
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.header}>
-				<h1>{dateHeader}</h1>
-				<h1>{totalAmountForDateString}</h1>
+		<div className={styles.rowContainer}>
+			<div className={styles.rowIcon}>
+				<img src={icon} alt="icon" />
 			</div>
-
-			{recordsLines}
+			<div className={styles.rowInfo}>
+				<h2>{categoryName}</h2>
+				<h3>
+					{startMonthToDisplay} - {endMonthToDisplay}
+				</h3>
+			</div>
+			<div className={styles.rowAmount}>
+				<h2>{amountToDisplay}</h2>
+			</div>
+			<div className={styles.rowButton}>
+				<IconButton onClick={handleClickOpen}>
+					<EditIcon fontSize="large" />
+				</IconButton>
+				{/* Form dialog for edit of record - opens on click of edit button */}
+				<BudgetEditModal openModal={openModal} handleClose={handleClose} record={record} categoryRecord={categoryRecord} type={type} />
+			</div>
 		</div>
 	);
 };
 
-export default IncomeExpenseRow;
+export default BudgetRow;

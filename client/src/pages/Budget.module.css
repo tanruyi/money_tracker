@@ -49,3 +49,8 @@
 	background-color: white;
 	width: 40vw;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}

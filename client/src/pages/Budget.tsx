@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import BudgetDashboard from "../components/BudgetDashboard";
-import IncomeExpenseRow from "../components/IncomeExpenseRow";
+import BudgetRow from "../components/BudgetRow";
 dayjs.extend(isBetween);
 
 const Budget = () => {
@@ -67,25 +67,13 @@ const Budget = () => {
 	}
 
 	// this will be displayed in HTML
-	const totalIncomeString = intToCurrencyString(totalIncome);
-
-	/* ====================================================
-    // List of Dates with Income Records for Displayed Period
-    ==================================================== */
-
-	const datesWithIncomeRecordsSet = new Set();
-
-	for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
-		datesWithIncomeRecordsSet.add(budgetIncomeRecordsToDisplay[i].startMonth);
-	}
-
-	const datesWithIncomeRecords = Array.from(datesWithIncomeRecordsSet);
+	const totalIncomeString = `$${intToCurrencyString(totalIncome)}`;
 
 	/* ====================================================
     // Income Rows to Display
     ==================================================== */
 
-	// const incomeRecordRows = datesWithIncomeRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
+	const budgetIncomeRows = budgetIncomeRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Income"} />);
 
 	// /* ====================================================
 	// // Filtered Expense Records to Display
@@ -161,17 +149,17 @@ const Budget = () => {
 					<h1>YTD</h1>
 				</div>
 			</div>
-            {/* Budget Records */}
-            <div className={styles.budgetRowsContainer}>
-                <div className={styles.budgetRowsColumn}>
-
-                </div>
-                <div className={styles.budgetRowsColumn}>
-
-                </div>
-            </div>
-
-			{/* {incomeRecordRows} */}
+			{/* Budget Records */}
+			<div className={styles.budgetRowsContainer}>
+				<div className={styles.budgetRowsColumn}>
+					<div className={styles.header}>
+						<h1>Income</h1>
+						<h1>{totalIncomeString}</h1>
+					</div>
+					{budgetIncomeRows}
+				</div>
+				<div className={styles.budgetRowsColumn}></div>
+			</div>
 		</div>
 	);
 };

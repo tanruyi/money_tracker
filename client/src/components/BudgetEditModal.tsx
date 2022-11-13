@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useCurrentUserContext } from "../context/currentUserContext";
-import { createBudgetAPI } from "../apis/budget";
+import { Budget, useCurrentUserContext } from "../context/currentUserContext";
+import { updateBudgetAPI, deleteBudgetAPI } from "../apis/budget";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { Income, Category } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -24,7 +25,6 @@ interface newBudgetInputState {
 }
 
 interface newBudgetData {
-	userId: number;
 	categoryId: number;
 	amount: number | undefined;
 	recordId: number;
@@ -32,12 +32,15 @@ interface newBudgetData {
 	endMonth: Dayjs;
 }
 
-interface BudgetCreationModalProps {
+interface BudgetEditModalProps {
 	openModal: boolean;
 	handleClose: () => void;
+	record: Budget;
+	categoryRecord: Category;
+	type: string;
 }
 
-const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProps) => {
+const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type }: BudgetEditModalProps) => {
 	/* ====================================================
 	// Context
 	==================================================== */
@@ -45,20 +48,20 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 	const { currentUserId, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Create new category modal
+    // Edit record modal
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
 	// Controls inputs
 	const [newBudgetInput, setNewBudgetInput] = useState<newBudgetInputState>({
-		recordType: "",
-		recordId: 0,
-		categoryName: "",
-		categoryId: 0,
-		startMonth: dayjs(),
-		endMonth: dayjs(),
-		amount: "",
+		recordType: type,
+		recordId: categoryRecord.recordId,
+		categoryName: categoryRecord.categoryName,
+		categoryId: record.categoryId,
+		startMonth: record.startMonth,
+		endMonth: record.endMonth,
+		amount: String(record.amount),
 	});
 
 	const handleRecordType = (e: any) => {
@@ -133,10 +136,11 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 		});
 	};
 
-	// Runs on click of create button
-	const handleCreateRecord = async () => {
+	// Runs on click of update button
+	const handleUpdateBudget = async () => {
+		const id = record.id;
+
 		let data: newBudgetData = {
-			userId: currentUserId,
 			categoryId: newBudgetInput.categoryId,
 			amount: Number(newBudgetInput.amount),
 			recordId: newBudgetInput.recordId,
@@ -144,32 +148,45 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 			endMonth: newBudgetInput.endMonth,
 		};
 
-		if (data.userId || data.categoryId || data.amount || data.recordId || data.startMonth || data.endMonth) {
+		if (data.categoryId || data.amount || data.recordId || data.startMonth || data.endMonth) {
 			try {
-				const response = await createBudgetAPI(data);
+				const response = await updateBudgetAPI(id, data);
 
 				// Refreshes the data on page
 				refreshData();
 
 				// Close modal upon successful update
 				handleClose();
-
-				// Clear submitted info from state after creation
-				setNewBudgetInput({
-					recordType: "",
-					recordId: 0,
-					categoryName: "",
-					categoryId: 0,
-					startMonth: dayjs(),
-					endMonth: dayjs(),
-					amount: "",
-				});
 			} catch (err) {
 				if (typeof err === "string") {
 					setError(err);
 				} else if (err instanceof Error) {
 					setError(err.message);
 				}
+			}
+		}
+	};
+
+	const handleDeleteBudget = async () => {
+		const requestBody = {
+			data: {
+				id: record.id,
+			},
+		};
+
+		try {
+			const response = await deleteBudgetAPI(requestBody);
+
+			// Refreshes the data on page
+			refreshData();
+
+			// Close modal upon successful update
+			handleClose();
+		} catch (err) {
+			if (typeof err === "string") {
+				setError(err);
+			} else if (err instanceof Error) {
+				setError(err.message);
 			}
 		}
 	};
@@ -221,17 +238,17 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DesktopDatePicker
 								label="Start Month"
-								views={["month", "year"]}
+								inputFormat="DD/MM/YYYY"
 								value={newBudgetInput.startMonth}
 								onChange={handleStartMonth}
-								renderInput={(params) => <TextField {...params} helperText={null} />}
+								renderInput={(params) => <TextField {...params} />}
 							/>
 							<DesktopDatePicker
 								label="End Month"
-								views={["month", "year"]}
+								inputFormat="DD/MM/YYYY"
 								value={newBudgetInput.endMonth}
 								onChange={handleEndMonth}
-								renderInput={(params) => <TextField {...params} helperText={null} />}
+								renderInput={(params) => <TextField {...params} />}
 							/>
 						</LocalizationProvider>
 						{/* Amount text field */}
@@ -243,12 +260,15 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleCreateRecord}>
-					Create
+				<Button variant="contained" size="large" onClick={handleUpdateBudget}>
+					Update
+				</Button>
+				<Button variant="contained" size="large" onClick={handleDeleteBudget}>
+					Delete
 				</Button>
 			</DialogActions>
 		</Dialog>
 	);
 };
 
-export default BudgetCreationModal;
+export default BudgetEditModal;

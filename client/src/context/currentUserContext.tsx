@@ -46,7 +46,7 @@ interface Expense {
 }
 
 // For state budget
-interface Budget {
+export interface Budget {
 	id: number;
 	userId: number;
 	categoryId: number;
