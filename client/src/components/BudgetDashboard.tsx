@@ -1,15 +1,17 @@
 /** @format */
 
 import React, { useState } from "react";
-import styles from "./IncomeExpenseDashboard.module.css";
+import styles from "./BudgetDashboard.module.css";
 import { Fab, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BudgetCreationModal from "./BudgetCreationModal";
 import dayjs, { Dayjs } from "dayjs";
-import WeekofYear from "dayjs/plugin/weekOfYear"
-dayjs.extend(WeekofYear)
+import WeekofYear from "dayjs/plugin/weekOfYear";
+import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+
+dayjs.extend(WeekofYear);
 
 /* ====================================================
 // Type Declaration
@@ -20,9 +22,12 @@ interface BudgetDashboardProps {
 	dateToDisplay: Dayjs;
 	handleBackArrow: () => void;
 	handleForwardArrow: () => void;
+	totalIncome: number;
+	totalExpenses: number;
+	// data: { [key: string]: string | number }[];
 }
 
-const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, handleForwardArrow }: BudgetDashboardProps) => {
+const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, handleForwardArrow, totalIncome, totalExpenses }: BudgetDashboardProps) => {
 	/* ====================================================
     // Handle category creation modal
     ==================================================== */
@@ -53,6 +58,22 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 		periodType = "year";
 	}
 
+	/* ====================================================
+    // Bar chart
+    ==================================================== */
+	const data = [
+		{
+			Type: "Income",
+			Amount: totalIncome,
+		},
+		{
+			Type: "Expenses",
+			Amount: totalExpenses,
+		},
+	];
+
+	console.log(data);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
@@ -61,20 +82,17 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 				</IconButton>
 				<div className={styles.dashboardHeader}>
 					<h1>{dateHeader}</h1>
-                    <div className={styles.dashboardInfo}>
+					<div className={styles.dashboardInfo}>
                         {/* TODO: to edit below code when doing chart */}
-						{/* Split the dashboard info to 2 columns displayed side by side */}
-						{/* <div className={styles.dashboardInfoColumn}>
-							<h3>Expenses for the {periodType}: </h3> */}
-							{/* <h1>${totalExpensesString}</h1> */}
-							{/* <h4>You are over-budget!</h4>
-						</div>
-						<div className={styles.dashboardInfoColumn}>
-							<h3>
-								Income for the {periodType}: ${totalIncomeString}
-							</h3>
-							<h3>Budget left: $(-21.46)</h3>
-						</div> */}
+                        <ResponsiveContainer width="100%" height="80%">
+                            <BarChart data={data} width={400} height={200} margin={{top: 10, right: 5, bottom: 5, left: 5}}>
+                                <XAxis dataKey="Type" />
+                                <Tooltip />
+                                <Bar dataKey="Amount">
+                                    <LabelList dataKey="Amount" position="top" />
+                                </Bar>
+                            </BarChart>
+                        </ResponsiveContainer>
 					</div>
 				</div>
 				<IconButton onClick={handleForwardArrow}>

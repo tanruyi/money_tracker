@@ -15,7 +15,7 @@ const Budget = () => {
     // Context
     ==================================================== */
 
-	const { budgets } = useCurrentUserContext();
+	const { categories, budgets } = useCurrentUserContext();
 
 	/* ====================================================
     // Current period to be displayed to be displayed
@@ -51,10 +51,43 @@ const Budget = () => {
 	// Filter for income records
 	const budgetIncomeRecords = budgets.filter((record) => record.recordId === 1);
 
-	// Filter budget income records to those within period we want to display
-	const budgetIncomeRecordsToDisplay = budgetIncomeRecords.filter((record) => {
+	// Filter budget income records to those within period we want to display, start mth & end mth inclusive
+	let budgetIncomeRecordsToDisplay = budgetIncomeRecords.filter((record) => {
 		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
 	});
+
+	/* ====================================================
+    // Total Budget Income for Each Category
+    ==================================================== */
+
+	// const categoryIdListForIncomeSet = new Set();
+
+	// for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
+	// 	categoryIdListForIncomeSet.add(budgetIncomeRecordsToDisplay[i].categoryId);
+	// }
+
+	// const categoryIdListForIncome = Array.from(categoryIdListForIncomeSet);
+
+	// let incomeForEachCategory: { [key: string]: string | number } = { Type: "Income" };
+
+	// for (let i = 0; categoryIdListForIncome.length; i++) {
+	// 	// Find id for category
+	// 	const categoryObject = categories.find((category) => category.id === categoryIdListForIncome[i]);
+
+	// 	const categoryName = categoryObject?.categoryName;
+
+	// 	let totalIncomeForCategory = 0;
+
+	// 	// Filter the list of budget income records for those under the same id
+	// 	const budgetIncomeRecordsForCategory = budgetIncomeRecordsToDisplay.filter((category) => category.id === categoryIdListForIncome[i]);
+
+	// 	// Get the sum of budgetted income for all records under the category
+	// 	for (let i = 0; i < budgetIncomeRecordsForCategory.length; i++) {
+	// 		totalIncomeForCategory += Number(budgetIncomeRecordsForCategory[i].amount);
+	// 	}
+
+	// 	incomeForEachCategory.categoryName = totalIncomeForCategory;
+	// }
 
 	/* ====================================================
     // Total Income for Displayed Period
@@ -87,6 +120,39 @@ const Budget = () => {
 	});
 
 	/* ====================================================
+    // Total Budget Expenses for Each Category
+    ==================================================== */
+
+	// const categoryIdListForExpenseSet = new Set();
+
+	// for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
+	// 	categoryIdListForExpenseSet.add(budgetExpenseRecordsToDisplay[i].categoryId);
+	// }
+
+	// const categoryIdListForExpense = Array.from(categoryIdListForExpenseSet);
+
+	// let expenseForEachCategory: { [key: string]: string | number } = { Type: "Expenses" };
+
+	// for (let i = 0; categoryIdListForExpense.length; i++) {
+	// 	// Find id for category
+	// 	const categoryObject = categories.find((category) => category.id === categoryIdListForExpense[i]);
+
+	// 	const categoryName = categoryObject?.categoryName;
+
+	// 	let totalExpenseForCategory = 0;
+
+	// 	// Filter the list of budget income records for those under the same id
+	// 	const budgetExpenseRecordsForCategory = budgetExpenseRecordsToDisplay.filter((category) => category.id === categoryIdListForExpense[i]);
+
+	// 	// Get the sum of budgetted income for all records under the category
+	// 	for (let i = 0; i < budgetExpenseRecordsForCategory.length; i++) {
+	// 		totalExpenseForCategory += Number(budgetExpenseRecordsForCategory[i].amount);
+	// 	}
+
+	// 	expenseForEachCategory.categoryName = totalExpenseForCategory;
+	// }
+
+	/* ====================================================
 	// Total Expenses for Displayed Period
 	==================================================== */
 
@@ -107,6 +173,12 @@ const Budget = () => {
 	const expenseRecordRows = budgetExpenseRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Expenses"} />);
 
 	/* ====================================================
+    // Data to pass to chart in BudgetDashboard
+    ==================================================== */
+
+	// const data: {[key: string]: string | number }[] = [incomeForEachCategory, expenseForEachCategory];
+
+	/* ====================================================
     // Handle Clicks on Monthly or YTD Tabs
     ==================================================== */
 	const handleIncomeClick = () => {
@@ -120,12 +192,7 @@ const Budget = () => {
 	return (
 		<div>
 			{/* Dashboard */}
-			<BudgetDashboard
-				currentPeriodView={currentPeriodView}
-				dateToDisplay={dateToDisplay}
-				handleBackArrow={handleBackArrow}
-				handleForwardArrow={handleForwardArrow}
-			/>
+			<BudgetDashboard currentPeriodView={currentPeriodView} dateToDisplay={dateToDisplay} handleBackArrow={handleBackArrow} handleForwardArrow={handleForwardArrow} totalIncome={totalIncome} totalExpenses={totalExpenses} />
 			{/* Monthly or YTD Tab */}
 			<div className={styles.tabContainer}>
 				<div className={currentPeriodView === "Monthly" ? styles.tabActive : styles.tab} onClick={handleIncomeClick}>
