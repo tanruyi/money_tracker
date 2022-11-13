@@ -18,7 +18,7 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 interface IncomeExpenseRowProps {
 	date: any;
 	recordsToDisplay: Income[];
-	displayRecord: string;
+	displayRecord: "Income" | "Expenses";
 }
 
 const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpenseRowProps) => {
@@ -64,11 +64,12 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
     // Row Expense Line HTML Component
     ==================================================== */
 
+	// Filter records to those that match the date to be displayed
 	const recordsForDate = recordsToDisplay.filter((record) => record.date === date);
 
+	// Create HTML component for each line of record
 	const recordsLines = recordsForDate.map((record) => {
-		// const categoryRecord = categories.find((category) => category.id === record.categoryId);
-
+		// Get the category name for categoryId given
 		let categoryRecord: any;
 
 		for (let i = 0; i < categories.length; i++) {
@@ -81,6 +82,13 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 
 		const categoryName = categoryRecord.categoryName;
 
+		// This is the amount to display, will show "-" sign if expenses
+		let amountToDisplay = `$${intToCurrencyString(record.amount)}`;
+
+		if (displayRecord === "Expenses") {
+			amountToDisplay = `-$${intToCurrencyString(record.amount)}`;
+		}
+
 		return (
 			<div className={styles.rowContainer}>
 				<div className={styles.rowIcon}>
@@ -91,7 +99,7 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 					<h3>{categoryName}</h3>
 				</div>
 				<div className={styles.rowAmount}>
-					<h2>-${intToCurrencyString(record.amount)}</h2>
+					<h2>{amountToDisplay}</h2>
 				</div>
 				<div className={styles.rowButton}>
 					<IconButton onClick={handleClickOpen}>
@@ -108,17 +116,24 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
     // Row Header - Date
     ==================================================== */
 
+	// This is the total amount to display, will show "-" sign if expenses
 	let totalAmountForDate = 0;
 
 	for (let i = 0; i < recordsForDate.length; i++) {
 		totalAmountForDate += Number(recordsForDate[i].amount);
 	}
 
+	let totalAmountForDateString = `$${intToCurrencyString(totalAmountForDate)}`;
+
+	if (displayRecord === "Expenses") {
+		totalAmountForDateString = `-$${intToCurrencyString(totalAmountForDate)}`;
+	}
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
 				<h1>{dateHeader}</h1>
-				<h1>${intToCurrencyString(totalAmountForDate)}</h1>
+				<h1>{totalAmountForDateString}</h1>
 			</div>
 
 			{recordsLines}

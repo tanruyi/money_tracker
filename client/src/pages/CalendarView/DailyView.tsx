@@ -27,9 +27,9 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	/* ====================================================
     // Income or expense to be displayed
     ==================================================== */
-	const [displayRecord, setDisplayRecord] = useState<string>("Income");
+	const [displayRecord, setDisplayRecord] = useState<"Income" | "Expenses">("Income");
 
-	const changeDisplayRecord = (type: string) => {
+	const changeDisplayRecord = (type: "Income" | "Expenses") => {
 		setDisplayRecord(type);
 	};
 

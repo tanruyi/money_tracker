@@ -8,8 +8,8 @@ import styles from "./IncomeExpenseTab.module.css";
 ==================================================== */
 
 interface IncomeExpenseTabProps {
-	displayRecord: string;
-	changeDisplayRecord: (type: string) => void;
+	displayRecord: "Income" | "Expenses";
+	changeDisplayRecord: (type: "Income" | "Expenses") => void;
 }
 
 const IncomeExpenseTab = ({ displayRecord, changeDisplayRecord }: IncomeExpenseTabProps) => {

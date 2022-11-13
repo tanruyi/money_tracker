@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import { useCurrentUserContext } from "./context/currentUserContext";
 import Settings from "./pages/Settings";
 import DailyView from "./pages/CalendarView/DailyView";
+import WeeklyView from "./pages/CalendarView/WeeklyView";
 
 function App() {
 	/* ====================================================
@@ -36,6 +37,7 @@ function App() {
 			<Navbar updateCurrentViewPage={updateCurrentViewPage} />
 			<Routes>
 				<Route path="/daily" element={<DailyView currentViewPage={currentViewPage} />} />
+				<Route path="/weekly" element={<WeeklyView currentViewPage={currentViewPage} />} />
 				<Route path="/monthly" element={<MonthlyView currentViewPage={currentViewPage} />} />
 				<Route path="/settings" element={<Settings />} />
 			</Routes>{" "}

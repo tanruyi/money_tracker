@@ -7,7 +7,9 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IncomeExpenseCreationModal from "./IncomeExpenseCreationModal";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import WeekofYear from "dayjs/plugin/weekOfYear"
+dayjs.extend(WeekofYear)
 
 /* ====================================================
 // Type Declaration
@@ -51,6 +53,9 @@ const IncomeExpenseDashboard = ({ currentViewPage, dateToDisplay, totalIncomeStr
 	} else if (currentViewPage === "Daily") {
 		dateHeader = dateToDisplay.format("DD MMM YYYY");
 		periodType = "day";
+	} else if (currentViewPage === "Weekly") {
+		dateHeader = `Week ${dateToDisplay.week()}`;
+		periodType = "week";
 	}
 
 	return (

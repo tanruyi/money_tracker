@@ -34,7 +34,9 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
-					<h1>Weekly</h1>
+					<Link to="/weekly" onClick={() => handleViewClick("Weekly")}>
+						<h1>Weekly</h1>
+					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/monthly" onClick={() => handleViewClick("Monthly")}>
