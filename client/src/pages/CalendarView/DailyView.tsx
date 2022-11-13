@@ -1,16 +1,23 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
-import styles from "./MonthlyView.module.css";
-import { useCurrentUserContext } from "../context/currentUserContext";
+import React, { useState } from "react";
+import styles from "./View.module.css";
+import { useCurrentUserContext } from "../../context/currentUserContext";
 import dayjs from "dayjs";
-import { intToCurrencyString } from "../utilities/utilityFunctions";
-import IncomeExpenseDashboard from "../components/IncomeExpenseDashboard";
-import IncomeExpenseTab from "../components/IncomeExpenseTab";
-import IncomeExpenseRow from "../components/IncomeExpenseRow";
-import { Income } from "../context/currentUserContext";
+import { intToCurrencyString } from "../../utilities/utilityFunctions";
+import IncomeExpenseDashboard from "../../components/IncomeExpenseDashboard";
+import IncomeExpenseTab from "../../components/IncomeExpenseTab";
+import IncomeExpenseRow from "../../components/IncomeExpenseRow";
 
-const MonthlyView = () => {
+/* ====================================================
+// Type Declaration
+==================================================== */
+
+interface DailyViewProps {
+	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
+}
+
+const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -27,27 +34,18 @@ const MonthlyView = () => {
 	};
 
 	/* ====================================================
-    // Month & year for display
+    // Date, month & year for display
     ==================================================== */
 
+	// This is the dayjs object for today's date
 	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
 
-	// Set year to display to current year by default
-	const [yearToDisplay, setYearToDisplay] = useState(dayjs().year());
-
-	// Set month to display to current month by default
-	const [monthToDisplay, setMonthToDisplay] = useState(dayjs().month());
-
 	const handleBackArrow = () => {
-		setDateToDisplay((prevState) => prevState.subtract(1, "month"));
-		setYearToDisplay(dateToDisplay.year());
-		setMonthToDisplay(dateToDisplay.month());
+		setDateToDisplay((prevState) => prevState.subtract(1, "day"));
 	};
 
 	const handleForwardArrow = () => {
-		setDateToDisplay((prevState) => prevState.add(1, "month"));
-		setYearToDisplay(dateToDisplay.year());
-		setMonthToDisplay(dateToDisplay.month());
+		setDateToDisplay((prevState) => prevState.add(1, "day"));
 	};
 
 	/* ====================================================
@@ -58,11 +56,11 @@ const MonthlyView = () => {
 	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
 		const dateToCompare = dayjs(record.date);
 
-		return dateToDisplay.isSame(dateToCompare, "month");
+		return dateToDisplay.isSame(dateToCompare, "date");
 	});
 
 	/* ====================================================
-    // Total Income for Displayed Month
+    // Total Income for Displayed Date
     ==================================================== */
 
 	let totalIncome = 0;
@@ -75,7 +73,7 @@ const MonthlyView = () => {
 	const totalIncomeString = intToCurrencyString(totalIncome);
 
 	/* ====================================================
-    // List of Dates with Income Records for Displayed Month
+    // List of Dates with Income Records for Displayed Date
     ==================================================== */
 
 	const datesWithIncomeRecordsSet = new Set();
@@ -93,18 +91,18 @@ const MonthlyView = () => {
 	const incomeRecordRows = datesWithIncomeRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
-    // Filtered Expense Records for Month to Display
+    // Filtered Expense Records for Date to Display
     ==================================================== */
 
 	// Filter expense records to those with mth & yr we want to display
 	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
 		const dateToCompare = dayjs(record.date);
 
-		return dateToDisplay.isSame(dateToCompare, "month");
+		return dateToDisplay.isSame(dateToCompare, "date");
 	});
 
 	/* ====================================================
-    // Total Expenses for Displayed Month
+    // Total Expenses for Displayed Date
     ==================================================== */
 
 	let totalExpenses = 0;
@@ -118,7 +116,7 @@ const MonthlyView = () => {
 	const totalExpensesString = intToCurrencyString(totalExpenses);
 
 	/* ====================================================
-    // List of Dates with Expense Records for Displayed Month
+    // List of Dates with Expense Records for Displayed Date
     ==================================================== */
 
 	const datesWithExpenseRecordsSet = new Set();
@@ -138,6 +136,7 @@ const MonthlyView = () => {
 	return (
 		<div>
 			<IncomeExpenseDashboard
+				currentViewPage={currentViewPage}
 				dateToDisplay={dateToDisplay}
 				totalIncomeString={totalIncomeString}
 				totalExpensesString={totalExpensesString}
@@ -150,4 +149,4 @@ const MonthlyView = () => {
 	);
 };
 
-export default MonthlyView;
+export default DailyView;

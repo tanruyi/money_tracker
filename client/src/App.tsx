@@ -1,13 +1,14 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./common/Navbar";
-import MonthlyView from "./pages/MonthlyView";
+import MonthlyView from "./pages/CalendarView/MonthlyView";
 import Login from "./pages/Login";
 import { useCurrentUserContext } from "./context/currentUserContext";
 import Settings from "./pages/Settings";
+import DailyView from "./pages/CalendarView/DailyView";
 
 function App() {
 	/* ====================================================
@@ -19,6 +20,12 @@ function App() {
     // HTML Components
     ==================================================== */
 
+	const [currentViewPage, setCurrentViewPage] = useState<"Daily" | "Weekly" | "Monthly" | "YTD">("Monthly");
+
+	const updateCurrentViewPage = (page: "Daily" | "Weekly" | "Monthly" | "YTD") => {
+		setCurrentViewPage(page);
+	};
+
 	const defaultPages = (
 		<Routes>
 			<Route path="/" element={<Login />} />
@@ -26,9 +33,10 @@ function App() {
 	);
 	const mainPages = (
 		<>
-			<Navbar />
+			<Navbar updateCurrentViewPage={updateCurrentViewPage} />
 			<Routes>
-				<Route path="/monthly" element={<MonthlyView />} />
+				<Route path="/daily" element={<DailyView currentViewPage={currentViewPage} />} />
+				<Route path="/monthly" element={<MonthlyView currentViewPage={currentViewPage} />} />
 				<Route path="/settings" element={<Settings />} />
 			</Routes>{" "}
 		</>

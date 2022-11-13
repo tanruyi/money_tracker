@@ -14,6 +14,7 @@ import { Dayjs } from "dayjs";
 ==================================================== */
 
 interface IncomeExpenseDashboardProps {
+	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
 	dateToDisplay: Dayjs;
 	totalIncomeString: string;
 	totalExpensesString: string;
@@ -21,7 +22,7 @@ interface IncomeExpenseDashboardProps {
 	handleForwardArrow: () => void;
 }
 
-const IncomeExpenseDashboard = ({ dateToDisplay, totalIncomeString, totalExpensesString, handleBackArrow, handleForwardArrow }: IncomeExpenseDashboardProps) => {
+const IncomeExpenseDashboard = ({ currentViewPage, dateToDisplay, totalIncomeString, totalExpensesString, handleBackArrow, handleForwardArrow }: IncomeExpenseDashboardProps) => {
 	/* ====================================================
     // Handle category creation modal
     ==================================================== */
@@ -38,6 +39,20 @@ const IncomeExpenseDashboard = ({ dateToDisplay, totalIncomeString, totalExpense
 		setOpenModal(false);
 	};
 
+	/* ====================================================
+    // Handle HTML text to display depending on the page being viewed
+    ==================================================== */
+	let dateHeader = "";
+	let periodType = "";
+
+	if (currentViewPage === "Monthly") {
+		dateHeader = dateToDisplay.format("MMM YYYY");
+		periodType = "month";
+	} else if (currentViewPage === "Daily") {
+		dateHeader = dateToDisplay.format("DD MMM YYYY");
+		periodType = "day";
+	}
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
@@ -45,16 +60,18 @@ const IncomeExpenseDashboard = ({ dateToDisplay, totalIncomeString, totalExpense
 					<ArrowBackIosNewIcon sx={{ color: "white" }} />
 				</IconButton>
 				<div className={styles.dashboardHeader}>
-					<h1>{dateToDisplay.format("MMM YYYY")}</h1>
+					<h1>{dateHeader}</h1>
 					<div className={styles.dashboardInfo}>
 						{/* Split the dashboard info to 2 columns displayed side by side */}
 						<div className={styles.dashboardInfoColumn}>
-							<h3>Expenses for this month: </h3>
+							<h3>Expenses for the {periodType}: </h3>
 							<h1>${totalExpensesString}</h1>
 							<h4>You are over-budget!</h4>
 						</div>
 						<div className={styles.dashboardInfoColumn}>
-							<h3>Income for this month: ${totalIncomeString}</h3>
+							<h3>
+								Income for the {periodType}: ${totalIncomeString}
+							</h3>
 							<h3>Budget left: $(-21.46)</h3>
 						</div>
 					</div>
