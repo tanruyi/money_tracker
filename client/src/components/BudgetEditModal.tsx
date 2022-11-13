@@ -238,23 +238,29 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DesktopDatePicker
 								label="Start Month"
-								inputFormat="DD/MM/YYYY"
+								views={["month", "year"]}
 								value={newBudgetInput.startMonth}
 								onChange={handleStartMonth}
-								renderInput={(params) => <TextField {...params} />}
+								renderInput={(params) => <TextField {...params} helperText={null} />}
 							/>
 							<DesktopDatePicker
 								label="End Month"
-								inputFormat="DD/MM/YYYY"
+								views={["month", "year"]}
 								value={newBudgetInput.endMonth}
 								onChange={handleEndMonth}
-								renderInput={(params) => <TextField {...params} />}
+								renderInput={(params) => <TextField {...params} helperText={null} />}
 							/>
 						</LocalizationProvider>
 						{/* Amount text field */}
 						<FormControl>
 							<InputLabel htmlFor="amount">Monthly Amount</InputLabel>
-							<OutlinedInput id="amount" label="Monthly Amount" value={newBudgetInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+							<OutlinedInput
+								id="amount"
+								label="Monthly Amount"
+								value={newBudgetInput.amount}
+								onChange={handleAmount}
+								startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							/>
 						</FormControl>
 					</Stack>
 				</Box>

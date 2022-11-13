@@ -75,48 +75,36 @@ const Budget = () => {
 
 	const budgetIncomeRows = budgetIncomeRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Income"} />);
 
-	// /* ====================================================
-	// // Filtered Expense Records to Display
-	// ==================================================== */
+	/* ====================================================
+	// Filtered Expense Records to Display
+	==================================================== */
+	// Filter for expense records
+	const budgetExpenseRecords = budgets.filter((record) => record.recordId === 2);
 
-	// // Filter expense records to those with mth & yr we want to display
-	// let expenseRecordsToDisplay = expenseRecords.filter((record) => {
-	// 	const dateToCompare = dayjs(record.date);
+	// Filter budget expense records to those within period we want to display
+	const budgetExpenseRecordsToDisplay = budgetExpenseRecords.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+	});
 
-	// 	return dateToDisplay.isSame(dateToCompare, "month");
-	// });
+	/* ====================================================
+	// Total Expenses for Displayed Period
+	==================================================== */
 
-	// /* ====================================================
-	// // Total Expenses for Displayed Period
-	// ==================================================== */
+	let totalExpenses = 0;
 
-	// let totalExpenses = 0;
+	if (budgetExpenseRecordsToDisplay.length > 0) {
+		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
+			totalExpenses += Number(budgetExpenseRecordsToDisplay[i].amount);
+		}
+	}
 
-	// if (expenseRecordsToDisplay.length > 0) {
-	// 	for (let i = 0; i < expenseRecordsToDisplay.length; i++) {
-	// 		totalExpenses += Number(expenseRecordsToDisplay[i].amount);
-	// 	}
-	// }
+	const totalExpensesString = `-$${intToCurrencyString(totalExpenses)}`;
 
-	// const totalExpensesString = intToCurrencyString(totalExpenses);
+	/* ====================================================
+	// Expense Rows to Display
+	==================================================== */
 
-	// /* ====================================================
-	// // List of Dates with Expense Records for Displayed Period
-	// ==================================================== */
-
-	// const datesWithExpenseRecordsSet = new Set();
-
-	// for (let i = 0; i < expenseRecordsToDisplay.length; i++) {
-	// 	datesWithExpenseRecordsSet.add(expenseRecordsToDisplay[i].date);
-	// }
-
-	// const datesWithExpenseRecords = Array.from(datesWithExpenseRecordsSet);
-
-	// /* ====================================================
-	// // Expense Rows to Display
-	// ==================================================== */
-
-	// const expenseRecordRows = datesWithExpenseRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
+	const expenseRecordRows = budgetExpenseRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Expenses"} />);
 
 	/* ====================================================
     // Handle Clicks on Monthly or YTD Tabs
@@ -135,8 +123,6 @@ const Budget = () => {
 			<BudgetDashboard
 				currentPeriodView={currentPeriodView}
 				dateToDisplay={dateToDisplay}
-				totalIncomeString={totalIncomeString}
-				// totalExpensesString={totalExpensesString}
 				handleBackArrow={handleBackArrow}
 				handleForwardArrow={handleForwardArrow}
 			/>
@@ -158,7 +144,13 @@ const Budget = () => {
 					</div>
 					{budgetIncomeRows}
 				</div>
-				<div className={styles.budgetRowsColumn}></div>
+				<div className={styles.budgetRowsColumn}>
+					<div className={styles.header}>
+						<h1>Expenses</h1>
+						<h1>{totalExpensesString}</h1>
+					</div>
+					{expenseRecordRows}
+				</div>
 			</div>
 		</div>
 	);

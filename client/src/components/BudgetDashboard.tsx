@@ -18,13 +18,11 @@ dayjs.extend(WeekofYear)
 interface BudgetDashboardProps {
 	currentPeriodView: "Monthly" | "YTD";
 	dateToDisplay: Dayjs;
-	totalIncomeString: string;
-	// totalExpensesString: string;
 	handleBackArrow: () => void;
 	handleForwardArrow: () => void;
 }
 
-const BudgetDashboard = ({ currentPeriodView, dateToDisplay, totalIncomeString, handleBackArrow, handleForwardArrow }: BudgetDashboardProps) => {
+const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, handleForwardArrow }: BudgetDashboardProps) => {
 	/* ====================================================
     // Handle category creation modal
     ==================================================== */
@@ -63,7 +61,8 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, totalIncomeString, 
 				</IconButton>
 				<div className={styles.dashboardHeader}>
 					<h1>{dateHeader}</h1>
-					<div className={styles.dashboardInfo}>
+                    <div className={styles.dashboardInfo}>
+                        {/* TODO: to edit below code when doing chart */}
 						{/* Split the dashboard info to 2 columns displayed side by side */}
 						{/* <div className={styles.dashboardInfoColumn}>
 							<h3>Expenses for the {periodType}: </h3> */}
