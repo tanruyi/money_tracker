@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./MonthlyView.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import dayjs from "dayjs";
@@ -8,6 +8,7 @@ import { intToCurrencyString } from "../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../components/IncomeExpenseDashboard";
 import IncomeExpenseTab from "../components/IncomeExpenseTab";
 import IncomeExpenseRow from "../components/IncomeExpenseRow";
+import { Income } from "../context/currentUserContext";
 
 const MonthlyView = () => {
 	/* ====================================================
@@ -54,30 +55,11 @@ const MonthlyView = () => {
     ==================================================== */
 
 	// Filter income records to those with mth & yr we want to display
-	// let incomeRecordsToDisplay = incomeRecords.filter((record) => {
-	// 	console.log("incomeRecordsToDisplay...");
-	// 	const dateToCompare = dayjs(record.date);
-	// 	const recordYear = dateToCompare.year();
-	// 	console.log("recordYear: ", recordYear);
-	// 	const recordMonth = dateToCompare.month();
-	// 	console.log("recordMonth", recordMonth);
-	// 	return recordYear === yearToDisplay && recordMonth === monthToDisplay;
-	// });
+	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
+		const dateToCompare = dayjs(record.date);
 
-	let incomeRecordsToDisplay: any[] = [];
-
-	for (let i = 0; i < incomeRecords.length; i++) {
-		const dateToCompare = dayjs(incomeRecords[i].date);
-		const recordYear = dateToCompare.year();
-		const recordMonth = dateToCompare.month();
-
-		if (recordYear === yearToDisplay && recordMonth === monthToDisplay) {
-			incomeRecordsToDisplay.push(incomeRecords[i]);
-		}
-	}
-
-	console.log("dateToDisplay: ", dateToDisplay);
-	console.log("incomeRecordsToDisplay: ", incomeRecordsToDisplay);
+		return dateToDisplay.isSame(dateToCompare, "month");
+	});
 
 	/* ====================================================
     // Total Income for Displayed Month
@@ -116,9 +98,9 @@ const MonthlyView = () => {
 
 	// Filter expense records to those with mth & yr we want to display
 	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
-		const recordYear = dayjs(record.date).get("year");
-		const recordMonth = dayjs(record.date).get("month") + 1;
-		return recordYear === yearToDisplay && recordMonth === monthToDisplay;
+		const dateToCompare = dayjs(record.date);
+
+		return dateToDisplay.isSame(dateToCompare, "month");
 	});
 
 	/* ====================================================
