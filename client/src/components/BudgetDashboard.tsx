@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BudgetCreationModal from "./BudgetCreationModal";
 import dayjs, { Dayjs } from "dayjs";
 import WeekofYear from "dayjs/plugin/weekOfYear";
-import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 dayjs.extend(WeekofYear);
 
@@ -24,7 +24,6 @@ interface BudgetDashboardProps {
 	handleForwardArrow: () => void;
 	totalIncome: number;
 	totalExpenses: number;
-	// data: { [key: string]: string | number }[];
 }
 
 const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, handleForwardArrow, totalIncome, totalExpenses }: BudgetDashboardProps) => {
@@ -83,16 +82,15 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 				<div className={styles.dashboardHeader}>
 					<h1>{dateHeader}</h1>
 					<div className={styles.dashboardInfo}>
-                        {/* TODO: to edit below code when doing chart */}
-                        <ResponsiveContainer width="100%" height="80%">
-                            <BarChart data={data} width={400} height={200} margin={{top: 10, right: 5, bottom: 5, left: 5}}>
-                                <XAxis dataKey="Type" />
-                                <Tooltip />
-                                <Bar dataKey="Amount">
-                                    <LabelList dataKey="Amount" position="top" />
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
+						<ResponsiveContainer width="100%" height="80%">
+							<BarChart data={data} width={400} height={200} margin={{ top: 15, right: 5, bottom: 5, left: 5 }}>
+								<XAxis dataKey="Type" />
+								<Tooltip />
+								<Bar dataKey="Amount">
+									<LabelList dataKey="Amount" position="top" />
+								</Bar>
+							</BarChart>
+						</ResponsiveContainer>
 					</div>
 				</div>
 				<IconButton onClick={handleForwardArrow}>

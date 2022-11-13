@@ -23,5 +23,7 @@
 
 .dashboardInfo {
 	display: flex;
-    align-items: flex-end;
+	align-items: flex-end;
+	height: 15vh;
+	width: 100%;
 }

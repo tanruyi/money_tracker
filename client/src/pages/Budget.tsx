@@ -5,10 +5,14 @@ import styles from "./Budget.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import CustomParseFormat from "dayjs/plugin/customParseFormat";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import BudgetDashboard from "../components/BudgetDashboard";
 import BudgetRow from "../components/BudgetRow";
-dayjs.extend(isBetween);
+dayjs.extend(isBetween, CustomParseFormat);
+dayjs.extend(isSameOrBefore, isSameOrAfter);
 
 const Budget = () => {
 	/* ====================================================
@@ -95,8 +99,44 @@ const Budget = () => {
 
 	let totalIncome = 0;
 
-	for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
-		totalIncome += Number(budgetIncomeRecordsToDisplay[i].amount);
+	// Calculate the total for the mth
+	if (currentPeriodView === "Monthly") {
+		for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
+			totalIncome += Number(budgetIncomeRecordsToDisplay[i].amount);
+		}
+		// Calculate total for YTD
+	} else if (currentPeriodView === "YTD") {
+        for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
+            // Get the start & end mth of the record in dayjs
+			const startMth = dayjs(budgetIncomeRecordsToDisplay[i].startMonth);
+			const endMth = dayjs(budgetIncomeRecordsToDisplay[i].endMonth);
+
+            // Get the yr of display in string
+			const currentYr = dateToDisplay.format("YYYY");
+
+            // Get the 1 Jan & 31 Dec of yr of display in dayjs
+			const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
+			const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
+
+			let noOfMonths = 0;
+
+            // Get boolean whether start & end mth are within the year of display
+			const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
+			const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
+
+            // Get the number of months b/w start & end mth within yr of display
+			if (startMthWithinYr && endMthWithinYr) {
+				noOfMonths = endMth.diff(startMth, "month") + 1;
+			} else if (!startMthWithinYr && endMthWithinYr) {
+				noOfMonths = endMth.diff(startofYr, "month") + 1;
+			} else if (!startMthWithinYr && !endMthWithinYr) {
+				noOfMonths = endofYr.diff(startofYr, "month") + 1;
+			} else if (startMthWithinYr && !endMthWithinYr) {
+				noOfMonths = endofYr.diff(startMth, "month") + 1;
+			}
+
+			totalIncome += noOfMonths * Number(budgetIncomeRecordsToDisplay[i].amount);
+		}
 	}
 
 	// this will be displayed in HTML
@@ -158,12 +198,40 @@ const Budget = () => {
 
 	let totalExpenses = 0;
 
-	if (budgetExpenseRecordsToDisplay.length > 0) {
+	// Calculate the total for the mth
+	if (currentPeriodView === "Monthly") {
 		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
 			totalExpenses += Number(budgetExpenseRecordsToDisplay[i].amount);
 		}
-	}
+	} else if (currentPeriodView === "YTD") {
+		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
+			const startMth = dayjs(budgetExpenseRecordsToDisplay[i].startMonth);
+			const endMth = dayjs(budgetExpenseRecordsToDisplay[i].endMonth);
 
+			const currentYr = dateToDisplay.format("YYYY");
+
+			const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
+			const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
+
+			let noOfMonths = 0;
+
+			const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
+			const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
+
+			if (startMthWithinYr && endMthWithinYr) {
+				noOfMonths = endMth.diff(startMth, "month") + 1;
+			} else if (!startMthWithinYr && endMthWithinYr) {
+				noOfMonths = endMth.diff(startofYr, "month") + 1;
+			} else if (!startMthWithinYr && !endMthWithinYr) {
+				noOfMonths = endofYr.diff(startofYr, "month") + 1;
+			} else if (startMthWithinYr && !endMthWithinYr) {
+				noOfMonths = endofYr.diff(startMth, "month") + 1;
+			}
+
+			totalExpenses += noOfMonths * Number(budgetExpenseRecordsToDisplay[i].amount);
+		}
+    }
+    
 	const totalExpensesString = `-$${intToCurrencyString(totalExpenses)}`;
 
 	/* ====================================================
@@ -192,7 +260,14 @@ const Budget = () => {
 	return (
 		<div>
 			{/* Dashboard */}
-			<BudgetDashboard currentPeriodView={currentPeriodView} dateToDisplay={dateToDisplay} handleBackArrow={handleBackArrow} handleForwardArrow={handleForwardArrow} totalIncome={totalIncome} totalExpenses={totalExpenses} />
+			<BudgetDashboard
+				currentPeriodView={currentPeriodView}
+				dateToDisplay={dateToDisplay}
+				handleBackArrow={handleBackArrow}
+				handleForwardArrow={handleForwardArrow}
+				totalIncome={totalIncome}
+				totalExpenses={totalExpenses}
+			/>
 			{/* Monthly or YTD Tab */}
 			<div className={styles.tabContainer}>
 				<div className={currentPeriodView === "Monthly" ? styles.tabActive : styles.tab} onClick={handleIncomeClick}>
