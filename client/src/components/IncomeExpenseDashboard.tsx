@@ -56,6 +56,9 @@ const IncomeExpenseDashboard = ({ currentViewPage, dateToDisplay, totalIncomeStr
 	} else if (currentViewPage === "Weekly") {
 		dateHeader = `Week ${dateToDisplay.week()}`;
 		periodType = "week";
+	} else if (currentViewPage === "YTD") {
+		dateHeader = `Year ${dateToDisplay.year()}`;
+		periodType = "year";
 	}
 
 	return (

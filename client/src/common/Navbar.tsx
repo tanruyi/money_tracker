@@ -44,7 +44,9 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
-					<h1>YTD</h1>
+					<Link to="/ytd" onClick={() => handleViewClick("YTD")}>
+						<h1>YTD</h1>
+					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<h1>Budget</h1>

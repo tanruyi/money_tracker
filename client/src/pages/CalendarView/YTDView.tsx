@@ -13,11 +13,11 @@ import IncomeExpenseRow from "../../components/IncomeExpenseRow";
 // Type Declaration
 ==================================================== */
 
-interface DailyViewProps {
+interface YTDViewProps {
 	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
 }
 
-const DailyView = ({ currentViewPage }: DailyViewProps) => {
+const YTDView = ({ currentViewPage }: YTDViewProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -41,26 +41,26 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
 
 	const handleBackArrow = () => {
-		setDateToDisplay((prevState) => prevState.subtract(1, "day"));
+		setDateToDisplay((prevState) => prevState.subtract(1, "year"));
 	};
 
 	const handleForwardArrow = () => {
-		setDateToDisplay((prevState) => prevState.add(1, "day"));
+		setDateToDisplay((prevState) => prevState.add(1, "year"));
 	};
 
 	/* ====================================================
-    // Filtered Income Records for Date to Display
+    // Filtered Income Records for YTD to Display
     ==================================================== */
 
 	// Filter income records to those with mth & yr we want to display
 	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
 		const dateToCompare = dayjs(record.date);
 
-		return dateToDisplay.isSame(dateToCompare, "date");
+		return dateToDisplay.isSame(dateToCompare, "year");
 	});
 
 	/* ====================================================
-    // Total Income for Displayed Date
+    // Total Income for Displayed YTD
     ==================================================== */
 
 	let totalIncome = 0;
@@ -73,7 +73,7 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	const totalIncomeString = intToCurrencyString(totalIncome);
 
 	/* ====================================================
-    // List of Dates with Income Records for Displayed Date
+    // List of Dates with Income Records for Displayed YTD
     ==================================================== */
 
 	const datesWithIncomeRecordsSet = new Set();
@@ -91,18 +91,18 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	const incomeRecordRows = datesWithIncomeRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
-    // Filtered Expense Records for Date to Display
+    // Filtered Expense Records for YTD to Display
     ==================================================== */
 
 	// Filter expense records to those with mth & yr we want to display
 	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
 		const dateToCompare = dayjs(record.date);
 
-		return dateToDisplay.isSame(dateToCompare, "date");
+		return dateToDisplay.isSame(dateToCompare, "year");
 	});
 
 	/* ====================================================
-    // Total Expenses for Displayed Date
+    // Total Expenses for Displayed YTD
     ==================================================== */
 
 	let totalExpenses = 0;
@@ -116,7 +116,7 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	const totalExpensesString = intToCurrencyString(totalExpenses);
 
 	/* ====================================================
-    // List of Dates with Expense Records for Displayed Date
+    // List of Dates with Expense Records for Displayed YTD
     ==================================================== */
 
 	const datesWithExpenseRecordsSet = new Set();
@@ -149,4 +149,4 @@ const DailyView = ({ currentViewPage }: DailyViewProps) => {
 	);
 };
 
-export default DailyView;
+export default YTDView;

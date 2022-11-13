@@ -34,7 +34,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	};
 
 	/* ====================================================
-    // Date, month & year for display
+    // Date for display
     ==================================================== */
 
 	// This is the dayjs object for today's date
@@ -49,7 +49,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	};
 
 	/* ====================================================
-    // Filtered Income Records for Month to Display
+    // Filtered Income Records for Week to Display
     ==================================================== */
 
 	// Filter income records to those with mth & yr we want to display
@@ -60,7 +60,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	});
 
 	/* ====================================================
-    // Total Income for Displayed Date
+    // Total Income for Displayed Week
     ==================================================== */
 
 	let totalIncome = 0;
@@ -73,7 +73,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	const totalIncomeString = intToCurrencyString(totalIncome);
 
 	/* ====================================================
-    // List of Dates with Income Records for Displayed Date
+    // List of Dates with Income Records for Displayed Week
     ==================================================== */
 
 	const datesWithIncomeRecordsSet = new Set();
@@ -91,7 +91,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	const incomeRecordRows = datesWithIncomeRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
-    // Filtered Expense Records for Date to Display
+    // Filtered Expense Records for Week to Display
     ==================================================== */
 
 	// Filter expense records to those with mth & yr we want to display
@@ -102,7 +102,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	});
 
 	/* ====================================================
-    // Total Expenses for Displayed Date
+    // Total Expenses for Displayed Week
     ==================================================== */
 
 	let totalExpenses = 0;
@@ -116,7 +116,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 	const totalExpensesString = intToCurrencyString(totalExpenses);
 
 	/* ====================================================
-    // List of Dates with Expense Records for Displayed Date
+    // List of Dates with Expense Records for Displayed Week
     ==================================================== */
 
 	const datesWithExpenseRecordsSet = new Set();

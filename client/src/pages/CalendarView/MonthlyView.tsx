@@ -34,7 +34,7 @@ const MonthlyView = ({ currentViewPage }: DailyViewProps) => {
 	};
 
 	/* ====================================================
-    // Month & year for display
+    // Date for display
     ==================================================== */
 
 	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
