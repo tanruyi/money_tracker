@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createBudgetAPI } from "../apis/budget";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+dayjs.extend(isSameOfAfter);
 
 /* ====================================================
 // Type Declaration
@@ -116,12 +118,18 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 	};
 
 	const handleEndMonth = (newDate: Dayjs | null) => {
-		setNewBudgetInput((prevState) => {
-			return {
-				...prevState,
-				endMonth: newDate,
-			};
-		});
+		const after = newDate?.isSameOrAfter(newBudgetInput.startMonth);
+
+		if (after === true) {
+			setNewBudgetInput((prevState) => {
+				return {
+					...prevState,
+					endMonth: newDate,
+				};
+			});
+        } else {
+            window.alert("End month must be same or after start month.")
+        }
 	};
 
 	const handleAmount = (e: any) => {
@@ -221,14 +229,14 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DesktopDatePicker
 								label="Start Month"
-								views={["month", "year"]}
+								views={["year", "month"]}
 								value={newBudgetInput.startMonth}
 								onChange={handleStartMonth}
 								renderInput={(params) => <TextField {...params} helperText={null} />}
 							/>
 							<DesktopDatePicker
 								label="End Month"
-								views={["month", "year"]}
+								views={["year", "month"]}
 								value={newBudgetInput.endMonth}
 								onChange={handleEndMonth}
 								renderInput={(params) => <TextField {...params} helperText={null} />}
@@ -237,7 +245,13 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 						{/* Amount text field */}
 						<FormControl>
 							<InputLabel htmlFor="amount">Monthly Amount</InputLabel>
-							<OutlinedInput id="amount" label="Monthly Amount" value={newBudgetInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+							<OutlinedInput
+								id="amount"
+								label="Monthly Amount"
+								value={newBudgetInput.amount}
+								onChange={handleAmount}
+								startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							/>
 						</FormControl>
 					</Stack>
 				</Box>
