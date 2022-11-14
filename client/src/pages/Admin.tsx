@@ -17,10 +17,66 @@ const Admin = () => {
 	};
 
 	/* ====================================================
-	// Creates Table Displaying User Found
+	// Data on Account Returned by API
 	==================================================== */
 
-	const [accountFound, setAccountFound] = useState<any>();
+	const [accountFound, setAccountFound] = useState<any>({});
+
+	/* ====================================================
+	// Handle Search Button Click
+	==================================================== */
+
+	const handleSearchButton = async () => {
+		if (usernameToSearch) {
+			try {
+				const response = await findAccountAPI(usernameToSearch);
+
+				setAccountFound(response.data);
+			} catch (err) {
+				if (typeof err === "string") {
+					setError(err);
+				} else if (err instanceof Error) {
+					setError(err.message);
+				}
+			}
+		} else {
+			window.alert("No username provided");
+		}
+	};
+
+	/* ====================================================
+	// Handle Delete Button Click
+	==================================================== */
+
+	const handleDeleteButton = async () => {
+		const confirmed = window.confirm(`Are you sure you want to delete account for username ${accountFound.username}?`);
+
+		if (confirmed) {
+			const requestBody = {
+				data: {
+					userId: accountFound.id,
+				},
+			};
+
+			try {
+				const response = await deleteAccountAPI(requestBody);
+
+				setUsernameToSearch("");
+				setAccountFound({});
+				window.alert(`Account for ${accountFound.username} deleted.`);
+			} catch (err) {
+				if (typeof err === "string") {
+					setError(err);
+				} else if (err instanceof Error) {
+					setError(err.message);
+				}
+			}
+		}
+	};
+
+	/* ====================================================
+	// Creates Table Displaying User Found
+	==================================================== */
 
 	const [error, setError] = useState<any>();
 
@@ -50,34 +106,17 @@ const Admin = () => {
 							<TableCell>{accountFound.id}</TableCell>
 							<TableCell>{accountFound.username}</TableCell>
 							<TableCell>{role}</TableCell>
+							<TableCell>
+								<Button variant="contained" onClick={handleDeleteButton}>
+									Delete Account
+								</Button>
+							</TableCell>
 						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>
 		);
 	}
-
-	/* ====================================================
-	// Handle Search Button Click
-	==================================================== */
-
-	const handleSearchButton = async () => {
-		if (usernameToSearch) {
-			try {
-				const response = await findAccountAPI(usernameToSearch);
-
-				setAccountFound(response.data);
-			} catch (err) {
-				if (typeof err === "string") {
-					setError(err);
-				} else if (err instanceof Error) {
-					setError(err.message);
-				}
-			}
-		} else {
-			window.alert("No username provided");
-		}
-	};
 
 	return (
 		<div className={styles.container}>
