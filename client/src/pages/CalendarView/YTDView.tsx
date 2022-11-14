@@ -21,7 +21,7 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
     // Context
     ==================================================== */
 
-	const { incomeRecords, expenseRecords } = useCurrentUserContext();
+	const { incomeRecords, expenseRecords, budgets } = useCurrentUserContext();
 
 	/* ====================================================
     // Income or expense to be displayed
@@ -129,6 +129,106 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 	const expenseRecordRows = datesWithExpenseRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
+    // Compare Income & Expense Against Budget
+    ==================================================== */
+
+	// Filter for income records
+	const budgetIncomeRecords = budgets.filter((record) => record.recordId === 1);
+
+	// Filter budget income records to those within period we want to display, start mth & end mth inclusive
+	let budgetIncomeRecordsToUse = budgetIncomeRecords.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+	});
+
+	// Get total budgeted income for YTD
+	let totalbudgettedIncome = 0;
+
+	for (let i = 0; i < budgetIncomeRecordsToUse.length; i++) {
+		// Get the start & end mth of the record in dayjs
+		const startMth = dayjs(budgetIncomeRecordsToUse[i].startMonth);
+		const endMth = dayjs(budgetIncomeRecordsToUse[i].endMonth);
+
+		// Get the yr of display in string
+		const currentYr = dateToDisplay.format("YYYY");
+
+		// Get the 1 Jan & 31 Dec of yr of display in dayjs
+		const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
+		const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
+
+		let noOfMonths = 0;
+
+		// Get boolean whether start & end mth are within the year of display
+		const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
+		const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
+
+		// Get the number of months b/w start & end mth within yr of display
+		if (startMthWithinYr && endMthWithinYr) {
+			noOfMonths = endMth.diff(startMth, "month") + 1;
+		} else if (!startMthWithinYr && endMthWithinYr) {
+			noOfMonths = endMth.diff(startofYr, "month") + 1;
+		} else if (!startMthWithinYr && !endMthWithinYr) {
+			noOfMonths = endofYr.diff(startofYr, "month") + 1;
+		} else if (startMthWithinYr && !endMthWithinYr) {
+			noOfMonths = endofYr.diff(startMth, "month") + 1;
+		}
+
+		totalbudgettedIncome += noOfMonths * Number(budgetIncomeRecordsToUse[i].amount);
+	}
+
+	// Filter for expense records
+	const budgetExpenseRecords = budgets.filter((record) => record.recordId === 2);
+
+	// Filter budget expense records to those within period we want to display
+	const budgetExpenseRecordsToUse = budgetExpenseRecords.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+	});
+
+	// Get total budgeted expenses for YTD
+	let totalbudgettedExpense = 0;
+
+	for (let i = 0; i < budgetExpenseRecordsToUse.length; i++) {
+		const startMth = dayjs(budgetExpenseRecordsToUse[i].startMonth);
+		const endMth = dayjs(budgetExpenseRecordsToUse[i].endMonth);
+
+		const currentYr = dateToDisplay.format("YYYY");
+
+		const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
+		const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
+
+		let noOfMonths = 0;
+
+		const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
+		const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
+
+		if (startMthWithinYr && endMthWithinYr) {
+			noOfMonths = endMth.diff(startMth, "month") + 1;
+		} else if (!startMthWithinYr && endMthWithinYr) {
+			noOfMonths = endMth.diff(startofYr, "month") + 1;
+		} else if (!startMthWithinYr && !endMthWithinYr) {
+			noOfMonths = endofYr.diff(startofYr, "month") + 1;
+		} else if (startMthWithinYr && !endMthWithinYr) {
+			noOfMonths = endofYr.diff(startMth, "month") + 1;
+		}
+		totalbudgettedExpense += noOfMonths * Number(budgetExpenseRecordsToUse[i].amount);
+	}
+
+	let budgetIncomeCheckText = "";
+
+	if (totalbudgettedIncome > totalIncome) {
+		budgetIncomeCheckText = "Congrats! Your income has exceeded the budget!";
+	} else {
+		budgetIncomeCheckText = "You have not hit your budgeted income. Just a bit more to go! ";
+	}
+
+	let budgetExpenseCheckText = "";
+
+	if (totalbudgettedExpense > totalExpenses) {
+		budgetExpenseCheckText = "Your expenses have exceeded the budget!";
+	} else {
+		budgetExpenseCheckText = "Well done! Your expenses are within the budget.";
+	}
+
+	/* ====================================================
     // Handle Clicks on Income or Expense Tabs
     ==================================================== */
 	const handleIncomeClick = () => {
@@ -149,6 +249,8 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 				totalExpensesString={totalExpensesString}
 				handleBackArrow={handleBackArrow}
 				handleForwardArrow={handleForwardArrow}
+				budgetIncomeCheckText={budgetIncomeCheckText}
+				budgetExpenseCheckText={budgetExpenseCheckText}
 			/>
 			{/* Income or Expense Tab */}
 			<div className={styles.tabContainer}>

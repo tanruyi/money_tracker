@@ -8,8 +8,8 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IncomeExpenseCreationModal from "./IncomeExpenseCreationModal";
 import dayjs, { Dayjs } from "dayjs";
-import WeekofYear from "dayjs/plugin/weekOfYear"
-dayjs.extend(WeekofYear)
+import WeekofYear from "dayjs/plugin/weekOfYear";
+dayjs.extend(WeekofYear);
 
 /* ====================================================
 // Type Declaration
@@ -22,9 +22,20 @@ interface IncomeExpenseDashboardProps {
 	totalExpensesString: string;
 	handleBackArrow: () => void;
 	handleForwardArrow: () => void;
+	budgetIncomeCheckText?: string;
+	budgetExpenseCheckText?: string;
 }
 
-const IncomeExpenseDashboard = ({ currentViewPage, dateToDisplay, totalIncomeString, totalExpensesString, handleBackArrow, handleForwardArrow }: IncomeExpenseDashboardProps) => {
+const IncomeExpenseDashboard = ({
+	currentViewPage,
+	dateToDisplay,
+	totalIncomeString,
+	totalExpensesString,
+	handleBackArrow,
+	handleForwardArrow,
+	budgetIncomeCheckText,
+	budgetExpenseCheckText,
+}: IncomeExpenseDashboardProps) => {
 	/* ====================================================
     // Handle category creation modal
     ==================================================== */
@@ -74,13 +85,12 @@ const IncomeExpenseDashboard = ({ currentViewPage, dateToDisplay, totalIncomeStr
 						<div className={styles.dashboardInfoColumn}>
 							<h3>Expenses for the {periodType}: </h3>
 							<h1>${totalExpensesString}</h1>
-							<h4>You are over-budget!</h4>
+							<h4>{budgetExpenseCheckText}</h4>
 						</div>
 						<div className={styles.dashboardInfoColumn}>
-							<h3>
-								Income for the {periodType}: ${totalIncomeString}
-							</h3>
-							<h3>Budget left: $(-21.46)</h3>
+							<h3>Income for the {periodType}:</h3>
+							<h1>${totalIncomeString}</h1>
+							<h4>{budgetIncomeCheckText}</h4>
 						</div>
 					</div>
 				</div>

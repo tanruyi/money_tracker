@@ -21,7 +21,7 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
     // Context
     ==================================================== */
 
-	const { incomeRecords, expenseRecords } = useCurrentUserContext();
+	const { incomeRecords, expenseRecords, budgets } = useCurrentUserContext();
 
 	/* ====================================================
     // Income or expense to be displayed
@@ -128,6 +128,55 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 	const expenseRecordRows = datesWithExpenseRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
+    // Compare Income & Expense Against Budget
+    ==================================================== */
+
+	// Filter for income records
+	const budgetIncomeRecords = budgets.filter((record) => record.recordId === 1);
+
+	// Filter budget income records to those within period we want to display, start mth & end mth inclusive
+	let budgetIncomeRecordsToUse = budgetIncomeRecords.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+	});
+
+	let totalbudgettedIncome = 0;
+
+	for (let i = 0; i < budgetIncomeRecordsToUse.length; i++) {
+		totalbudgettedIncome += Number(budgetIncomeRecordsToUse[i].amount);
+	}
+
+	// Filter for expense records
+	const budgetExpenseRecords = budgets.filter((record) => record.recordId === 2);
+
+	// Filter budget expense records to those within period we want to display
+	const budgetExpenseRecordsToUse = budgetExpenseRecords.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+    });
+    
+    let totalbudgettedExpense = 0;
+
+	for (let i = 0; i < budgetExpenseRecordsToUse.length; i++) {
+		totalbudgettedExpense += Number(budgetExpenseRecordsToUse[i].amount);
+    }
+
+    let budgetIncomeCheckText = ""
+
+    if (totalbudgettedIncome > totalIncome) {
+        budgetIncomeCheckText = "Congrats! Your income has exceeded the budget!"
+    } else {
+        budgetIncomeCheckText = "You have not hit your budgeted income. Just a bit more to go! "
+    }
+    
+    let budgetExpenseCheckText = ""
+
+    if (totalbudgettedExpense > totalExpenses) {
+        budgetExpenseCheckText = "Your expenses have exceeded the budget!"
+    } else {
+        budgetExpenseCheckText = "Well done! Your expenses are within the budget."
+    }
+
+
+	/* ====================================================
     // Handle Clicks on Income or Expense Tabs
     ==================================================== */
 	const handleIncomeClick = () => {
@@ -147,7 +196,9 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 				totalIncomeString={totalIncomeString}
 				totalExpensesString={totalExpensesString}
 				handleBackArrow={handleBackArrow}
-				handleForwardArrow={handleForwardArrow}
+                handleForwardArrow={handleForwardArrow}
+                budgetIncomeCheckText={budgetIncomeCheckText}
+                budgetExpenseCheckText={budgetExpenseCheckText}
 			/>
 			{/* Income or Expense Tab */}
 			<div className={styles.tabContainer}>

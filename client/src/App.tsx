@@ -12,6 +12,7 @@ import DailyView from "./pages/CalendarView/DailyView";
 import WeeklyView from "./pages/CalendarView/WeeklyView";
 import YTDView from "./pages/CalendarView/YTDView";
 import Budget from "./pages/Budget";
+import Analyse from "./pages/Analyse";
 
 function App() {
 	/* ====================================================
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/monthly" element={<MonthlyView currentViewPage={currentViewPage} />} />
                 <Route path="/ytd" element={<YTDView currentViewPage={currentViewPage} />} />
                 <Route path="/budget" element={<Budget />} />
+                <Route path="/analyse" element={<Analyse />} />
 				<Route path="/settings" element={<Settings />} />
 			</Routes>{" "}
 		</>
