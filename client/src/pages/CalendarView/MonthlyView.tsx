@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import { intToCurrencyString } from "../../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../../components/IncomeExpenseDashboard";
 import IncomeExpenseRow from "../../components/IncomeExpenseRow";
+import noMoneyMeme from "../../assets/you-aint-got-no-money-patricia-carson.gif";
+import giveMeMeme from "../../assets/kitty-kitten.gif";
 
 /* ====================================================
 // Type Declaration
@@ -151,30 +153,29 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 	// Filter budget expense records to those within period we want to display
 	const budgetExpenseRecordsToUse = budgetExpenseRecords.filter((record) => {
 		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
-    });
-    
-    let totalbudgettedExpense = 0;
+	});
+
+	let totalbudgettedExpense = 0;
 
 	for (let i = 0; i < budgetExpenseRecordsToUse.length; i++) {
 		totalbudgettedExpense += Number(budgetExpenseRecordsToUse[i].amount);
-    }
+	}
 
-    let budgetIncomeCheckText = ""
+	let budgetIncomeCheckText = "";
 
-    if (totalbudgettedIncome > totalIncome) {
-        budgetIncomeCheckText = "Congrats! Your income has exceeded the budget!"
-    } else {
-        budgetIncomeCheckText = "You have not hit your budgeted income. Just a bit more to go! "
-    }
-    
-    let budgetExpenseCheckText = ""
+	if (totalbudgettedIncome > totalIncome) {
+		budgetIncomeCheckText = "Congrats! Your have achieved your budgeted income!";
+	} else {
+		budgetIncomeCheckText = "You have not hit your budgeted income. Just a bit more to go! ";
+	}
 
-    if (totalbudgettedExpense > totalExpenses) {
-        budgetExpenseCheckText = "Your expenses have exceeded the budget!"
-    } else {
-        budgetExpenseCheckText = "Well done! Your expenses are within the budget."
-    }
+	let budgetExpenseCheckText = "";
 
+	if (totalbudgettedExpense > totalExpenses) {
+		budgetExpenseCheckText = "Oh no! You have hit your budgeted expenses!";
+	} else {
+		budgetExpenseCheckText = "Well done! Your expenses are within the budget.";
+	}
 
 	/* ====================================================
     // Handle Clicks on Income or Expense Tabs
@@ -187,6 +188,22 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 		setDisplayRecord("Expenses");
 	};
 
+	/* ====================================================
+    // Display Image if there are no records
+    ==================================================== */
+
+	const incomeImage = <img className={styles.meme} src={noMoneyMeme} alt="no-money-meme" />;
+
+	const expenseImage = <img className={styles.meme} src={giveMeMeme} alt="give-me-meme" />;
+
+	let imgToDisplay;
+
+	if (displayRecord === "Income" && datesWithIncomeRecords.length === 0) {
+		imgToDisplay = incomeImage;
+	} else if (displayRecord === "Expenses" && datesWithExpenseRecords.length === 0) {
+		imgToDisplay = expenseImage;
+	}
+
 	return (
 		<div>
 			{/* Dashboard */}
@@ -196,9 +213,9 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 				totalIncomeString={totalIncomeString}
 				totalExpensesString={totalExpensesString}
 				handleBackArrow={handleBackArrow}
-                handleForwardArrow={handleForwardArrow}
-                budgetIncomeCheckText={budgetIncomeCheckText}
-                budgetExpenseCheckText={budgetExpenseCheckText}
+				handleForwardArrow={handleForwardArrow}
+				budgetIncomeCheckText={budgetIncomeCheckText}
+				budgetExpenseCheckText={budgetExpenseCheckText}
 			/>
 			{/* Income or Expense Tab */}
 			<div className={styles.tabContainer}>
@@ -210,8 +227,10 @@ const MonthlyView = ({ currentViewPage }: MonthlyViewProps) => {
 				</div>
 			</div>
 			{/* Income or Expense Records */}
-
-			<div className={styles.rowsContainer}>{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}</div>
+			<div className={styles.rowsContainer}>
+				{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}
+				{imgToDisplay}
+			</div>
 		</div>
 	);
 };

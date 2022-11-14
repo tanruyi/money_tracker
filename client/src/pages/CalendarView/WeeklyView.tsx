@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import { intToCurrencyString } from "../../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../../components/IncomeExpenseDashboard";
 import IncomeExpenseRow from "../../components/IncomeExpenseRow";
+import noMoneyMeme from "../../assets/you-aint-got-no-money-patricia-carson.gif";
+import giveMeMeme from "../../assets/kitty-kitten.gif";
 
 /* ====================================================
 // Type Declaration
@@ -139,6 +141,22 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 		setDisplayRecord("Expenses");
 	};
 
+	/* ====================================================
+    // Display Image if there are no records
+    ==================================================== */
+
+	const incomeImage = <img className={styles.meme} src={noMoneyMeme} alt="no-money-meme" />;
+
+	const expenseImage = <img className={styles.meme} src={giveMeMeme} alt="give-me-meme" />;
+
+	let imgToDisplay;
+
+	if (displayRecord === "Income" && datesWithIncomeRecords.length === 0) {
+		imgToDisplay = incomeImage;
+	} else if (displayRecord === "Expenses" && datesWithExpenseRecords.length === 0) {
+		imgToDisplay = expenseImage;
+	}
+
 	return (
 		<div>
 			{/* Dashboard */}
@@ -159,7 +177,11 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 					<h1>Expenses</h1>
 				</div>
 			</div>
-			{/* Income or Expense Records */} <div className={styles.rowsContainer}>{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}</div>
+			{/* Income or Expense Records */}{" "}
+			<div className={styles.rowsContainer}>
+				{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}
+				{imgToDisplay}
+			</div>
 		</div>
 	);
 };

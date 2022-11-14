@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import { intToCurrencyString } from "../../utilities/utilityFunctions";
 import IncomeExpenseDashboard from "../../components/IncomeExpenseDashboard";
 import IncomeExpenseRow from "../../components/IncomeExpenseRow";
+import noMoneyMeme from "../../assets/you-aint-got-no-money-patricia-carson.gif";
+import giveMeMeme from "../../assets/kitty-kitten.gif";
 
 /* ====================================================
 // Type Declaration
@@ -215,7 +217,7 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 	let budgetIncomeCheckText = "";
 
 	if (totalbudgettedIncome > totalIncome) {
-		budgetIncomeCheckText = "Congrats! Your income has exceeded the budget!";
+		budgetIncomeCheckText = "Congrats! Your have achieved your budgeted income!";
 	} else {
 		budgetIncomeCheckText = "You have not hit your budgeted income. Just a bit more to go! ";
 	}
@@ -223,7 +225,7 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 	let budgetExpenseCheckText = "";
 
 	if (totalbudgettedExpense > totalExpenses) {
-		budgetExpenseCheckText = "Your expenses have exceeded the budget!";
+		budgetExpenseCheckText = "Oh no! You have hit your budgeted expenses!";
 	} else {
 		budgetExpenseCheckText = "Well done! Your expenses are within the budget.";
 	}
@@ -238,6 +240,22 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 	const handleExpensesClick = () => {
 		setDisplayRecord("Expenses");
 	};
+
+	/* ====================================================
+    // Display Image if there are no records
+    ==================================================== */
+
+	const incomeImage = <img className={styles.meme} src={noMoneyMeme} alt="no-money-meme" />;
+
+	const expenseImage = <img className={styles.meme} src={giveMeMeme} alt="give-me-meme" />;
+
+	let imgToDisplay;
+
+	if (displayRecord === "Income" && datesWithIncomeRecords.length === 0) {
+		imgToDisplay = incomeImage;
+	} else if (displayRecord === "Expenses" && datesWithExpenseRecords.length === 0) {
+		imgToDisplay = expenseImage;
+	}
 
 	return (
 		<div>
@@ -262,7 +280,10 @@ const YTDView = ({ currentViewPage }: YTDViewProps) => {
 				</div>
 			</div>
 			{/* Income or Expense Records */}
-			<div className={styles.rowsContainer}>{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}</div>
+			<div className={styles.rowsContainer}>
+				{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}
+				{imgToDisplay}
+			</div>
 		</div>
 	);
 };

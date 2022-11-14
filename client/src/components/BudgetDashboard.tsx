@@ -83,7 +83,7 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 					<h1>{dateHeader}</h1>
 					<div className={styles.dashboardInfo}>
 						<ResponsiveContainer width="100%" height="80%">
-							<BarChart data={data} width={400} height={200} margin={{ top: 15, right: 5, bottom: 5, left: 5 }}>
+							<BarChart data={data} width={400} height={200} margin={{ top: 30, right: 5, bottom: 5, left: 5 }}>
 								<XAxis dataKey="Type" />
 								<Tooltip />
 								<Bar dataKey="Amount">
