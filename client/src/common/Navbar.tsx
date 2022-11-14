@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./Navbar.module.css";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+import { useCurrentUserContext } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -14,10 +15,26 @@ interface NavbarProps {
 }
 
 const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
-	// Updates state in App depending on which link is clicked
+	/* ====================================================
+    // Context
+    ==================================================== */
+	const { currentUserRole } = useCurrentUserContext();
+
+	/* ====================================================
+    // Handles calendar view page to display
+    ==================================================== */
+
 	const handleViewClick = (page: "Daily" | "Weekly" | "Monthly" | "YTD") => {
 		updateCurrentViewPage(page);
 	};
+
+	const adminLink = (
+		<div className={styles.pageLink}>
+			<Link to="/admin">
+				<h1>Admin</h1>
+			</Link>
+		</div>
+	);
 
 	return (
 		// Holding container
@@ -63,6 +80,7 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 						<h1>Settings</h1>
 					</Link>
 				</div>
+				{currentUserRole === "admin" ? adminLink : ""}
 			</div>
 		</div>
 	);

@@ -15,7 +15,7 @@ const Home = () => {
     // Context
     ==================================================== */
 
-	const { updateCurrentUser } = useCurrentUserContext();
+	const { updateCurrentUser, updateCurrentUserRole } = useCurrentUserContext();
 
 	/* ====================================================
     // Log In
@@ -53,6 +53,7 @@ const Home = () => {
 				if ((await response).status === 200) {
 					// On login, updates user id as context
 					updateCurrentUser((await response).data.id);
+					updateCurrentUserRole((await response).data.roleId);
 
 					// Navigates to monthly view page on log in
 					navigate("/monthly");
@@ -136,6 +137,7 @@ const Home = () => {
 		const data = {
 			username,
 			password,
+			roleId: 1,
 		};
 
 		try {

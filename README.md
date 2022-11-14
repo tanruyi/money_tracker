@@ -17,6 +17,7 @@ Money Tracker
     -   Axios
     -   Dayjs
     -   React Router
+    -   Rechart
 
 -   Back-end:
     -   Node.js

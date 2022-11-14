@@ -14,12 +14,20 @@ model Users {
     id         Int          @id @default(autoincrement())
     username   String       @unique @db.VarChar(20)
     password   String       @db.VarChar(100)
+    roleId     Int
+    roleName   Roles        @relation(fields: [roleId], references: [id])
     createdAt  DateTime     @default(now())
     updatedAt  DateTime     @updatedAt
     Categories Categories[]
     Income     Income[]
     Expenses   Expenses[]
     Budget     Budget[]
+}
+
+model Roles {
+    id       Int     @id @default(autoincrement())
+    roleName String  @unique @db.VarChar(20)
+    Users    Users[]
 }
 
 model RecordTypes {

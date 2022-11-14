@@ -55,6 +55,7 @@ const createUser = async (req, res) => {
 			data: {
 				username: req.body.username,
 				password: hashedPW,
+				roleId: req.body.roleId,
 			},
 		});
 
@@ -119,6 +120,7 @@ const logIn = async (req, res) => {
 			access,
 			refresh,
 			id: user.id,
+			roleId: user.roleId,
 		};
 
 		console.log(`login success for ${user.username} id: ${user.id}`);

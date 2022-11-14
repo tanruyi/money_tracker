@@ -13,12 +13,13 @@ import WeeklyView from "./pages/CalendarView/WeeklyView";
 import YTDView from "./pages/CalendarView/YTDView";
 import Budget from "./pages/Budget";
 import Analyse from "./pages/Analyse";
+import Admin from "./pages/Admin";
 
 function App() {
 	/* ====================================================
     // Context
     ==================================================== */
-	const { currentUserId } = useCurrentUserContext();
+	const { currentUserId, currentUserRole } = useCurrentUserContext();
 
 	/* ====================================================
     // HTML Components
@@ -41,11 +42,12 @@ function App() {
 			<Routes>
 				<Route path="/daily" element={<DailyView currentViewPage={currentViewPage} />} />
 				<Route path="/weekly" element={<WeeklyView currentViewPage={currentViewPage} />} />
-                <Route path="/monthly" element={<MonthlyView currentViewPage={currentViewPage} />} />
-                <Route path="/ytd" element={<YTDView currentViewPage={currentViewPage} />} />
-                <Route path="/budget" element={<Budget />} />
-                <Route path="/analyse" element={<Analyse />} />
+				<Route path="/monthly" element={<MonthlyView currentViewPage={currentViewPage} />} />
+				<Route path="/ytd" element={<YTDView currentViewPage={currentViewPage} />} />
+				<Route path="/budget" element={<Budget />} />
+				<Route path="/analyse" element={<Analyse />} />
 				<Route path="/settings" element={<Settings />} />
+				{currentUserRole === "admin" ? <Route path="/admin" element={<Admin />} /> : ""}
 			</Routes>{" "}
 		</>
 	);

@@ -63,6 +63,8 @@ interface CurrentUserContextProviderProps {
 interface CurrentUserContextType {
 	currentUserId: UserId;
 	updateCurrentUser: (id: number) => void;
+	currentUserRole: "user" | "admin";
+	updateCurrentUserRole: (roleId: number) => void;
 	refreshData: () => void;
 	categories: Category[];
 	incomeRecords: Income[];
@@ -96,11 +98,21 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	const updateCurrentUser = (id: number) => setCurrentUserId(id);
 
+	// This stores the role of the current logged in user
+	const [currentUserRole, setCurrentUserRole] = useState<"user" | "admin">("user");
+
+	const updateCurrentUserRole = (roleId: number) => {
+		if (roleId === 1) {
+			setCurrentUserRole("user");
+		} else if (roleId === 2) {
+			setCurrentUserRole("admin");
+		}
+	};
+
 	// If this is true, rerun getAllUserData to get updated data from db
 	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
 
 	const refreshData = () => {
-		// Change to true
 		setRefreshCurrentUserData((prevState) => (prevState += 1));
 	};
 
@@ -146,5 +158,9 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		}
 	}, [currentUserId, refreshCurrentUserData]);
 
-	return <CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, refreshData, categories, incomeRecords, expenseRecords, budgets }}>{children}</CurrentUserContext.Provider>;
+	return (
+		<CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, currentUserRole, updateCurrentUserRole, refreshData, categories, incomeRecords, expenseRecords, budgets }}>
+			{children}
+		</CurrentUserContext.Provider>
+	);
 }
