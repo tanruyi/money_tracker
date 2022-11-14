@@ -13,7 +13,7 @@ const express = require("express");
 const adminRouter = express.Router();
 
 // Import routes
-const { deleteAccount, resetPw } = require("../controllers/admin");
+const { deleteAccount, resetPw, findAccount } = require("../controllers/admin");
 
 /* =========================================
 // ROUTER
@@ -21,6 +21,9 @@ const { deleteAccount, resetPw } = require("../controllers/admin");
 
 // Reset password
 adminRouter.patch("/reset_pw", resetPw);
+
+// Gets id, username & role id for a user
+adminRouter.get("/find_account/:username", findAccount);
 
 // Deletes all data and account for a user
 adminRouter.delete("/delete_account", deleteAccount);

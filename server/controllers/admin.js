@@ -54,6 +54,38 @@ const resetPw = async (req, res) => {
 	}
 };
 
+// Gets id, username & role id for a user
+const findAccount = async (req, res) => {
+	if (!req?.params?.username) {
+		return res.status(400).json({ status: "error", message: "username required" });
+	}
+
+	try {
+		const user = await prisma.users.findUnique({
+			where: {
+				username: req.params.username,
+			},
+		});
+
+		// Returns error message if the username does not exist
+		if (!user) {
+			return res.status(401).json({ status: "error", message: "no such username exists" });
+		}
+
+		const response = {
+			id: user.id,
+			username: user.username,
+			roleId: user.roleId,
+		};
+
+		console.log(`found user of username: ${req.params.username}`);
+		res.json(response);
+	} catch (err) {
+		console.error("GET /admin/find_account", err);
+		res.status(400).json({ status: "error", message: "failed to find user" });
+	}
+};
+
 // Deletes all data and account for a user
 const deleteAccount = async (req, res) => {
 	// Checks whether userId is provided, if not throw error
@@ -106,5 +138,6 @@ const deleteAccount = async (req, res) => {
 ========================================= */
 module.exports = {
 	deleteAccount,
+	findAccount,
 	resetPw,
 };

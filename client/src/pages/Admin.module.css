@@ -3,4 +3,14 @@
 .container {
 	background-color: #1f2833;
 	height: 92vh;
+	padding-top: 1vh;
+}
+
+.block {
+	background-color: white;
+	width: 80vw;
+	height: 50vh;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1rem;
 }
