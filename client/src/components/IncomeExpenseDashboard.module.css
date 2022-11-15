@@ -1,24 +1,29 @@
 /** @format */
 
 .container {
-	background-color: #1f2833;
+	background-color: var(--base);
 	height: 40vh;
 }
 .dashboard {
 	margin-left: auto;
 	margin-right: auto;
-	padding: 6vh 0;
-	width: 40vw;
+	padding: 4vh 0;
+	width: 55vw;
+    height: 38vh;
 	display: flex;
 }
 
 .dashboardHeader {
-	color: #45a29e;
-	background-color: white;
-	width: 35vw;
+	color: var(--base);
+	background-color: var(--color5);
+	width: 55vw;
 	padding: 1rem 4rem;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.dateHeader {
+	font-size: 2.2rem;
 }
 
 .dashboardInfo {

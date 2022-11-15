@@ -289,10 +289,10 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 						</FormControl>
 						{/* Detail text field */}
 						<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
-						<p>{newRecordInput.detailCharacterCount}/50</p>
+						<p style={{ textAlign: "right" }}>{newRecordInput.detailCharacterCount}/50 characters left</p>
 						{/* Note text field */}
 						<TextField label="Note" multiline minRows={5} value={newRecordInput.note} onChange={handleNote} />
-						<p>{newRecordInput.noteCharacterCount}/200</p>
+						<p style={{ textAlign: "right" }}>{newRecordInput.noteCharacterCount}/200 characters left</p>
 					</Stack>
 				</Box>
 			</DialogContent>

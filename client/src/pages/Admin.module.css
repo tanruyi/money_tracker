@@ -1,13 +1,13 @@
 /** @format */
 
 .container {
-	background-color: #1f2833;
+	background-color: var(--base);
 	height: 92vh;
-	padding-top: 1vh;
+	padding-top: 2rem;
+    color: var(--color8);
 }
 
 .block {
-	background-color: white;
 	width: 80vw;
 	height: 50vh;
 	margin-left: auto;

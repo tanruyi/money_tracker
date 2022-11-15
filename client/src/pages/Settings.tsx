@@ -125,12 +125,13 @@ const Settings = () => {
 
 	return (
 		<div className={styles.container}>
-			<h1>Settings</h1>
 			<div className={styles.categoriesBox}>
-				<h2>Categories</h2>
-				<Fab sx={{ marginLeft: "85vw", bgcolor: "#66fcf1" }} onClick={handleClickOpen}>
-					<AddIcon />
-				</Fab>
+				<div className={styles.headerBox}>
+					<h1>Categories</h1>
+					<Fab sx={{ marginLeft: "75vw", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
+						<AddIcon />
+					</Fab>
+				</div>
 				<div className={styles.categoriesList}>
 					<div className={styles.typeContainer}>
 						<h2>Income</h2>

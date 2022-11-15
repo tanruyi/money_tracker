@@ -75,31 +75,31 @@ const IncomeExpenseDashboard = ({
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
-				<IconButton onClick={handleBackArrow}>
-					<ArrowBackIosNewIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon />
 				</IconButton>
 				<div className={styles.dashboardHeader}>
-					<h1>{dateHeader}</h1>
+					<h1 className={styles.dateHeader}>{dateHeader}</h1>
 					<div className={styles.dashboardInfo}>
 						{/* Split the dashboard info to 2 columns displayed side by side */}
-						<div className={styles.dashboardInfoColumn}>
-							<h3>Expenses for the {periodType}: </h3>
-							<h1>${totalExpensesString}</h1>
-							<h4>{budgetExpenseCheckText}</h4>
-						</div>
 						<div className={styles.dashboardInfoColumn}>
 							<h3>Income for the {periodType}:</h3>
 							<h1>${totalIncomeString}</h1>
 							<h4>{budgetIncomeCheckText}</h4>
 						</div>
+						<div className={styles.dashboardInfoColumn}>
+							<h3>Expenses for the {periodType}: </h3>
+							<h1>${totalExpensesString}</h1>
+							<h4>{budgetExpenseCheckText}</h4>
+						</div>
 					</div>
 				</div>
-				<IconButton onClick={handleForwardArrow}>
-					<ArrowForwardIosIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon />
 				</IconButton>
 			</div>
 			{/* Create new record button */}
-			<Fab sx={{ margin: "0 48.8vw", bgcolor: "#66fcf1" }} onClick={handleClickOpen}>
+			<Fab sx={{ marginLeft: "90vw", marginTop: "-7vh", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
 				<AddIcon />
 			</Fab>
 			{/* Form dialog for new record - opens on click of new record button */}

@@ -1,7 +1,6 @@
 /** @format */
 
 .container,
-.logo,
 .pageLinkContainer {
 	height: 8vh;
 }
@@ -16,7 +15,7 @@
 	font-family: "League Spartan", sans-serif;
 	font-size: 2rem;
 	color: var(--base);
-	margin: auto 1rem;
+	margin: auto 3rem;
 }
 
 .pageLinkContainer {

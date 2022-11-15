@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState } from "react";
-import styles from "./IncomeExpenseRow.module.css";
+import styles from "./BudgetRow.module.css";
 import icon from "../assets/cocoa.png";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";

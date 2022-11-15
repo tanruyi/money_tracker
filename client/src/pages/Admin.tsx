@@ -92,7 +92,7 @@ const Admin = () => {
 		}
 
 		resultToDisplay = (
-			<TableContainer component={Paper}>
+			<TableContainer component={Paper} >
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -106,7 +106,7 @@ const Admin = () => {
 							<TableCell>{accountFound.id}</TableCell>
 							<TableCell>{accountFound.username}</TableCell>
 							<TableCell>{role}</TableCell>
-							<TableCell>
+							<TableCell sx={{width: "20vh"}}>
 								<Button variant="contained" onClick={handleDeleteButton}>
 									Delete Account
 								</Button>
@@ -120,12 +120,11 @@ const Admin = () => {
 
 	return (
 		<div className={styles.container}>
-			<h1>Admin</h1>
 			<div className={styles.block}>
-				<h2>Delete Account</h2>
-				<Box>
+				<h1>Delete Account</h1>
+				<Box sx={{ marginBottom: "2rem", display: "flex", alignItems: "baseline" }}>
 					<TextField id="search-username" label="Search by Username" variant="outlined" value={usernameToSearch} onChange={handleUsernameInput} />
-					<Button variant="contained" onClick={handleSearchButton}>
+					<Button variant="contained" onClick={handleSearchButton} size="large" sx={{ marginLeft: "2rem" }}>
 						Search
 					</Button>
 				</Box>

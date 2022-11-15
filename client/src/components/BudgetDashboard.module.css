@@ -1,7 +1,7 @@
 /** @format */
 
 .container {
-	background-color: #1f2833;
+	background-color: var(--base);
 	height: 40vh;
 }
 .dashboard {
@@ -9,16 +9,19 @@
 	margin-right: auto;
 	padding: 6vh 0;
 	width: 40vw;
+    height: 38vh;
 	display: flex;
 }
 
 .dashboardHeader {
-	color: #45a29e;
-	background-color: white;
+	color: var(--color5);
+	background-color: var(--base);
 	width: 35vw;
 	padding: 1rem 4rem;
 	margin-left: auto;
 	margin-right: auto;
+	border: 3px solid var(--color5);
+	border-radius: 1rem;
 }
 
 .dashboardInfo {

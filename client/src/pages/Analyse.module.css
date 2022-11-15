@@ -1,52 +1,59 @@
 /** @format */
 
 .container {
-	background-color: #1f2833;
+	background-color: var(--base);
 	height: 92vh;
-	color: white;
-}
-
-.container h1 {
-	margin-top: 0;
+	color: var(--color8);
 }
 
 .buttonsContainer {
-    display: flex;
+	display: flex;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .typeButtonContainer {
+	font-weight: bold;
+    text-align: center;
 	color: #1f2833;
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-around;
 	width: 50vw;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 2rem;
 }
 
-.typeButton, .typeButtonActive {
-	width: 40%;
+.typeButton,
+.typeButtonActive {
+	width: 30%;
 	padding: 1rem;
-    cursor: pointer;
+	cursor: pointer;
+    border-radius: 1rem;
 }
 
 .typeButton {
-    background-color: white;
+	background-color: var(--color3);
 }
 
 .typeButtonActive {
-    background-color: red;
+	background-color: var(--emphasise);
+}
+
+.container h1 {
+	text-align: center;
 }
 
 .chartContainer {
-    display: flex;
+	display: flex;
+    justify-content: center;
 }
 
 .chartBox {
 	width: 80vw;
 	height: 70vh;
 	background-color: white;
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 2vw;
+	margin-right: 2vw;
 }
-

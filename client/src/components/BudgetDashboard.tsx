@@ -76,29 +76,29 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
-				<IconButton onClick={handleBackArrow}>
-					<ArrowBackIosNewIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon />
 				</IconButton>
 				<div className={styles.dashboardHeader}>
 					<h1>{dateHeader}</h1>
 					<div className={styles.dashboardInfo}>
 						<ResponsiveContainer width="100%" height="80%">
-							<BarChart data={data} width={400} height={200} margin={{ top: 30, right: 5, bottom: 5, left: 5 }}>
+							<BarChart data={data} width={400} height={200} margin={{ top: 20, right: 5, bottom: 5, left: 5 }}>
 								<XAxis dataKey="Type" />
 								<Tooltip />
-								<Bar dataKey="Amount">
+								<Bar dataKey="Amount" fill="var(--emphasise)">
 									<LabelList dataKey="Amount" position="top" />
 								</Bar>
 							</BarChart>
 						</ResponsiveContainer>
 					</div>
 				</div>
-				<IconButton onClick={handleForwardArrow}>
-					<ArrowForwardIosIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon />
 				</IconButton>
 			</div>
 			{/* Create new record button */}
-			<Fab sx={{ margin: "0 48.8vw", bgcolor: "#66fcf1" }} onClick={handleClickOpen}>
+			<Fab sx={{ marginLeft: "48.8vw", marginTop: "-7vh", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
 				<AddIcon />
 			</Fab>
 			{/* Form dialog for new record - opens on click of new record button */}

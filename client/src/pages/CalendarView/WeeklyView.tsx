@@ -177,7 +177,7 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 					<h1>Expenses</h1>
 				</div>
 			</div>
-			{/* Income or Expense Records */}{" "}
+			{/* Income or Expense Records */}
 			<div className={styles.rowsContainer}>
 				{displayRecord === "Income" ? incomeRecordRows : expenseRecordRows}
 				{imgToDisplay}

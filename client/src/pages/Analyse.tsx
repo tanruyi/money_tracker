@@ -248,26 +248,26 @@ const Analyse = () => {
 			</div>
 			<h1>{dateHeader}</h1>
 			<div className={styles.chartContainer}>
-				<IconButton onClick={handleBackArrow}>
-					<ArrowBackIosNewIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon />
 				</IconButton>
 				<div className={styles.chartBox}>
 					<ResponsiveContainer height="100%" width="100%">
 						<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 20, left: 20 }}>
-							<XAxis dataKey="Category" />
-							<YAxis label={{ value: "Amount", angle: -90, position: "insideLeft" }} />
+							<XAxis dataKey="Category" label={{ value: "Categories", position: "bottom" }} />
+							<YAxis label={{ value: "Amount", angle: -90, position: "left" }} />
 							<Tooltip />
-							<Bar dataKey="Actual" fill="red">
+							<Bar dataKey="Actual" fill="var(--emphasise)">
 								<LabelList dataKey="Actual" position="top" />
 							</Bar>
-							<Bar dataKey="Budget" fill="blue">
+							<Bar dataKey="Budget" fill="var(--color5)">
 								<LabelList dataKey="Budget" position="top" />
 							</Bar>
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
-				<IconButton onClick={handleForwardArrow}>
-					<ArrowForwardIosIcon sx={{ color: "white" }} />
+				<IconButton sx={{ color: "var(--color10)" }} onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon />
 				</IconButton>
 			</div>
 		</div>

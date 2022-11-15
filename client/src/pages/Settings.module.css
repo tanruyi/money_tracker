@@ -1,17 +1,20 @@
 /** @format */
 
 .container {
-	height: 100vh;
+	min-height: 92vh;
 	width: 100%;
-	padding: 2vh 3vh 4vh;
-	background-color: #1f2833;
-	color: #66fcf1;
+	padding: 2vh 3vh 0;
+	background-color: var(--base);
+	color: var(--color8);
 }
 
 .categoriesBox {
-	background-color: #c5c6c7;
 	padding: 2vh 3vh 4vh;
 	margin: 2vh;
+}
+
+.headerBox {
+	display: flex;
 }
 
 .categoriesList {
@@ -26,6 +29,6 @@
 }
 
 thisIsEmpty {
-	color: black;
+	color: var(--contrast);
 	text-align: center;
 }

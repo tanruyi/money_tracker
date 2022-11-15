@@ -8,7 +8,7 @@
 .tabContainer {
 	display: flex;
 	width: 100%;
-	background-color: #1f2833;
+	background-color: var(--base);
 }
 
 .tab,
@@ -16,19 +16,19 @@
 .tabActive {
 	width: 50%;
 	text-align: center;
-	background-color: #45a29e;
 	border-radius: 2rem 2rem 0 0;
 	cursor: pointer;
-	color: #0b0c10;
 }
 
 .tab {
-	background-color: #45a29e;
+	background-color: var(--color8);
+	color: var(--base);
 }
 
 .tab:hover,
 .tabActive {
-	background-color: #66fcf1;
+	background-color: var(--color3);
+	color: var(--contrast);
 }
 
 .tab h1 {
@@ -37,7 +37,7 @@
 }
 
 .rowsContainer {
-	background-color: #c5c6c7;
+	background-color: var(--color3);
 	width: 100%;
 	min-height: 47vh;
 	padding: 2vh 0;
