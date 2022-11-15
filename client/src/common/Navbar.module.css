@@ -7,8 +7,16 @@
 }
 
 .container {
-	background-color: var(--color1);
+	background-color: var(--color10);
 	display: flex;
+	justify-content: space-between;
+}
+
+.title {
+	font-family: "League Spartan", sans-serif;
+	font-size: 2rem;
+	color: var(--base);
+	margin: auto 1rem;
 }
 
 .pageLinkContainer {
@@ -17,9 +25,23 @@
 }
 
 .pageLink {
-	margin: 1vw;
+	margin: auto 1rem;
 }
 
-.pageLink h1 {
-	color: #c5c6c7;
+.pageLink a {
+	text-decoration: none;
+}
+
+.pageTitle, .pageTitleActive {
+	color: var(--base);
+	height: 100%;
+	margin: auto 1rem;
+}
+
+.pageTitle {
+	color: var(--base);
+}
+
+.pageTitle:hover, .pageTitleActive {
+    color: var(--emphasise);
 }

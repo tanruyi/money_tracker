@@ -1,8 +1,7 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Navbar.module.css";
-import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useCurrentUserContext } from "../context/currentUserContext";
 
@@ -28,10 +27,14 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 		updateCurrentViewPage(page);
 	};
 
+	/* ====================================================
+    // Saves current page
+    ==================================================== */
+
 	const adminLink = (
 		<div className={styles.pageLink}>
 			<Link to="/admin">
-				<h1>Admin</h1>
+				<h1 className={styles.pageTitle}>Admin</h1>
 			</Link>
 		</div>
 	);
@@ -39,45 +42,44 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 	return (
 		// Holding container
 		<div className={styles.container}>
-			{/* Logo Image */}
-			<img className={styles.logo} src={logo} alt="logo" />
-
+			{/* Title */}
+			<h3 className={styles.title}>Money Tracker</h3>
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
 				{/* TODO: Add routes for below */}
 				<div className={styles.pageLink}>
 					<Link to="/daily" onClick={() => handleViewClick("Daily")}>
-						<h1>Daily</h1>
+						<h1 className={styles.pageTitle}>Daily</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/weekly" onClick={() => handleViewClick("Weekly")}>
-						<h1>Weekly</h1>
+						<h1 className={styles.pageTitle}>Weekly</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/monthly" onClick={() => handleViewClick("Monthly")}>
-						<h1>Monthly</h1>
+						<h1 className={styles.pageTitle}>Monthly</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/ytd" onClick={() => handleViewClick("YTD")}>
-						<h1>YTD</h1>
+						<h1 className={styles.pageTitle}>YTD</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/budget">
-						<h1>Budget</h1>
+						<h1 className={styles.pageTitle}>Budget</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/analyse">
-						<h1>Analyse</h1>
+						<h1 className={styles.pageTitle}>Analyse</h1>
 					</Link>
 				</div>
 				<div className={styles.pageLink}>
 					<Link to="/settings">
-						<h1>Settings</h1>
+						<h1 className={styles.pageTitle}>Settings</h1>
 					</Link>
 				</div>
 				{currentUserRole === "admin" ? adminLink : ""}
