@@ -1,5 +1,23 @@
 /** @format */
 
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap");
+
+:root {
+	--base: #faf9f9;
+	--contrast: #22223b;
+	--emphasise: #ffbe0b;
+	--color1: #99e2b4;
+	--color2: #88d4ab;
+	--color3: #78c6a3;
+	--color4: #67b99a;
+	--color5: #56ab91;
+	--color6: #469d89;
+	--color7: #358f80;
+	--color8: #248277;
+	--color9: #14746f;
+	--color10: #036666;
+}
+
 * {
 	box-sizing: border-box;
 }
