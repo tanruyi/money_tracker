@@ -10,10 +10,43 @@
 	margin-top: 0;
 }
 
+.buttonsContainer {
+    display: flex;
+}
+
+.typeButtonContainer {
+	color: #1f2833;
+	display: flex;
+    justify-content: space-between;
+	width: 50vw;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2rem;
+}
+
+.typeButton, .typeButtonActive {
+	width: 40%;
+	padding: 1rem;
+    cursor: pointer;
+}
+
+.typeButton {
+    background-color: white;
+}
+
+.typeButtonActive {
+    background-color: red;
+}
+
 .chartContainer {
+    display: flex;
+}
+
+.chartBox {
 	width: 80vw;
 	height: 70vh;
 	background-color: white;
 	margin-left: auto;
 	margin-right: auto;
 }
+

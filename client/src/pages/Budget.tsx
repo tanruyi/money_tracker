@@ -249,11 +249,11 @@ const Budget = () => {
 	/* ====================================================
     // Handle Clicks on Monthly or YTD Tabs
     ==================================================== */
-	const handleIncomeClick = () => {
+	const handleMonthlyClick = () => {
 		setCurrentPeriodView("Monthly");
 	};
 
-	const handleExpensesClick = () => {
+	const handleYTDClick = () => {
 		setCurrentPeriodView("YTD");
 	};
 
@@ -270,10 +270,10 @@ const Budget = () => {
 			/>
 			{/* Monthly or YTD Tab */}
 			<div className={styles.tabContainer}>
-				<div className={currentPeriodView === "Monthly" ? styles.tabActive : styles.tab} onClick={handleIncomeClick}>
+				<div className={currentPeriodView === "Monthly" ? styles.tabActive : styles.tab} onClick={handleMonthlyClick}>
 					<h1>Monthly</h1>
 				</div>
-				<div className={currentPeriodView === "YTD" ? styles.tabActive : styles.tab} onClick={handleExpensesClick}>
+				<div className={currentPeriodView === "YTD" ? styles.tabActive : styles.tab} onClick={handleYTDClick}>
 					<h1>YTD</h1>
 				</div>
 			</div>

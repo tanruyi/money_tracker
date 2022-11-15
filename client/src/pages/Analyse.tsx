@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import styles from "./Analyse.module.css";
 import { useCurrentUserContext, Budget } from "../context/currentUserContext";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IconButton } from "@mui/material";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 
 /* ====================================================
 // Type Declaration
@@ -34,6 +40,71 @@ const Analyse = () => {
 	const [currentPeriodView, setCurrentPeriodView] = useState<"Monthly" | "YTD">("Monthly");
 
 	/* ====================================================
+    // Date for display
+    ==================================================== */
+
+	// This is the dayjs object for today's date
+	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
+
+	const handleBackArrow = () => {
+		if (currentPeriodView === "Monthly") {
+			setDateToDisplay((prevState) => prevState.subtract(1, "month"));
+		} else if (currentPeriodView === "YTD") {
+			setDateToDisplay((prevState) => prevState.subtract(1, "year"));
+		}
+	};
+
+	const handleForwardArrow = () => {
+		if (currentPeriodView === "Monthly") {
+			setDateToDisplay((prevState) => prevState.add(1, "month"));
+		} else if (currentPeriodView === "YTD") {
+			setDateToDisplay((prevState) => prevState.add(1, "year"));
+		}
+	};
+
+	/* ====================================================
+    // Filtered Income Records for Date to Display
+    ==================================================== */
+
+	// Filter income records to those with mth & yr we want to display
+	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
+		const dateToCompare = dayjs(record.date);
+
+		return dateToDisplay.isSame(dateToCompare, "month");
+	});
+
+	/* ====================================================
+    // Filtered Expense Records for Date to Display
+    ==================================================== */
+
+	// Filter expense records to those with mth & yr we want to display
+	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
+		const dateToCompare = dayjs(record.date);
+
+		return dateToDisplay.isSame(dateToCompare, "month");
+	});
+
+	/* ====================================================
+    // Filtered Budget Records for Date to Display
+    ==================================================== */
+
+	let budgetRecordsToUse: Budget[] | [] = [];
+
+	// Filter for budget records depending on whether it is Income or Expense currently displayed
+	if (displayRecord === "Income") {
+		budgetRecordsToUse = budgets.filter((record) => record.recordId === 1);
+	} else if (displayRecord === "Expenses") {
+		budgetRecordsToUse = budgets.filter((record) => record.recordId === 2);
+	}
+
+	// Filter budget income records to those within period we want to display, start mth & end mth inclusive
+	let budgetRecordsToDisplay = budgetRecordsToUse.filter((record) => {
+		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
+	});
+
+	console.log("budgetRecordsToDisplay", budgetRecordsToDisplay);
+
+	/* ====================================================
     // Data to pass to bar chart
     ==================================================== */
 
@@ -55,9 +126,9 @@ const Analyse = () => {
 		if (displayRecord === "Income") {
 			let totalActual = 0;
 
-			for (let j = 0; j < incomeRecords.length; j++) {
-				if (incomeRecords[j].categoryId === categories[i].id) {
-					totalActual += Number(incomeRecords[j].amount);
+			for (let j = 0; j < incomeRecordsToDisplay.length; j++) {
+				if (incomeRecordsToDisplay[j].categoryId === categories[i].id) {
+					totalActual += Number(incomeRecordsToDisplay[j].amount);
 				}
 			}
 
@@ -65,9 +136,9 @@ const Analyse = () => {
 		} else if (displayRecord === "Expenses") {
 			let totalActual = 0;
 
-			for (let j = 0; j < expenseRecords.length; j++) {
-				if (expenseRecords[j].categoryId === categories[i].id) {
-					totalActual += Number(expenseRecords[j].amount);
+			for (let j = 0; j < expenseRecordsToDisplay.length; j++) {
+				if (expenseRecordsToDisplay[j].categoryId === categories[i].id) {
+					totalActual += Number(expenseRecordsToDisplay[j].amount);
 				}
 			}
 
@@ -75,21 +146,41 @@ const Analyse = () => {
 		}
 
 		// Add total budgeted amount for category to newDataObject
-		let budgetRecordsToUse: Budget[] | [] = [];
-
-		// Filter for budget records depending on whether it is Income or Expense currently displayed
-		if (displayRecord === "Income") {
-			budgetRecordsToUse = budgets.filter((record) => record.recordId === 1);
-		} else if (displayRecord === "Expenses") {
-			budgetRecordsToUse = budgets.filter((record) => record.recordId === 2);
-		}
-
 		let totalBudgeted = 0;
 
-		if (budgetRecordsToUse.length > 0) {
-			for (let k = 0; k < budgetRecordsToUse.length; k++) {
-				if (budgetRecordsToUse[k].categoryId === categories[i].id) {
-					totalBudgeted += Number(budgetRecordsToUse[k].amount);
+		if (currentPeriodView === "Monthly") {
+			for (let k = 0; k < budgetRecordsToDisplay.length; k++) {
+				if (budgetRecordsToDisplay[k].categoryId === categories[i].id) {
+					totalBudgeted += Number(budgetRecordsToDisplay[k].amount);
+				}
+			}
+		} else if (currentPeriodView === "YTD") {
+			for (let k = 0; k < budgetRecordsToDisplay.length; k++) {
+				if (budgetRecordsToDisplay[k].categoryId === categories[i].id) {
+					const startMth = dayjs(budgetRecordsToDisplay[k].startMonth);
+					const endMth = dayjs(budgetRecordsToDisplay[k].endMonth);
+
+					const currentYr = dateToDisplay.format("YYYY");
+
+					const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
+					const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
+
+					let noOfMonths = 0;
+
+					const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
+					const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
+
+					if (startMthWithinYr && endMthWithinYr) {
+						noOfMonths = endMth.diff(startMth, "month") + 1;
+					} else if (!startMthWithinYr && endMthWithinYr) {
+						noOfMonths = endMth.diff(startofYr, "month") + 1;
+					} else if (!startMthWithinYr && !endMthWithinYr) {
+						noOfMonths = endofYr.diff(startofYr, "month") + 1;
+					} else if (startMthWithinYr && !endMthWithinYr) {
+						noOfMonths = endofYr.diff(startMth, "month") + 1;
+					}
+
+					totalBudgeted += noOfMonths * Number(budgetRecordsToDisplay[k].amount);
 				}
 			}
 		}
@@ -100,26 +191,84 @@ const Analyse = () => {
 	}
 
 	/* ====================================================
-    // Get total income for each category for current displayed period
+    // Handle Clicks on Monthly or YTD Buttons
     ==================================================== */
+	const handleMonthlyClick = () => {
+		setCurrentPeriodView("Monthly");
+	};
+
+	const handleYTDClick = () => {
+		setCurrentPeriodView("YTD");
+	};
+
+	/* ====================================================
+    // Handle Clicks on Income or Expense Buttons
+    ==================================================== */
+	const handleIncomeClick = () => {
+		setDisplayRecord("Income");
+	};
+
+	const handleExpensesClick = () => {
+		setDisplayRecord("Expenses");
+	};
+
+	/* ====================================================
+    // Handle HTML text to display for title
+    ==================================================== */
+	let dateHeader = "";
+	let periodType = "";
+
+	if (currentPeriodView === "Monthly") {
+		dateHeader = dateToDisplay.format("MMM YYYY");
+		periodType = "month";
+	} else if (currentPeriodView === "YTD") {
+		dateHeader = `Year ${dateToDisplay.year()}`;
+		periodType = "year";
+	}
 
 	return (
 		<div className={styles.container}>
-			<h1>Budget vs Actual</h1>
+			<div className={styles.buttonsContainer}>
+				<div className={styles.typeButtonContainer}>
+					<div className={displayRecord === "Income" ? styles.typeButtonActive : styles.typeButton} onClick={handleIncomeClick}>
+						Income
+					</div>
+					<div className={displayRecord === "Expenses" ? styles.typeButtonActive : styles.typeButton} onClick={handleExpensesClick}>
+						Expenses
+					</div>
+				</div>
+				<div className={styles.typeButtonContainer}>
+					<div id="monthly-button" className={currentPeriodView === "Monthly" ? styles.typeButtonActive : styles.typeButton} onClick={handleMonthlyClick}>
+						Monthly
+					</div>
+					<div id="YTD-button" className={currentPeriodView === "YTD" ? styles.typeButtonActive : styles.typeButton} onClick={handleYTDClick}>
+						YTD
+					</div>
+				</div>
+			</div>
+			<h1>{dateHeader}</h1>
 			<div className={styles.chartContainer}>
-				<ResponsiveContainer height="100%" width="100%">
-					<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 20, left: 20 }}>
-                        <XAxis dataKey="Category" />
-                        <YAxis label={{ value: "Amount", angle: -90, position: 'insideLeft' }} />
-						<Tooltip />
-						<Bar dataKey="Actual" fill="red">
-							<LabelList dataKey="Actual" position="top" />
-						</Bar>
-						<Bar dataKey="Budget" fill="blue">
-							<LabelList dataKey="Budget" position="top" />
-						</Bar>
-					</BarChart>
-				</ResponsiveContainer>
+				<IconButton onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon sx={{ color: "white" }} />
+				</IconButton>
+				<div className={styles.chartBox}>
+					<ResponsiveContainer height="100%" width="100%">
+						<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 20, left: 20 }}>
+							<XAxis dataKey="Category" />
+							<YAxis label={{ value: "Amount", angle: -90, position: "insideLeft" }} />
+							<Tooltip />
+							<Bar dataKey="Actual" fill="red">
+								<LabelList dataKey="Actual" position="top" />
+							</Bar>
+							<Bar dataKey="Budget" fill="blue">
+								<LabelList dataKey="Budget" position="top" />
+							</Bar>
+						</BarChart>
+					</ResponsiveContainer>
+				</div>
+				<IconButton onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon sx={{ color: "white" }} />
+				</IconButton>
 			</div>
 		</div>
 	);
