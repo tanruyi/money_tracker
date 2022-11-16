@@ -8,6 +8,7 @@ import whyMeme from "../assets/confused-white-persian-guardian.gif";
 import { Fab, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { createCategoryAPI } from "../apis/categories";
+import { useNavigate } from "react-router-dom";
 
 /* ====================================================
 // Type Declaration
@@ -19,11 +20,13 @@ interface newCategoryData {
 }
 
 const Settings = () => {
+	const navigate = useNavigate();
+
 	/* ====================================================
     // Context
     ==================================================== */
 
-	const { currentUserId, categories, refreshData } = useCurrentUserContext();
+	const { currentUserId, updateCurrentUser, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Filter categories to income & expense types
@@ -123,9 +126,18 @@ const Settings = () => {
 		}
 	};
 
+	/* ====================================================
+    // Handle log out
+    ==================================================== */
+
+	const handleLogOut = () => {
+		updateCurrentUser(0);
+		navigate("/");
+	};
+
 	return (
 		<div className={styles.container}>
-			<div className={styles.categoriesBox}>
+			<div className={styles.itemBox}>
 				<div className={styles.headerBox}>
 					<h1>Categories</h1>
 					<Fab sx={{ marginLeft: "75vw", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
@@ -142,6 +154,12 @@ const Settings = () => {
 						{expenseCategories.length > 0 ? expenseCategoriesToDisplay : toDisplayIfNoCategories}{" "}
 					</div>
 				</div>
+			</div>
+			<div className={styles.itemBox}>
+				<h1>Log Out</h1>
+				<h2 className={styles.logOutLink} onClick={handleLogOut}>
+					Click here to log out
+				</h2>
 			</div>
 			{/* Form Dialog, only visible when open */}
 			<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>

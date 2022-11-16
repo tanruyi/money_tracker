@@ -8,7 +8,7 @@
 	color: var(--color8);
 }
 
-.categoriesBox {
+.itemBox {
 	padding: 2vh 3vh 4vh;
 	margin: 2vh;
 }
@@ -28,7 +28,16 @@
 	padding: 2vh 3vh 4vh;
 }
 
-thisIsEmpty {
+.thisIsEmpty {
 	color: var(--contrast);
 	text-align: center;
+}
+
+.logOutLink {
+	color: var(--contrast);
+	cursor: pointer;
+}
+
+.logOutLink:hover {
+	color: var(--emphasise);
 }

@@ -55,7 +55,6 @@ function App() {
 	return (
 		<>
 			{currentUserId === 0 ? defaultPages : mainPages}
-			{/* {mainPages} */}
 		</>
 	);
 }
