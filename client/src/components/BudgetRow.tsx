@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./BudgetRow.module.css";
-import icon from "../assets/cocoa.png";
+import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import dayjs from "dayjs";

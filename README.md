@@ -34,3 +34,4 @@ Money Tracker
 -   https://fonts.google.com/specimen/League+Spartan
 -   https://tenor.com/view/kitty-kitten-lazy-pet-me-give-me-give-me-gif-16322510
 -   https://tenor.com/view/you-aint-got-no-money-patricia-carson-the-ms-pat-show-youre-poor-you-dont-have-money-gif-25239898
+-   https://www.iconfinder.com/icons/3827994/business_cash_management_money_icon
