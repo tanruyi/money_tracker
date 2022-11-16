@@ -99,7 +99,7 @@ const IncomeExpenseDashboard = ({
 				</IconButton>
 			</div>
 			{/* Create new record button */}
-			<Fab sx={{ marginLeft: "90vw", marginTop: "-7vh", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
+			<Fab sx={{ marginLeft: "90vw", marginTop: "-8vh", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
 				<AddIcon />
 			</Fab>
 			{/* Form dialog for new record - opens on click of new record button */}

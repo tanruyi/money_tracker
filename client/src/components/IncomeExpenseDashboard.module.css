@@ -2,14 +2,14 @@
 
 .container {
 	background-color: var(--base);
-	height: 40vh;
+	height: 35vh;
 }
 .dashboard {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 4vh 0;
-	width: 55vw;
-    height: 38vh;
+	width: 50vw;
+    height: 35vh;
 	display: flex;
 }
 
