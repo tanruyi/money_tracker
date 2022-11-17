@@ -39,7 +39,7 @@
 .rowsContainer {
 	background-color: var(--color3);
 	width: 100%;
-	min-height: 47vh;
+	min-height: 52vh;
 	padding: 2vh 0;
 	text-align: center;
 }
