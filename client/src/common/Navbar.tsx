@@ -11,24 +11,17 @@ import { useLocation } from "react-router-dom";
 ==================================================== */
 
 interface NavbarProps {
+	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
 	updateCurrentViewPage: (page: "Daily" | "Weekly" | "Monthly" | "YTD") => void;
 }
 
-const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
+const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
 	const location = useLocation();
 
 	/* ====================================================
     // Context
     ==================================================== */
 	const { currentUserRole, currentUsername } = useCurrentUserContext();
-
-	/* ====================================================
-    // Handles calendar view page to display
-    ==================================================== */
-
-	const handleViewClick = (page: "Daily" | "Weekly" | "Monthly" | "YTD") => {
-		updateCurrentViewPage(page);
-	};
 
 	/* ====================================================
     // Saves current page
@@ -42,8 +35,6 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 		</div>
 	);
 
-	console.log(location.pathname);
-
 	return (
 		// Holding container
 		<div className={styles.container}>
@@ -54,26 +45,31 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
 				{/* Links to different pages */}
-				<div className={styles.pageLink}>
-					<Link to="/daily" onClick={() => handleViewClick("Daily")}>
-						<h1 className={location.pathname === "/daily" ? styles.pageTitleActive : styles.pageTitle}>Daily</h1>
+				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Daily")}>
+					<Link to="/calendar">
+						<h1 className={currentViewPage === "Daily" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>Daily</h1>
 					</Link>
 				</div>
-				<div className={styles.pageLink}>
-					<Link to="/weekly" onClick={() => handleViewClick("Weekly")}>
-						<h1 className={location.pathname === "/weekly" ? styles.pageTitleActive : styles.pageTitle}>Weekly</h1>
+				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Weekly")}>
+					<Link to="/calendar">
+						<h1 className={currentViewPage === "Weekly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
+							Weekly
+						</h1>
 					</Link>
 				</div>
-				<div className={styles.pageLink}>
-					<Link to="/monthly" onClick={() => handleViewClick("Monthly")}>
-						<h1 className={location.pathname === "/monthly" ? styles.pageTitleActive : styles.pageTitle}>Monthly</h1>
+				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Monthly")}>
+					<Link to="/calendar">
+						<h1 className={currentViewPage === "Monthly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
+							Monthly
+						</h1>
 					</Link>
 				</div>
-				<div className={styles.pageLink}>
-					<Link to="/ytd" onClick={() => handleViewClick("YTD")}>
-						<h1 className={location.pathname === "/ytd" ? styles.pageTitleActive : styles.pageTitle}>YTD</h1>
+				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("YTD")}>
+					<Link to="/calendar">
+						<h1 className={currentViewPage === "YTD" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>YTD</h1>
 					</Link>
 				</div>
+
 				<div className={styles.pageLink}>
 					<Link to="/budget">
 						<h1 className={location.pathname === "/budget" ? styles.pageTitleActive : styles.pageTitle}>Budget</h1>

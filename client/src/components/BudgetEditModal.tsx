@@ -245,7 +245,7 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Category</DialogTitle>
+			<DialogTitle>Edit Budget Record</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>

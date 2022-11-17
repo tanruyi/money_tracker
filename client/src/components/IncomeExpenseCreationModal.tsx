@@ -259,7 +259,7 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Category</DialogTitle>
+			<DialogTitle>Create Income or Expense Record</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>

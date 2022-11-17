@@ -41,6 +41,7 @@
 	color: var(--base);
 	height: 100%;
 	margin: auto 1rem;
+	cursor: pointer;
 }
 
 .pageTitle {

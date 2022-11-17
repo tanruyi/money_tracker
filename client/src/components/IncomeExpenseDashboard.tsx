@@ -16,7 +16,7 @@ dayjs.extend(WeekofYear);
 ==================================================== */
 
 interface IncomeExpenseDashboardProps {
-	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
+	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD" | "Budget" | "Analyse" | "Settings" | "Admin";
 	dateToDisplay: Dayjs;
 	totalIncomeString: string;
 	totalExpensesString: string;
