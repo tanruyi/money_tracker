@@ -97,7 +97,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		}
 	};
 
-	// If this is true, rerun getAllUserData to get updated data from db
+	// If this is changed, rerun getAllUserData to get updated data from db
 	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
 
 	const refreshData = () => {
@@ -130,8 +130,6 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		// get budget data
 		const allBudgetResponse = getAllBudgetAPI(currentUserId);
 		setBudgets((await allBudgetResponse).data);
-
-		console.log("getAllUserData");
 	}
 
 	useEffect(() => {
