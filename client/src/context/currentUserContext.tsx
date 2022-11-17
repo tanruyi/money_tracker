@@ -83,6 +83,13 @@ export function useCurrentUserContext() {
 export function CurrentUserContextProvider({ children }: CurrentUserContextProviderProps) {
 	const [error, setError] = useState<any>();
 
+	// If this is changed, rerun getAllUserData to get updated data from db
+	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
+
+	const refreshData = () => {
+		setRefreshCurrentUserData((prevState) => (prevState += 1));
+	};
+
 	// This stores the id of the current logged in user
 	const [currentUserId, setCurrentUserId] = useState<UserId>(0);
 
@@ -103,13 +110,6 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	const updateUsername = (username: string) => {
 		setCurrentUsername(username);
-	};
-
-	// If this is changed, rerun getAllUserData to get updated data from db
-	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
-
-	const refreshData = () => {
-		setRefreshCurrentUserData((prevState) => (prevState += 1));
 	};
 
 	// The states below store the API data for the current logged in user
