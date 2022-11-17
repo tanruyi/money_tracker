@@ -17,7 +17,7 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
-	const { currentUserRole } = useCurrentUserContext();
+	const { currentUserRole, currentUsername } = useCurrentUserContext();
 
 	/* ====================================================
     // Handles calendar view page to display
@@ -43,7 +43,9 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 		// Holding container
 		<div className={styles.container}>
 			{/* Title */}
-			<h3 className={styles.title}>Money Tracker</h3>
+			<h1 className={styles.title}>Money Tracker</h1>
+			{/* Username */}
+			<h3 className={styles.username}>User: {currentUsername}</h3>
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
 				{/* Links to different pages */}

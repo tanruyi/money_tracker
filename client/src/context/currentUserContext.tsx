@@ -53,6 +53,8 @@ interface CurrentUserContextType {
 	updateCurrentUser: (id: number) => void;
 	currentUserRole: "user" | "admin";
 	updateCurrentUserRole: (roleId: number) => void;
+	currentUsername: string;
+	updateUsername: (username: string) => void;
 	refreshData: () => void;
 	categories: Category[];
 	incomeRecords: IncomeExpense[];
@@ -95,6 +97,12 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		} else if (roleId === 2) {
 			setCurrentUserRole("admin");
 		}
+	};
+
+	const [currentUsername, setCurrentUsername] = useState("");
+
+	const updateUsername = (username: string) => {
+		setCurrentUsername(username);
 	};
 
 	// If this is changed, rerun getAllUserData to get updated data from db
@@ -145,7 +153,21 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	}, [currentUserId, refreshCurrentUserData]);
 
 	return (
-		<CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, currentUserRole, updateCurrentUserRole, refreshData, categories, incomeRecords, expenseRecords, budgets }}>
+		<CurrentUserContext.Provider
+			value={{
+				currentUserId,
+				updateCurrentUser,
+				currentUserRole,
+				updateCurrentUserRole,
+				currentUsername,
+				updateUsername,
+				refreshData,
+				categories,
+				incomeRecords,
+				expenseRecords,
+				budgets,
+			}}
+		>
 			{children}
 		</CurrentUserContext.Provider>
 	);

@@ -121,6 +121,7 @@ const logIn = async (req, res) => {
 			refresh,
 			id: user.id,
 			roleId: user.roleId,
+			username: user.username,
 		};
 
 		console.log(`login success for ${user.username} id: ${user.id}`);

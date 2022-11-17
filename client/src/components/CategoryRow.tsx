@@ -5,7 +5,7 @@ import styles from "./CategoryRow.module.css";
 import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
-import { useCurrentUserContext, Category } from "../context/currentUserContext";
+import { Category } from "../context/currentUserContext";
 import CategoryEditModal from "./CategoryEditModal";
 
 /* ====================================================

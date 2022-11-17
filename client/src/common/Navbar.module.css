@@ -13,9 +13,14 @@
 
 .title {
 	font-family: "League Spartan", sans-serif;
-	font-size: 2rem;
 	color: var(--base);
 	margin: auto 3rem;
+}
+
+.username {
+	color: var(--base);
+	margin: auto 1rem;
+	text-align: left;
 }
 
 .pageLinkContainer {
@@ -31,7 +36,8 @@
 	text-decoration: none;
 }
 
-.pageTitle, .pageTitleActive {
+.pageTitle,
+.pageTitleActive {
 	color: var(--base);
 	height: 100%;
 	margin: auto 1rem;
@@ -41,6 +47,7 @@
 	color: var(--base);
 }
 
-.pageTitle:hover, .pageTitleActive {
-    color: var(--emphasise);
+.pageTitle:hover,
+.pageTitleActive {
+	color: var(--emphasise);
 }
