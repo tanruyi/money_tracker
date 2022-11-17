@@ -11,7 +11,7 @@ import { createDefaultCategoriesAPI } from "../apis/categories";
 /* ====================================================
 // Type Declaration
 ==================================================== */
-interface newCategory {
+export interface newCategoryData {
 	userId: Number;
 	recordId: Number;
 	categoryName: String;
@@ -103,7 +103,7 @@ const Home = () => {
 
 	// define function that creates default categories
 	const createDefaultCategories = async (userId: number) => {
-		const defaultCategories: newCategory[] = [
+		const defaultCategories: newCategoryData[] = [
 			{ userId: userId, recordId: 1, categoryName: "Salary" },
 			{ userId: userId, recordId: 1, categoryName: "Government Payouts" },
 			{ userId: userId, recordId: 1, categoryName: "Interest" },

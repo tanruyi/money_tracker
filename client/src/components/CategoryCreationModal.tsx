@@ -3,24 +3,32 @@
 import React, { useState } from "react";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createCategoryAPI } from "../apis/categories";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	Stack,
+} from "@mui/material";
+import { newCategoryData } from "../pages/Login";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
-interface newCategoryData {
-	userId: number;
-	recordId: number;
-	categoryName: string;
-}
-
 interface CategoryCreationModalProps {
 	openModal: boolean;
-	handleClickOpen: () => void;
 	handleClose: () => void;
 }
 
-const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: CategoryCreationModalProps) => {
+const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModalProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -100,7 +108,14 @@ const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: Cate
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
 						</FormControl>
-						<TextField id="categoryName" label="Category Name" variant="outlined" sx={{ width: "100%" }} value={categoryName} onChange={handleCategoryName} />
+						<TextField
+							id="categoryName"
+							label="Category Name"
+							variant="outlined"
+							sx={{ width: "100%" }}
+							value={categoryName}
+							onChange={handleCategoryName}
+						/>
 					</Stack>
 				</Box>
 			</DialogContent>
