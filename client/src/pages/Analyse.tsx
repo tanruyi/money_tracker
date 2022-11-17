@@ -35,12 +35,12 @@ const Analyse = () => {
 	const [displayRecord, setDisplayRecord] = useState<"Income" | "Expenses">("Income");
 
 	/* ====================================================
-    // Current period to be displayed to be displayed
+    // Current period to be displayed
     ==================================================== */
 	const [currentPeriodView, setCurrentPeriodView] = useState<"Monthly" | "YTD">("Monthly");
 
 	/* ====================================================
-    // Date for display
+    // Date to display
     ==================================================== */
 
 	// This is the dayjs object for today's date
@@ -63,7 +63,7 @@ const Analyse = () => {
 	};
 
 	/* ====================================================
-    // Filtered Categories Based on displayRecord
+    // Filtered Categories to be displayed
     ==================================================== */
 
 	let filteredCategories: Category[] | [] = [];
