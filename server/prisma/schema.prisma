@@ -55,7 +55,7 @@ model Income {
     user       Users       @relation(fields: [userId], references: [id])
     date       DateTime    @db.Date
     // Set to optional relations so that deletion of categories tied to this as FK will save categoryId as null
-    categoryId Int?
+    categoryId Int
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
     detail     String?     @db.VarChar(50)
@@ -67,7 +67,7 @@ model Expenses {
     userId     Int
     user       Users       @relation(fields: [userId], references: [id])
     date       DateTime    @db.Date
-    categoryId Int?
+    categoryId Int
     category   Categories? @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
     detail     String?     @db.VarChar(50)
@@ -78,8 +78,8 @@ model Budget {
     id         Int         @id @default(autoincrement())
     userId     Int
     user       Users       @relation(fields: [userId], references: [id])
-    categoryId Int?
-    category   Categories? @relation(fields: [categoryId], references: [id])
+    categoryId Int
+    category   Categories  @relation(fields: [categoryId], references: [id])
     amount     Decimal     @db.Decimal(10, 2)
     recordId   Int
     recordType RecordTypes @relation(fields: [recordId], references: [id])
