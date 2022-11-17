@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./Analyse.module.css";
-import { useCurrentUserContext, Budget, Category } from "../context/currentUserContext";
+import { useCurrentUserContext, Budget, Category, IncomeExpense } from "../context/currentUserContext";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -35,9 +35,31 @@ const Analyse = () => {
 	const [displayRecord, setDisplayRecord] = useState<"Income" | "Expenses">("Income");
 
 	/* ====================================================
+    // Handle Clicks on Income or Expense Buttons
+    ==================================================== */
+	const handleIncomeClick = () => {
+		setDisplayRecord("Income");
+	};
+
+	const handleExpensesClick = () => {
+		setDisplayRecord("Expenses");
+	};
+
+	/* ====================================================
     // Current period to be displayed
     ==================================================== */
 	const [currentPeriodView, setCurrentPeriodView] = useState<"Monthly" | "YTD">("Monthly");
+
+	/* ====================================================
+    // Handle Clicks on Monthly or YTD Buttons
+    ==================================================== */
+	const handleMonthlyClick = () => {
+		setCurrentPeriodView("Monthly");
+	};
+
+	const handleYTDClick = () => {
+		setCurrentPeriodView("YTD");
+	};
 
 	/* ====================================================
     // Date to display
@@ -75,26 +97,42 @@ const Analyse = () => {
 	}
 
 	/* ====================================================
-    // Filtered Income Records for Date to Display
+    // Filtered Income or Expense Records for Date to Display
     ==================================================== */
 
-	// Filter income records to those with mth & yr we want to display
-	let incomeRecordsToDisplay = incomeRecords.filter((record) => {
-		const dateToCompare = dayjs(record.date);
+	// Filter income or expense records to those with mth & yr we want to display
 
-		return dateToDisplay.isSame(dateToCompare, "month");
-	});
+	let filteredActualRecords: IncomeExpense[] | [] = [];
 
-	/* ====================================================
-    // Filtered Expense Records for Date to Display
-    ==================================================== */
+	if (currentPeriodView === "Monthly") {
+		if (displayRecord === "Income") {
+			filteredActualRecords = incomeRecords.filter((record) => {
+				const dateToCompare = dayjs(record.date);
 
-	// Filter expense records to those with mth & yr we want to display
-	let expenseRecordsToDisplay = expenseRecords.filter((record) => {
-		const dateToCompare = dayjs(record.date);
+				return dateToDisplay.isSame(dateToCompare, "month");
+			});
+		} else if (displayRecord === "Expenses") {
+			filteredActualRecords = expenseRecords.filter((record) => {
+				const dateToCompare = dayjs(record.date);
 
-		return dateToDisplay.isSame(dateToCompare, "month");
-	});
+				return dateToDisplay.isSame(dateToCompare, "month");
+			});
+		}
+	} else if (currentPeriodView === "YTD") {
+		if (displayRecord === "Income") {
+			filteredActualRecords = incomeRecords.filter((record) => {
+				const dateToCompare = dayjs(record.date);
+
+				return dateToDisplay.isSame(dateToCompare, "year");
+			});
+		} else if (displayRecord === "Expenses") {
+			filteredActualRecords = expenseRecords.filter((record) => {
+				const dateToCompare = dayjs(record.date);
+
+				return dateToDisplay.isSame(dateToCompare, "year");
+			});
+		}
+	}
 
 	/* ====================================================
     // Filtered Budget Records for Date to Display
@@ -113,8 +151,6 @@ const Analyse = () => {
 	let budgetRecordsToDisplay = budgetRecordsToUse.filter((record) => {
 		return dateToDisplay.isBetween(dayjs(record.startMonth), dayjs(record.endMonth), "month", "[]");
 	});
-
-	console.log("budgetRecordsToDisplay", budgetRecordsToDisplay);
 
 	/* ====================================================
     // Data to pass to bar chart
@@ -135,27 +171,15 @@ const Analyse = () => {
 		newDataObject.Category = filteredCategories[i].categoryName;
 
 		// Add total actual amount for category to newDataObject
-		if (displayRecord === "Income") {
-			let totalActual = 0;
+		let totalActual = 0;
 
-			for (let j = 0; j < incomeRecordsToDisplay.length; j++) {
-				if (incomeRecordsToDisplay[j].categoryId === filteredCategories[i].id) {
-					totalActual += Number(incomeRecordsToDisplay[j].amount);
-				}
+		for (let j = 0; j < filteredActualRecords.length; j++) {
+			if (filteredActualRecords[j].categoryId === filteredCategories[i].id) {
+				totalActual += Number(filteredActualRecords[j].amount);
 			}
-
-			newDataObject.Actual = totalActual;
-		} else if (displayRecord === "Expenses") {
-			let totalActual = 0;
-
-			for (let j = 0; j < expenseRecordsToDisplay.length; j++) {
-				if (expenseRecordsToDisplay[j].categoryId === filteredCategories[i].id) {
-					totalActual += Number(expenseRecordsToDisplay[j].amount);
-				}
-			}
-
-			newDataObject.Actual = totalActual;
 		}
+
+		newDataObject.Actual = totalActual;
 
 		// Add total budgeted amount for category to newDataObject
 		let totalBudgeted = 0;
@@ -169,19 +193,24 @@ const Analyse = () => {
 		} else if (currentPeriodView === "YTD") {
 			for (let k = 0; k < budgetRecordsToDisplay.length; k++) {
 				if (budgetRecordsToDisplay[k].categoryId === filteredCategories[i].id) {
+					// Get the start & end mth of the record in dayjs
 					const startMth = dayjs(budgetRecordsToDisplay[k].startMonth);
 					const endMth = dayjs(budgetRecordsToDisplay[k].endMonth);
 
+					// Get the yr of display in string
 					const currentYr = dateToDisplay.format("YYYY");
 
+					// Get the 1 Jan & 31 Dec of yr of display in dayjs
 					const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
 					const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
 
 					let noOfMonths = 0;
 
+					// Get boolean whether start & end mth are within the year of display
 					const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
 					const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
 
+					// Get the number of months b/w start & end mth within yr of display
 					if (startMthWithinYr && endMthWithinYr) {
 						noOfMonths = endMth.diff(startMth, "month") + 1;
 					} else if (!startMthWithinYr && endMthWithinYr) {
@@ -203,43 +232,19 @@ const Analyse = () => {
 	}
 
 	/* ====================================================
-    // Handle Clicks on Monthly or YTD Buttons
-    ==================================================== */
-	const handleMonthlyClick = () => {
-		setCurrentPeriodView("Monthly");
-	};
-
-	const handleYTDClick = () => {
-		setCurrentPeriodView("YTD");
-	};
-
-	/* ====================================================
-    // Handle Clicks on Income or Expense Buttons
-    ==================================================== */
-	const handleIncomeClick = () => {
-		setDisplayRecord("Income");
-	};
-
-	const handleExpensesClick = () => {
-		setDisplayRecord("Expenses");
-	};
-
-	/* ====================================================
     // Handle HTML text to display for title
     ==================================================== */
 	let dateHeader = "";
-	let periodType = "";
 
 	if (currentPeriodView === "Monthly") {
 		dateHeader = dateToDisplay.format("MMM YYYY");
-		periodType = "month";
 	} else if (currentPeriodView === "YTD") {
 		dateHeader = `Year ${dateToDisplay.year()}`;
-		periodType = "year";
 	}
 
 	return (
 		<div className={styles.container}>
+			{/* Container for the 2 categories of buttons */}
 			<div className={styles.buttonsContainer}>
 				<div className={styles.typeButtonContainer}>
 					<div className={displayRecord === "Income" ? styles.typeButtonActive : styles.typeButton} onClick={handleIncomeClick}>
@@ -250,7 +255,11 @@ const Analyse = () => {
 					</div>
 				</div>
 				<div className={styles.typeButtonContainer}>
-					<div id="monthly-button" className={currentPeriodView === "Monthly" ? styles.typeButtonActive : styles.typeButton} onClick={handleMonthlyClick}>
+					<div
+						id="monthly-button"
+						className={currentPeriodView === "Monthly" ? styles.typeButtonActive : styles.typeButton}
+						onClick={handleMonthlyClick}
+					>
 						Monthly
 					</div>
 					<div id="YTD-button" className={currentPeriodView === "YTD" ? styles.typeButtonActive : styles.typeButton} onClick={handleYTDClick}>
@@ -258,11 +267,15 @@ const Analyse = () => {
 					</div>
 				</div>
 			</div>
+			{/* Bar chart header */}
 			<h1>{dateHeader}</h1>
+			{/* Bar chart container */}
 			<div className={styles.chartContainer}>
+				{/* To change info displayed to previous month or year */}
 				<IconButton sx={{ color: "var(--color10)" }} onClick={handleBackArrow}>
 					<ArrowBackIosNewIcon />
 				</IconButton>
+				{/* Bar chart */}
 				<div className={styles.chartBox}>
 					<ResponsiveContainer height="100%" width="100%">
 						<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 20, left: 20 }}>
@@ -278,6 +291,7 @@ const Analyse = () => {
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
+				{/* To change info displayed to next month or year */}
 				<IconButton sx={{ color: "var(--color10)" }} onClick={handleForwardArrow}>
 					<ArrowForwardIosIcon />
 				</IconButton>

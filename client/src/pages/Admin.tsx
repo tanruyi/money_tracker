@@ -23,6 +23,12 @@ const Admin = () => {
 	const [accountFound, setAccountFound] = useState<any>({});
 
 	/* ====================================================
+	// Error State for APIs
+	==================================================== */
+
+	const [error, setError] = useState<any>();
+
+	/* ====================================================
 	// Handle Search Button Click
 	==================================================== */
 
@@ -75,47 +81,15 @@ const Admin = () => {
 	};
 
 	/* ====================================================
-	// Creates Table Displaying User Found
+	// Text to display for user's role in table
 	==================================================== */
 
-	const [error, setError] = useState<any>();
+	let role = "";
 
-	let resultToDisplay: any;
-
-	if (accountFound) {
-		let role = "";
-
-		if (accountFound.roleId === 1) {
-			role = "Normal User";
-		} else if (accountFound.roleId === 2) {
-			role = "Admin";
-		}
-
-		resultToDisplay = (
-			<TableContainer component={Paper} >
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell>User ID</TableCell>
-							<TableCell>Username</TableCell>
-							<TableCell>Role</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						<TableRow>
-							<TableCell>{accountFound.id}</TableCell>
-							<TableCell>{accountFound.username}</TableCell>
-							<TableCell>{role}</TableCell>
-							<TableCell sx={{width: "20vh"}}>
-								<Button variant="contained" onClick={handleDeleteButton}>
-									Delete Account
-								</Button>
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
-		);
+	if (accountFound.roleId === 1) {
+		role = "Normal User";
+	} else if (accountFound.roleId === 2) {
+		role = "Admin";
 	}
 
 	return (
@@ -128,7 +102,29 @@ const Admin = () => {
 						Search
 					</Button>
 				</Box>
-				{resultToDisplay}
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>User ID</TableCell>
+								<TableCell>Username</TableCell>
+								<TableCell>Role</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							<TableRow>
+								<TableCell>{accountFound.id}</TableCell>
+								<TableCell>{accountFound.username}</TableCell>
+								<TableCell>{role}</TableCell>
+								<TableCell sx={{ width: "20vh" }}>
+									<Button variant="contained" onClick={handleDeleteButton}>
+										Delete Account
+									</Button>
+								</TableCell>
+							</TableRow>
+						</TableBody>
+					</Table>
+				</TableContainer>
 			</div>
 		</div>
 	);

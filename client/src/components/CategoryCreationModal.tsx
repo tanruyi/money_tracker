@@ -3,24 +3,32 @@
 import React, { useState } from "react";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createCategoryAPI } from "../apis/categories";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	Stack,
+} from "@mui/material";
+import { newCategoryData } from "../pages/Login";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
-interface newCategoryData {
-	userId: number;
-	recordId: number;
-	categoryName: string;
-}
-
 interface CategoryCreationModalProps {
 	openModal: boolean;
-	handleClickOpen: () => void;
 	handleClose: () => void;
 }
 
-const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: CategoryCreationModalProps) => {
+const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModalProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -28,15 +36,16 @@ const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: Cate
 	const { currentUserId, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Create new category modal
+    // Error State
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
-	// Controls the value of select field
+	/* ====================================================
+    // Controlled inputs
+    ==================================================== */
 	const [recordType, setRecordType] = useState<string>("");
 
-	// Controls the value for text field
 	const [categoryName, setCategoryName] = useState<string>("");
 
 	const handleRecordType = (e: any) => {
@@ -47,7 +56,9 @@ const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: Cate
 		setCategoryName(e.target.value);
 	};
 
-	// Runs on click of create button
+	/* ====================================================
+    // Runs on click of create button
+    ==================================================== */
 	const handleCreateCategory = async () => {
 		// Convert state for recordType to id stored in db for comparison below
 		let newRecordType = 0;
@@ -100,7 +111,14 @@ const CategoryCreationModal = ({ openModal, handleClickOpen, handleClose }: Cate
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
 						</FormControl>
-						<TextField id="categoryName" label="Category Name" variant="outlined" sx={{ width: "100%" }} value={categoryName} onChange={handleCategoryName} />
+						<TextField
+							id="categoryName"
+							label="Category Name"
+							variant="outlined"
+							sx={{ width: "100%" }}
+							value={categoryName}
+							onChange={handleCategoryName}
+						/>
 					</Stack>
 				</Box>
 			</DialogContent>

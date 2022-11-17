@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import CategoryRow from "../components/CategoryRow";
+import CategoryCreationModal from "../components/CategoryCreationModal";
 import styles from "./Settings.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import whyMeme from "../assets/confused-white-persian-guardian.gif";
-import { Fab } from "@mui/material";
+import { Divider, Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import CategoryCreationModal from "../components/CategoryCreationModal";
 
 const Settings = () => {
 	const navigate = useNavigate();
@@ -75,6 +75,7 @@ const Settings = () => {
 
 	return (
 		<div className={styles.container}>
+			{/* Categories List */}
 			<div className={styles.itemBox}>
 				<div className={styles.headerBox}>
 					<h1>Categories</h1>
@@ -89,18 +90,23 @@ const Settings = () => {
 					</div>
 					<div className={styles.typeContainer}>
 						<h2>Expense</h2>
-						{expenseCategories.length > 0 ? expenseCategoriesToDisplay : toDisplayIfNoCategories}{" "}
+						{expenseCategories.length > 0 ? expenseCategoriesToDisplay : toDisplayIfNoCategories}
 					</div>
 				</div>
 			</div>
+
+			<Divider />
+
+			{/* Log Out */}
 			<div className={styles.itemBox}>
 				<h1>Log Out</h1>
 				<h2 className={styles.logOutLink} onClick={handleLogOut}>
 					Click here to log out
 				</h2>
 			</div>
+
 			{/* Form Dialog, only visible when open */}
-			<CategoryCreationModal openModal={openModal} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+			<CategoryCreationModal openModal={openModal} handleClose={handleClose} />
 		</div>
 	);
 };

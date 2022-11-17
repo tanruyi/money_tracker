@@ -2,14 +2,28 @@
 
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useCurrentUserContext } from "../context/currentUserContext";
+import { useCurrentUserContext, IncomeExpense, Category } from "../context/currentUserContext";
 import { updateIncomeAPI, deleteIncomeAPI } from "../apis/income";
 import { updateExpenseAPI, deleteExpenseAPI } from "../apis/expenses";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	InputAdornment,
+	Stack,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { Income, Category } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -39,7 +53,7 @@ interface newRecordData {
 interface IncomeExpenseEditModalProps {
 	openModal: boolean;
 	handleClose: () => void;
-	record: Income;
+	record: IncomeExpense;
 	categoryRecord: Category;
 	displayRecord: string;
 }
@@ -277,14 +291,18 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Category</DialogTitle>
+			<DialogTitle>Edit Income or Expense Record</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
 						{/* Dropdown for record type */}
 						<FormControl>
 							<InputLabel htmlFor="income-or-expense">Record Type</InputLabel>
-							<Select value={newRecordInput.recordType} onChange={handleRecordType} input={<OutlinedInput label="Record Type" id="income-or-expense" />}>
+							<Select
+								value={newRecordInput.recordType}
+								onChange={handleRecordType}
+								input={<OutlinedInput label="Record Type" id="income-or-expense" />}
+							>
 								<MenuItem value={"Income"}>Income</MenuItem>
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
@@ -292,18 +310,34 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 						{/* Dropdown for category name */}
 						<FormControl>
 							<InputLabel htmlFor="categoryName">Category Name</InputLabel>
-							<Select value={newRecordInput.categoryName} onChange={handleCategoryName} input={<OutlinedInput label="Category Name" id="categoryName" />}>
+							<Select
+								value={newRecordInput.categoryName}
+								onChange={handleCategoryName}
+								input={<OutlinedInput label="Category Name" id="categoryName" />}
+							>
 								{categoryNamesToDisplay}
 							</Select>
 						</FormControl>
 						{/* Date picker */}
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
-							<DesktopDatePicker label="date" inputFormat="DD/MM/YYYY" value={newRecordInput.date} onChange={handleDate} renderInput={(params) => <TextField {...params} />} />
+							<DesktopDatePicker
+								label="date"
+								inputFormat="DD/MM/YYYY"
+								value={newRecordInput.date}
+								onChange={handleDate}
+								renderInput={(params) => <TextField {...params} />}
+							/>
 						</LocalizationProvider>
 						{/* Amount text field */}
 						<FormControl>
 							<InputLabel htmlFor="amount">Amount</InputLabel>
-							<OutlinedInput id="amount" label="Amount" value={newRecordInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+							<OutlinedInput
+								id="amount"
+								label="Amount"
+								value={newRecordInput.amount}
+								onChange={handleAmount}
+								startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							/>
 						</FormControl>
 						{/* Detail text field */}
 						<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />

@@ -23,19 +23,7 @@ export interface Category {
 }
 
 // For state income
-export interface Income {
-	id: number;
-	userId: number;
-	date: Date;
-	categoryId: number;
-	amount: number;
-	detail: string;
-	note: string;
-}
-
-// TODO: check where this should be exported to, like income
-// For state expenses
-interface Expense {
+export interface IncomeExpense {
 	id: number;
 	userId: number;
 	date: Date;
@@ -65,10 +53,12 @@ interface CurrentUserContextType {
 	updateCurrentUser: (id: number) => void;
 	currentUserRole: "user" | "admin";
 	updateCurrentUserRole: (roleId: number) => void;
+	currentUsername: string;
+	updateUsername: (username: string) => void;
 	refreshData: () => void;
 	categories: Category[];
-	incomeRecords: Income[];
-	expenseRecords: Expense[];
+	incomeRecords: IncomeExpense[];
+	expenseRecords: IncomeExpense[];
 	budgets: Budget[];
 }
 
@@ -109,7 +99,13 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		}
 	};
 
-	// If this is true, rerun getAllUserData to get updated data from db
+	const [currentUsername, setCurrentUsername] = useState("");
+
+	const updateUsername = (username: string) => {
+		setCurrentUsername(username);
+	};
+
+	// If this is changed, rerun getAllUserData to get updated data from db
 	const [refreshCurrentUserData, setRefreshCurrentUserData] = useState<number>(0);
 
 	const refreshData = () => {
@@ -119,9 +115,9 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	// The states below store the API data for the current logged in user
 	const [categories, setCategories] = useState<Category[]>([]);
 
-	const [incomeRecords, setIncomeRecords] = useState<Income[]>([]);
+	const [incomeRecords, setIncomeRecords] = useState<IncomeExpense[]>([]);
 
-	const [expenseRecords, setExpenseRecords] = useState<Expense[]>([]);
+	const [expenseRecords, setExpenseRecords] = useState<IncomeExpense[]>([]);
 
 	const [budgets, setBudgets] = useState<Budget[]>([]);
 
@@ -142,8 +138,6 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		// get budget data
 		const allBudgetResponse = getAllBudgetAPI(currentUserId);
 		setBudgets((await allBudgetResponse).data);
-
-		console.log("getAllUserData");
 	}
 
 	useEffect(() => {
@@ -159,7 +153,21 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	}, [currentUserId, refreshCurrentUserData]);
 
 	return (
-		<CurrentUserContext.Provider value={{ currentUserId, updateCurrentUser, currentUserRole, updateCurrentUserRole, refreshData, categories, incomeRecords, expenseRecords, budgets }}>
+		<CurrentUserContext.Provider
+			value={{
+				currentUserId,
+				updateCurrentUser,
+				currentUserRole,
+				updateCurrentUserRole,
+				currentUsername,
+				updateUsername,
+				refreshData,
+				categories,
+				incomeRecords,
+				expenseRecords,
+				budgets,
+			}}
+		>
 			{children}
 		</CurrentUserContext.Provider>
 	);

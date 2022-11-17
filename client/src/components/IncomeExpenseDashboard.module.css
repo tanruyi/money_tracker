@@ -9,14 +9,14 @@
 	margin-right: auto;
 	padding: 4vh 0;
 	width: 50vw;
-    height: 35vh;
+	height: 35vh;
 	display: flex;
 }
 
 .dashboardHeader {
 	color: var(--base);
 	background-color: var(--color5);
-    border-radius: 0.8rem;
+	border-radius: 0.8rem;
 	width: 55vw;
 	padding: 1rem 4rem;
 	margin-left: auto;
@@ -25,6 +25,7 @@
 
 .dateHeader {
 	font-size: 2.2rem;
+    margin: 1rem auto;
 }
 
 .dashboardInfo {
