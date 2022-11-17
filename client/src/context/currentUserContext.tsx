@@ -23,19 +23,7 @@ export interface Category {
 }
 
 // For state income
-export interface Income {
-	id: number;
-	userId: number;
-	date: Date;
-	categoryId: number;
-	amount: number;
-	detail: string;
-	note: string;
-}
-
-// TODO: check where this should be exported to, like income
-// For state expenses
-interface Expense {
+export interface IncomeExpense {
 	id: number;
 	userId: number;
 	date: Date;
@@ -67,8 +55,8 @@ interface CurrentUserContextType {
 	updateCurrentUserRole: (roleId: number) => void;
 	refreshData: () => void;
 	categories: Category[];
-	incomeRecords: Income[];
-	expenseRecords: Expense[];
+	incomeRecords: IncomeExpense[];
+	expenseRecords: IncomeExpense[];
 	budgets: Budget[];
 }
 
@@ -119,9 +107,9 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	// The states below store the API data for the current logged in user
 	const [categories, setCategories] = useState<Category[]>([]);
 
-	const [incomeRecords, setIncomeRecords] = useState<Income[]>([]);
+	const [incomeRecords, setIncomeRecords] = useState<IncomeExpense[]>([]);
 
-	const [expenseRecords, setExpenseRecords] = useState<Expense[]>([]);
+	const [expenseRecords, setExpenseRecords] = useState<IncomeExpense[]>([]);
 
 	const [budgets, setBudgets] = useState<Budget[]>([]);
 

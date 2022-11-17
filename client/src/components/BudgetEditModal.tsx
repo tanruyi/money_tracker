@@ -3,13 +3,12 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
-import { Budget, useCurrentUserContext } from "../context/currentUserContext";
+import { Budget, IncomeExpense, Category, useCurrentUserContext } from "../context/currentUserContext";
 import { updateBudgetAPI, deleteBudgetAPI } from "../apis/budget";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { Income, Category } from "../context/currentUserContext";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================

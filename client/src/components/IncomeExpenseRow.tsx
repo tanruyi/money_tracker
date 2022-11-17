@@ -6,10 +6,9 @@ import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import dayjs from "dayjs";
-import { Income } from "../context/currentUserContext";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import IncomeExpenseEditModal from "./IncomeExpenseEditModal";
-import { useCurrentUserContext } from "../context/currentUserContext";
+import { useCurrentUserContext, IncomeExpense } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -17,7 +16,7 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 
 interface IncomeExpenseRowProps {
 	date: any;
-	recordsToDisplay: Income[];
+	recordsToDisplay: IncomeExpense[];
 	displayRecord: "Income" | "Expenses";
 }
 

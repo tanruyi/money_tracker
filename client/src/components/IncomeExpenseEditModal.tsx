@@ -2,14 +2,13 @@
 
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { useCurrentUserContext } from "../context/currentUserContext";
+import { useCurrentUserContext, IncomeExpense, Category } from "../context/currentUserContext";
 import { updateIncomeAPI, deleteIncomeAPI } from "../apis/income";
 import { updateExpenseAPI, deleteExpenseAPI } from "../apis/expenses";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { Income, Category } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -39,7 +38,7 @@ interface newRecordData {
 interface IncomeExpenseEditModalProps {
 	openModal: boolean;
 	handleClose: () => void;
-	record: Income;
+	record: IncomeExpense;
 	categoryRecord: Category;
 	displayRecord: string;
 }
