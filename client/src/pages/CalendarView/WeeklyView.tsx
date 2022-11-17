@@ -81,11 +81,19 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 
 	const datesWithIncomeRecords = Array.from(datesWithIncomeRecordsSet);
 
+	const datesWithIncomeRecordsSorted = datesWithIncomeRecords.sort((date1, date2) => {
+		const date1Object = new Date(String(date1));
+
+		const date2Object = new Date(String(date2));
+
+		return Number(date2Object) - Number(date1Object);
+	});
+
 	/* ====================================================
     // Income Rows to Display
     ==================================================== */
 
-	const incomeRecordRows = datesWithIncomeRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
+	const incomeRecordRows = datesWithIncomeRecordsSorted.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={incomeRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
     // Filtered Expense Records for Week to Display
@@ -124,11 +132,19 @@ const WeeklyView = ({ currentViewPage }: WeeklyViewProps) => {
 
 	const datesWithExpenseRecords = Array.from(datesWithExpenseRecordsSet);
 
+	const datesWithExpenseRecordsSorted = datesWithExpenseRecords.sort((date1, date2) => {
+		const date1Object = new Date(String(date1));
+
+		const date2Object = new Date(String(date2));
+
+		return Number(date2Object) - Number(date1Object);
+	});
+
 	/* ====================================================
     // Expense Rows to Display
     ==================================================== */
 
-	const expenseRecordRows = datesWithExpenseRecords.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
+	const expenseRecordRows = datesWithExpenseRecordsSorted.map((date, index) => <IncomeExpenseRow key={index} date={date} recordsToDisplay={expenseRecordsToDisplay} displayRecord={displayRecord} />);
 
 	/* ====================================================
     // Handle Clicks on Income or Expense Tabs
