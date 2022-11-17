@@ -56,15 +56,15 @@ One major hurdle with this project is that there is a significant amount of date
 
 ## App Screenshots
 
-![](/images/app_calendar)
+![app](/images/app_calendar)
 
-![](/images/app_budget)
+![app](/images/app_budget)
 
-![](/images/app_analyse)
+![app](/images/app_analyse)
 
-![](/images/app_settings)
+![app](/images/app_settings)
 
-![](/images/app_admin)
+![app](/images/app_admin)
 
 # How to Install and Run Locally:
 
@@ -101,29 +101,29 @@ One major hurdle with this project is that there is a significant amount of date
 
 ## React Hierarchy Structure
 
-![](/images/react_hierarchy)
+![react_hierarchy](/images/react_hierarchy)
 
 ## Wireframes
 
-![](/images/wireframe_home)
+![wireframe](/images/wireframe_home)
 
-![](/images/wireframe_createRecordModal)
+![wireframe](/images/wireframe_createRecordModal)
 
-![](/images/wireframe_editRecordModal)
+![wireframe](/images/wireframe_editRecordModal)
 
-![](/images/wireframe_budget)
+![wireframe](/images/wireframe_budget)
 
-![](/images/wireframe_createBudgetModal)
+![wireframe](/images/wireframe_createBudgetModal)
 
-![](/images/wireframe_editBudgetModal)
+![wireframe](/images/wireframe_editBudgetModal)
 
-![](/images/wireframe_analyse)
+![wireframe](/images/wireframe_analyse)
 
-![](/images/wireframe_settings)
+![wireframe](/images/wireframe_settings)
 
-![](/images/wireframe_editCategoryModal)
+![wireframe](/images/wireframe_editCategoryModal)
 
-![](/images/wireframe_admin)
+![wireframe](/images/wireframe_admin)
 
 # Acknowledgements & Credits
 
