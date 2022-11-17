@@ -6,11 +6,10 @@ import { Fab, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import BudgetCreationModal from "./BudgetCreationModal";
 import dayjs, { Dayjs } from "dayjs";
 import WeekofYear from "dayjs/plugin/weekOfYear";
-import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis } from "recharts";
-
 dayjs.extend(WeekofYear);
 
 /* ====================================================
@@ -71,16 +70,17 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 		},
 	];
 
-	console.log(data);
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.dashboard}>
+				{/* To change info displayed to previous month or year */}
 				<IconButton sx={{ color: "var(--color10)" }} onClick={handleBackArrow}>
 					<ArrowBackIosNewIcon />
 				</IconButton>
 				<div className={styles.dashboardHeader}>
+					{/* Page header */}
 					<h1>{dateHeader}</h1>
+					{/* Bar chart container */}
 					<div className={styles.dashboardInfo}>
 						<ResponsiveContainer width="100%" height="80%">
 							<BarChart data={data} width={400} height={200} margin={{ top: 20, right: 5, bottom: 5, left: 5 }}>
@@ -93,6 +93,7 @@ const BudgetDashboard = ({ currentPeriodView, dateToDisplay, handleBackArrow, ha
 						</ResponsiveContainer>
 					</div>
 				</div>
+				{/* To change info displayed to next month or year */}
 				<IconButton sx={{ color: "var(--color10)" }} onClick={handleForwardArrow}>
 					<ArrowForwardIosIcon />
 				</IconButton>

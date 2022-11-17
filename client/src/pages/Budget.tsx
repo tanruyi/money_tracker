@@ -19,12 +19,23 @@ const Budget = () => {
     // Context
     ==================================================== */
 
-	const { categories, budgets } = useCurrentUserContext();
+	const { budgets } = useCurrentUserContext();
 
 	/* ====================================================
     // Current period to be displayed to be displayed
     ==================================================== */
 	const [currentPeriodView, setCurrentPeriodView] = useState<"Monthly" | "YTD">("Monthly");
+
+	/* ====================================================
+    // Handle Clicks on Monthly or YTD Tabs
+    ==================================================== */
+	const handleMonthlyClick = () => {
+		setCurrentPeriodView("Monthly");
+	};
+
+	const handleYTDClick = () => {
+		setCurrentPeriodView("YTD");
+	};
 
 	/* ====================================================
     // Date for display
@@ -139,19 +150,24 @@ const Budget = () => {
 		}
 	} else if (currentPeriodView === "YTD") {
 		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
+			// Get the start & end mth of the record in dayjs
 			const startMth = dayjs(budgetExpenseRecordsToDisplay[i].startMonth);
 			const endMth = dayjs(budgetExpenseRecordsToDisplay[i].endMonth);
 
+			// Get the yr of display in string
 			const currentYr = dateToDisplay.format("YYYY");
 
+			// Get the 1 Jan & 31 Dec of yr of display in dayjs
 			const startofYr = dayjs(`${currentYr}-01-01`, "YYYY-MM-DD");
 			const endofYr = dayjs(`${currentYr}-12-31`, "YYYY-MM-DD");
 
 			let noOfMonths = 0;
 
+			// Get boolean whether start & end mth are within the year of display
 			const startMthWithinYr = startMth.isBetween(startofYr, endofYr, "month", "[]");
 			const endMthWithinYr = endMth.isBetween(startofYr, endofYr, "month", "[]");
 
+			// Get the number of months b/w start & end mth within yr of display
 			if (startMthWithinYr && endMthWithinYr) {
 				noOfMonths = endMth.diff(startMth, "month") + 1;
 			} else if (!startMthWithinYr && endMthWithinYr) {
@@ -166,6 +182,7 @@ const Budget = () => {
 		}
 	}
 
+	// this will be displayed in HTML
 	const totalExpensesString = `-$${intToCurrencyString(totalExpenses)}`;
 
 	/* ====================================================
@@ -173,17 +190,6 @@ const Budget = () => {
 	==================================================== */
 
 	const expenseRecordRows = budgetExpenseRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Expenses"} />);
-
-	/* ====================================================
-    // Handle Clicks on Monthly or YTD Tabs
-    ==================================================== */
-	const handleMonthlyClick = () => {
-		setCurrentPeriodView("Monthly");
-	};
-
-	const handleYTDClick = () => {
-		setCurrentPeriodView("YTD");
-	};
 
 	return (
 		<div>

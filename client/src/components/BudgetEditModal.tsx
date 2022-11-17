@@ -1,14 +1,29 @@
 /** @format */
 
 import React, { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
-import { Budget, IncomeExpense, Category, useCurrentUserContext } from "../context/currentUserContext";
+import { Budget, Category, useCurrentUserContext } from "../context/currentUserContext";
 import { updateBudgetAPI, deleteBudgetAPI } from "../apis/budget";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	InputAdornment,
+	Stack,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
+import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================
@@ -49,12 +64,14 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 	const { currentUserId, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Edit record modal
+    // Error State
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
-	// Controls inputs
+	/* ====================================================
+    // Controlled inputs
+    ==================================================== */
 	const [newBudgetInput, setNewBudgetInput] = useState<newBudgetInputState>({
 		recordType: type,
 		recordId: categoryRecord.recordId,
@@ -143,7 +160,9 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 		});
 	};
 
-	// Runs on click of update button
+	/* ====================================================
+    // Runs on click of update button
+    ==================================================== */
 	const handleUpdateBudget = async () => {
 		const id = record.id;
 
@@ -173,6 +192,10 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 			}
 		}
 	};
+
+	/* ====================================================
+    // Runs on click of delete button
+    ==================================================== */
 
 	const handleDeleteBudget = async () => {
 		const requestBody = {
@@ -229,7 +252,11 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 						{/* Dropdown for record type */}
 						<FormControl>
 							<InputLabel htmlFor="income-or-expense">Record Type</InputLabel>
-							<Select value={newBudgetInput.recordType} onChange={handleRecordType} input={<OutlinedInput label="Record Type" id="income-or-expense" />}>
+							<Select
+								value={newBudgetInput.recordType}
+								onChange={handleRecordType}
+								input={<OutlinedInput label="Record Type" id="income-or-expense" />}
+							>
 								<MenuItem value={"Income"}>Income</MenuItem>
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
@@ -237,7 +264,11 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 						{/* Dropdown for category name */}
 						<FormControl>
 							<InputLabel htmlFor="categoryName">Category Name</InputLabel>
-							<Select value={newBudgetInput.categoryName} onChange={handleCategoryName} input={<OutlinedInput label="Category Name" id="categoryName" />}>
+							<Select
+								value={newBudgetInput.categoryName}
+								onChange={handleCategoryName}
+								input={<OutlinedInput label="Category Name" id="categoryName" />}
+							>
 								{categoryNamesToDisplay}
 							</Select>
 						</FormControl>
@@ -273,9 +304,11 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 				</Box>
 			</DialogContent>
 			<DialogActions>
+				{/* Update button */}
 				<Button variant="contained" size="large" onClick={handleUpdateBudget}>
 					Update
 				</Button>
+				{/* Delete button */}
 				<Button variant="contained" size="large" onClick={handleDeleteBudget}>
 					Delete
 				</Button>

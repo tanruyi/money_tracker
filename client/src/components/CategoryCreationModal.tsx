@@ -36,15 +36,16 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 	const { currentUserId, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Create new category modal
+    // Error State
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
-	// Controls the value of select field
+	/* ====================================================
+    // Controlled inputs
+    ==================================================== */
 	const [recordType, setRecordType] = useState<string>("");
 
-	// Controls the value for text field
 	const [categoryName, setCategoryName] = useState<string>("");
 
 	const handleRecordType = (e: any) => {
@@ -55,7 +56,9 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 		setCategoryName(e.target.value);
 	};
 
-	// Runs on click of create button
+	/* ====================================================
+    // Runs on click of create button
+    ==================================================== */
 	const handleCreateCategory = async () => {
 		// Convert state for recordType to id stored in db for comparison below
 		let newRecordType = 0;

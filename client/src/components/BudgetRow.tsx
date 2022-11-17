@@ -6,10 +6,9 @@ import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import dayjs from "dayjs";
-import { Budget } from "../context/currentUserContext";
+import { useCurrentUserContext, Budget } from "../context/currentUserContext";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import BudgetEditModal from "./BudgetEditModal";
-import { useCurrentUserContext } from "../context/currentUserContext";
 
 /* ====================================================
 // Type Declaration
@@ -72,19 +71,23 @@ const BudgetRow = ({ record, type }: BudgetRowProps) => {
 
 	return (
 		<div className={styles.rowContainer}>
+			{/* Icon */}
 			<div className={styles.rowIcon}>
 				<img src={icon} alt="icon" />
 			</div>
+			{/* Category name & budget period */}
 			<div className={styles.rowInfo}>
 				<h2>{categoryName}</h2>
 				<h3>
 					{startMonthToDisplay} - {endMonthToDisplay}
 				</h3>
 			</div>
+			{/* Budget amount */}
 			<div className={styles.rowAmount}>
 				<h2>{amountToDisplay}</h2>
 			</div>
 			<div className={styles.rowButton}>
+				{/* Edit button */}
 				<IconButton onClick={handleClickOpen}>
 					<EditIcon fontSize="large" />
 				</IconButton>

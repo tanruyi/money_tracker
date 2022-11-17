@@ -1,14 +1,29 @@
 /** @format */
 
 import React, { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createBudgetAPI } from "../apis/budget";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	InputAdornment,
+	Stack,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
+import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================
@@ -47,12 +62,14 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 	const { currentUserId, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
-    // Create new category modal
+    // Error State
     ==================================================== */
 
 	const [error, setError] = useState<any>();
 
-	// Controls inputs
+	/* ====================================================
+    // Controlled inputs
+    ==================================================== */
 	const [newBudgetInput, setNewBudgetInput] = useState<newBudgetInputState>({
 		recordType: "",
 		recordId: 0,
@@ -127,9 +144,9 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 					endMonth: newDate,
 				};
 			});
-        } else {
-            window.alert("End month must be same or after start month.")
-        }
+		} else {
+			window.alert("End month must be same or after start month.");
+		}
 	};
 
 	const handleAmount = (e: any) => {
@@ -141,7 +158,9 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 		});
 	};
 
-	// Runs on click of create button
+	/* ====================================================
+    // Runs on click of create button
+    ==================================================== */
 	const handleCreateRecord = async () => {
 		let data: newBudgetData = {
 			userId: currentUserId,
@@ -213,7 +232,11 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 						{/* Dropdown for record type */}
 						<FormControl>
 							<InputLabel htmlFor="income-or-expense">Record Type</InputLabel>
-							<Select value={newBudgetInput.recordType} onChange={handleRecordType} input={<OutlinedInput label="Record Type" id="income-or-expense" />}>
+							<Select
+								value={newBudgetInput.recordType}
+								onChange={handleRecordType}
+								input={<OutlinedInput label="Record Type" id="income-or-expense" />}
+							>
 								<MenuItem value={"Income"}>Income</MenuItem>
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
@@ -221,7 +244,11 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 						{/* Dropdown for category name */}
 						<FormControl>
 							<InputLabel htmlFor="categoryName">Category Name</InputLabel>
-							<Select value={newBudgetInput.categoryName} onChange={handleCategoryName} input={<OutlinedInput label="Category Name" id="categoryName" />}>
+							<Select
+								value={newBudgetInput.categoryName}
+								onChange={handleCategoryName}
+								input={<OutlinedInput label="Category Name" id="categoryName" />}
+							>
 								{categoryNamesToDisplay}
 							</Select>
 						</FormControl>
@@ -256,6 +283,7 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 					</Stack>
 				</Box>
 			</DialogContent>
+			{/* Create button */}
 			<DialogActions>
 				<Button variant="contained" size="large" onClick={handleCreateRecord}>
 					Create
