@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import { useCurrentUserContext } from "../context/currentUserContext";
@@ -46,7 +46,7 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 			<h3 className={styles.title}>Money Tracker</h3>
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
-				{/* TODO: Add routes for below */}
+				{/* Links to different pages */}
 				<div className={styles.pageLink}>
 					<Link to="/daily" onClick={() => handleViewClick("Daily")}>
 						<h1 className={styles.pageTitle}>Daily</h1>
@@ -82,6 +82,8 @@ const Navbar = ({ updateCurrentViewPage }: NavbarProps) => {
 						<h1 className={styles.pageTitle}>Settings</h1>
 					</Link>
 				</div>
+
+				{/* Admin link is only available to admins */}
 				{currentUserRole === "admin" ? adminLink : ""}
 			</div>
 		</div>
