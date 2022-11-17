@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./Analyse.module.css";
-import { useCurrentUserContext, Budget } from "../context/currentUserContext";
+import { useCurrentUserContext, Budget, Category } from "../context/currentUserContext";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -63,6 +63,18 @@ const Analyse = () => {
 	};
 
 	/* ====================================================
+    // Filtered Categories Based on displayRecord
+    ==================================================== */
+
+	let filteredCategories: Category[] | [] = [];
+
+	if (displayRecord === "Income") {
+		filteredCategories = categories.filter((category) => category.recordId === 1);
+	} else if (displayRecord === "Expenses") {
+		filteredCategories = categories.filter((category) => category.recordId === 2);
+	}
+
+	/* ====================================================
     // Filtered Income Records for Date to Display
     ==================================================== */
 
@@ -111,7 +123,7 @@ const Analyse = () => {
 	let dataForChartArray: Data[] = [];
 
 	// Loop through list of categories under the user
-	for (let i = 0; i < categories.length; i++) {
+	for (let i = 0; i < filteredCategories.length; i++) {
 		let newDataObject: Data = {
 			Category: "",
 			IncomeOrExpense: displayRecord,
@@ -120,14 +132,14 @@ const Analyse = () => {
 		};
 
 		// Add category name to newDataObject
-		newDataObject.Category = categories[i].categoryName;
+		newDataObject.Category = filteredCategories[i].categoryName;
 
 		// Add total actual amount for category to newDataObject
 		if (displayRecord === "Income") {
 			let totalActual = 0;
 
 			for (let j = 0; j < incomeRecordsToDisplay.length; j++) {
-				if (incomeRecordsToDisplay[j].categoryId === categories[i].id) {
+				if (incomeRecordsToDisplay[j].categoryId === filteredCategories[i].id) {
 					totalActual += Number(incomeRecordsToDisplay[j].amount);
 				}
 			}
@@ -137,7 +149,7 @@ const Analyse = () => {
 			let totalActual = 0;
 
 			for (let j = 0; j < expenseRecordsToDisplay.length; j++) {
-				if (expenseRecordsToDisplay[j].categoryId === categories[i].id) {
+				if (expenseRecordsToDisplay[j].categoryId === filteredCategories[i].id) {
 					totalActual += Number(expenseRecordsToDisplay[j].amount);
 				}
 			}
@@ -150,13 +162,13 @@ const Analyse = () => {
 
 		if (currentPeriodView === "Monthly") {
 			for (let k = 0; k < budgetRecordsToDisplay.length; k++) {
-				if (budgetRecordsToDisplay[k].categoryId === categories[i].id) {
+				if (budgetRecordsToDisplay[k].categoryId === filteredCategories[i].id) {
 					totalBudgeted += Number(budgetRecordsToDisplay[k].amount);
 				}
 			}
 		} else if (currentPeriodView === "YTD") {
 			for (let k = 0; k < budgetRecordsToDisplay.length; k++) {
-				if (budgetRecordsToDisplay[k].categoryId === categories[i].id) {
+				if (budgetRecordsToDisplay[k].categoryId === filteredCategories[i].id) {
 					const startMth = dayjs(budgetRecordsToDisplay[k].startMonth);
 					const endMth = dayjs(budgetRecordsToDisplay[k].endMonth);
 
