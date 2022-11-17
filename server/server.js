@@ -40,8 +40,6 @@ const budgetRouter = require("./router/budget");
 // Import admin router
 const adminRouter = require("./router/admin");
 
-const auth = require("./middleware/auth");
-
 /* ==============================================
 // MIDDLEWARE
 ============================================== */
