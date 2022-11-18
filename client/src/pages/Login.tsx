@@ -66,13 +66,15 @@ const Home = () => {
 				const response = loginAPI(data);
 
 				// On login, updates user id as context
-				updateCurrentUser((await response).data.id);
-				updateCurrentUserRole((await response).data.roleId);
-				updateUsername((await response).data.username);
+				if ((await response).status === 200) {
+					updateCurrentUser((await response).data.id);
+					updateCurrentUserRole((await response).data.roleId);
+					updateUsername((await response).data.username);
 
-				// Navigates to monthly view page on log in
-				// navigate("/monthly");
-				navigate("/calendar");
+					// Navigates to monthly view page on log in
+					// navigate("/monthly");
+					navigate("/calendar");
+				}
 			} else {
 				window.alert("Username or password is empty. Please try again.");
 			}
@@ -146,11 +148,13 @@ const Home = () => {
 				const response = registrationAPI(data);
 
 				// Upon success confirmation from API, inform user, reset username & pw states, and change back to display login box
-				window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
-				setUsername("");
-				setPassword("");
-				setRegistrationNeeded(false);
-				createDefaultCategories((await response).data.userId);
+				if ((await response).status === 200) {
+					window.alert(`Registration successful! Welcome ${username} to Money Tracker! Please login to enter.`);
+					setUsername("");
+					setPassword("");
+					setRegistrationNeeded(false);
+					createDefaultCategories((await response).data.userId);
+				}
 			} else {
 				window.alert("Username or password is empty.");
 			}
