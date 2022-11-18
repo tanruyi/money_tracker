@@ -56,14 +56,19 @@ One major hurdle with this project is that there is a significant amount of date
 
 ## App Screenshots
 
+Calendar View
 ![app](/images/app_calendar.png)
 
+Budget Page
 ![app](/images/app_budget.png)
 
+Analyse Page
 ![app](/images/app_analyse.png)
 
+Settings Page
 ![app](/images/app_settings.png)
 
+Admin Page
 ![app](/images/app_admin.png)
 
 # How to Install and Run Locally:
@@ -103,26 +108,40 @@ One major hurdle with this project is that there is a significant amount of date
 
 ![react_hierarchy](/images/react_hierarchy.png)
 
+## Database Model
+
+[database model](https://drawsql.app/teams/ruyi/diagrams/money-tracker)
+
 ## Wireframes
 
+Home page
 ![wireframe](/images/wireframe_home.png)
 
+Create record modal
 ![wireframe](/images/wireframe_createRecordModal.png)
 
+Edit record modal
 ![wireframe](/images/wireframe_editRecordModal.png)
 
+Budget page
 ![wireframe](/images/wireframe_budget.png)
 
+Create budget modal
 ![wireframe](/images/wireframe_createBudgetModal.png)
 
+Edit budget modal
 ![wireframe](/images/wireframe_editBudgetModal.png)
 
+Analyse page
 ![wireframe](/images/wireframe_analyse.png)
 
+Settings page
 ![wireframe](/images/wireframe_settings.png)
 
+Edit category modal
 ![wireframe](/images/wireframe_editCategoryModal.png)
 
+Admin page
 ![wireframe](/images/wireframe_admin.png)
 
 # Acknowledgements & Credits
