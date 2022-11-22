@@ -40,11 +40,6 @@ const createUser = async (req, res) => {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	// Checks whether username & password is provided, if not throw error
-	// if (!req?.body?.username || !req?.body?.password) {
-	// 	return res.status(400).json({ status: "error", message: "username or password not provided" });
-	// }
-
 	try {
 		// check if the username already exists
 		const userExists = await prisma.users.findUnique({
@@ -85,11 +80,6 @@ const logIn = async (req, res) => {
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errors: errors.array() });
 	}
-
-	// Checks whether username & password is provided, if not throw error
-	// if (!req?.body?.username || !req?.body?.password) {
-	// 	return res.status(400).json({ status: "error", message: "username or password not provided" });
-	// }
 
 	try {
 		// check if the username already exists, and returns null if none found

@@ -18,6 +18,9 @@ const bcrypt = require("bcrypt");
 // Import utility function
 const { generateRandomPw } = require("../utilities/generateRandomPw");
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
@@ -88,9 +91,11 @@ const findAccount = async (req, res) => {
 
 // Deletes all data and account for a user
 const deleteAccount = async (req, res) => {
-	// Checks whether userId is provided, if not throw error
-	if (!req?.body?.userId) {
-		return res.status(400).json({ status: "error", message: "userId required" });
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
 
 	try {

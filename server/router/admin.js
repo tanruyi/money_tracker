@@ -15,6 +15,9 @@ const adminRouter = express.Router();
 // Import routes
 const { deleteAccount, resetPw, findAccount } = require("../controllers/admin");
 
+// Import validation middleware
+const { validateDeleteAccount } = require("../validation/admin");
+
 /* =========================================
 // ROUTER
 ========================================= */
@@ -26,7 +29,7 @@ adminRouter.patch("/reset_pw", resetPw);
 adminRouter.get("/find_account/:username", findAccount);
 
 // Deletes all data and account for a user
-adminRouter.delete("/delete_account", deleteAccount);
+adminRouter.delete("/delete_account", validateDeleteAccount, deleteAccount);
 
 /* =========================================
 // EXPORTS
