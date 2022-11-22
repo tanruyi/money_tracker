@@ -12,12 +12,44 @@ const { PrismaClient } = require("@prisma/client");
 // Instantiate PrismaClient
 const prisma = new PrismaClient();
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
 
+// Create multiple categories (only used during user registration)
+const createDefaultCategories = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
+	try {
+		const newCategories = await prisma.categories.createMany({
+			data: req.body.newCategories,
+		});
+
+		console.log("Default categories created");
+		res.json({ status: "success", message: "default categories created" });
+	} catch (err) {
+		console.error("POST /category/create", err);
+		res.status(400).json({ status: "error", message: "an error has occurred" });
+	}
+};
+
 // Creates new category
 const createCategory = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	try {
 		const newCategory = await prisma.categories.create({
 			data: {
@@ -35,23 +67,15 @@ const createCategory = async (req, res) => {
 	}
 };
 
-// Create multiple categories (only used during user registration)
-const createDefaultCategories = async (req, res) => {
-	try {
-		const newCategories = await prisma.categories.createMany({
-			data: req.body.newCategories,
-		});
-
-		console.log("Default categories created");
-		res.json({ status: "success", message: "default categories created" });
-	} catch (err) {
-		console.error("POST /category/create", err);
-		res.status(400).json({ status: "error", message: "an error has occurred" });
-	}
-};
-
 // Get all categories for a user
 const getCategories = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in categories in db
 	const targetUser = parseInt(req.params.userId);
 
@@ -72,6 +96,13 @@ const getCategories = async (req, res) => {
 
 // Update a category for a user
 const updateCategory = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert categoryId passed via req.params from string to integer, which is the value type of id in categories in db
 	const targetCategory = parseInt(req.params.categoryId);
 
@@ -96,10 +127,11 @@ const updateCategory = async (req, res) => {
 
 // Delete a category
 const deleteCategory = async (req, res) => {
-	// Checks whether id is provided, if not throw error
-	if (!req.body.id) {
-		console.error("delete failed, id not provided: ", req.body.id);
-		return res.status(400).json({ status: "error", message: "id not provided" });
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
 
 	try {
