@@ -12,12 +12,22 @@ const { PrismaClient } = require("@prisma/client");
 // Instantiate PrismaClient
 const prisma = new PrismaClient();
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
 
 // Create new budget record
 const createBudget = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	try {
 		const newBudgetRecord = await prisma.budget.create({
 			data: {
@@ -40,6 +50,13 @@ const createBudget = async (req, res) => {
 
 // Get all budget records for a user
 const getBudgetRecords = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in expenses in db
 	const targetUser = parseInt(req.params.userId);
 
@@ -60,6 +77,13 @@ const getBudgetRecords = async (req, res) => {
 
 // Update a budget record for a user
 const updateBudgetRecord = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert budgetId passed via req.params from string to integer, which is the value type of id in budget in db
 	const targetBudgetRecord = parseInt(req.params.budgetId);
 
@@ -87,8 +111,12 @@ const updateBudgetRecord = async (req, res) => {
 
 // Delete a budget record
 const deleteBudgetRecord = async (req, res) => {
-	// Convert budgetId passed via req.params from string to integer, which is the value type of id in budget in db
-	// const targetBudgetRecord = parseInt(req.params.budgetId);
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
 
 	// Checks whether id is provided, if not throw error
 	if (!req?.body?.id) {

@@ -39,8 +39,8 @@ const validateGetCategories = [check("userId", "userId must be integer").isInt()
 // Update a category for a user
 const validateUpdateCategory = [
 	check("categoryId", "categoryId must be integer").isInt(),
-	check("recordId", "recordId must be integer").isInt(),
-	check("categoryName", "categoryName must be max 30 characters").isLength({ min: 0, max: 30 }),
+	check("recordId", "recordId must be integer").isInt().optional(),
+	check("categoryName", "categoryName must be max 30 characters").isLength({ min: 0, max: 30 }).optional(),
 ];
 
 // Delete a category
