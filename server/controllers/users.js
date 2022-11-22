@@ -24,16 +24,26 @@ const jwt = require("jsonwebtoken");
 // Import UUID
 const { v4: uuidv4 } = require("uuid");
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
 
 // New user creation
 const createUser = async (req, res) => {
-	// Checks whether username & password is provided, if not throw error
-	if (!req?.body?.username || !req?.body?.password) {
-		return res.status(400).json({ status: "error", message: "username or password not provided" });
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
+
+	// Checks whether username & password is provided, if not throw error
+	// if (!req?.body?.username || !req?.body?.password) {
+	// 	return res.status(400).json({ status: "error", message: "username or password not provided" });
+	// }
 
 	try {
 		// check if the username already exists
@@ -69,10 +79,17 @@ const createUser = async (req, res) => {
 
 // Log in
 const logIn = async (req, res) => {
-	// Checks whether username & password is provided, if not throw error
-	if (!req?.body?.username || !req?.body?.password) {
-		return res.status(400).json({ status: "error", message: "username or password not provided" });
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
+
+	// Checks whether username & password is provided, if not throw error
+	// if (!req?.body?.username || !req?.body?.password) {
+	// 	return res.status(400).json({ status: "error", message: "username or password not provided" });
+	// }
 
 	try {
 		// check if the username already exists, and returns null if none found
