@@ -124,11 +124,6 @@ const deleteIncomeRecord = async (req, res) => {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	// Checks whether id is provided, if not throw error
-	// if (!req?.body?.id) {
-	// 	return res.status(400).json({ status: "error", message: "id not provided" });
-	// }
-
 	try {
 		const deletedIncomeRecord = await prisma.income.delete({
 			where: {

@@ -12,12 +12,22 @@ const { PrismaClient } = require("@prisma/client");
 // Instantiate PrismaClient
 const prisma = new PrismaClient();
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
 
 // Creates new expense record
 const createExpenseRecord = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert date passed via req.body to Date object, which is the value type of date in expenses in db
 	const newDate = new Date(req.body.date);
 
@@ -43,6 +53,13 @@ const createExpenseRecord = async (req, res) => {
 
 // Get all expense records for a user
 const getExpenseRecords = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in expenses in db
 	const targetUser = parseInt(req.params.userId);
 
@@ -63,6 +80,13 @@ const getExpenseRecords = async (req, res) => {
 
 // Update a expense record for a user
 const updateExpenseRecord = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert expenseId passed via req.params from string to integer, which is the value type of id in expenses in db
 	const targetExpenseRecord = parseInt(req.params.expenseId);
 
@@ -93,12 +117,11 @@ const updateExpenseRecord = async (req, res) => {
 
 // Delete a expense record
 const deleteExpenseRecord = async (req, res) => {
-	// Convert expenseId passed via req.params from string to integer, which is the value type of id in expenses in db
-	// const targetExpenseRecord = parseInt(req.params.expenseId);
+	// validation - check for errors
+	const errors = validationResult(req);
 
-	// Checks whether id is provided, if not throw error
-	if (!req?.body?.id) {
-		return res.status(400).json({ status: "error", message: "id not provided" });
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
 
 	try {
