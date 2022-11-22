@@ -12,12 +12,22 @@ const { PrismaClient } = require("@prisma/client");
 // Instantiate PrismaClient
 const prisma = new PrismaClient();
 
+// Import express validator
+const { validationResult } = require("express-validator");
+
 /* =========================================
 // ROUTES
 ========================================= */
 
 // Creates new income record
 const createIncomeRecord = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert date passed via req.body to Date object, which is the value type of date in income in db
 	const newDate = new Date(req.body.date);
 
@@ -43,6 +53,13 @@ const createIncomeRecord = async (req, res) => {
 
 // Get all income records for a user
 const getIncomeRecords = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert userId passed via req.params from string to integer, which is the value type of userId in income in db
 	const targetUser = parseInt(req.params.userId);
 
@@ -63,6 +80,13 @@ const getIncomeRecords = async (req, res) => {
 
 // Update a income record for a user
 const updateIncomeRecord = async (req, res) => {
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
 	// Convert incomeId passed via req.params from string to integer, which is the value type of id in income in db
 	const targetIncomeRecord = parseInt(req.params.incomeId);
 
@@ -93,10 +117,17 @@ const updateIncomeRecord = async (req, res) => {
 
 // Delete a income record
 const deleteIncomeRecord = async (req, res) => {
-	// Checks whether id is provided, if not throw error
-	if (!req?.body?.id) {
-		return res.status(400).json({ status: "error", message: "id not provided" });
+	// validation - check for errors
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
 	}
+
+	// Checks whether id is provided, if not throw error
+	// if (!req?.body?.id) {
+	// 	return res.status(400).json({ status: "error", message: "id not provided" });
+	// }
 
 	try {
 		const deletedIncomeRecord = await prisma.income.delete({
