@@ -1,12 +1,14 @@
 /** @format */
 
-import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
 import { loginAPI, registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /* ====================================================
 // Type Declaration
@@ -36,16 +38,45 @@ const Home = () => {
     // Controlled Inputs
     ==================================================== */
 
-	const [username, setUsername] = useState("");
+	// Username must start with an alphabet and end with any combination of alphabets, numbers, hyphens & underscores between 3 to 19 characters.
+	// Username can have min 4 characters & max 20 characters
+	const userRegex = /^[A-Za-z][a-zA-Z0-9-_]{3,19}$/;
 
+	// Password must have at least 1 lower-case & upper-case alphabet, 1 number & 1 special characters, and must be min 8 & max 24 characters
+	const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,24}$/;
+
+	// Saves input by user
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
+	// Checks input against regex to see if it's valid
+	const [validUsername, setValidUsername] = useState(false);
+	const [validPassword, setValidPassword] = useState(false);
+
+	// EVent handlers for changes in input fields
 	const handleUsernameInput = (e: any) => {
 		setUsername(e.target.value);
 	};
 
 	const handlePasswordInput = (e: any) => {
 		setPassword(e.target.value);
+	};
+
+	// Test whether inputs are valid upon state change
+	useEffect(() => {
+		setValidUsername(userRegex.test(username));
+	}, [username]);
+
+	useEffect(() => {
+		setValidPassword(pwRegex.test(password));
+	}, [password]);
+
+	// Saves boolean whether password is currently visible
+	const [showPassword, setShowPassword] = useState(false);
+
+	// Changes state upon click of eye icon
+	const handleShowPasswordClick = () => {
+		setShowPassword(!showPassword);
 	};
 
 	/* ====================================================
@@ -72,7 +103,6 @@ const Home = () => {
 					updateUsername((await response).data.username);
 
 					// Navigates to monthly view page on log in
-					// navigate("/monthly");
 					navigate("/calendar");
 				}
 			} else {
@@ -192,17 +222,45 @@ const Home = () => {
 						onKeyUp={registrationNeeded ? enterKeyRegistration : enterKeyLogin}
 					/>
 				</div>
-				<div className={styles.textField}>
-					<TextField
-						required
-						label="Password"
-						type="password"
-						sx={{ width: "25vw" }}
-						value={password}
-						onChange={handlePasswordInput}
-						onKeyUp={registrationNeeded ? enterKeyRegistration : enterKeyLogin}
-					/>
+				<div className={registrationNeeded && validUsername === false ? styles.textFieldErrorMsg : styles.textFieldErrorMsgInactive}>
+					<ErrorOutlineIcon sx={{ margin: "1rem 0.5rem" }} fontSize="large" />
+					<p>
+						{registrationNeeded && validUsername === false
+							? "Username must be between 4 to 20 characters. Alphabets, numbers, hyphens & underscores allowed."
+							: ""}
+					</p>
 				</div>
+				<div className={styles.textField}>
+					<FormControl variant="outlined">
+						<InputLabel htmlFor="password">Password</InputLabel>
+						<OutlinedInput
+							required
+							id="password"
+							label="password"
+							type={showPassword ? "text" : "password"}
+							sx={{ width: "25vw" }}
+							value={password}
+							onChange={handlePasswordInput}
+							onKeyUp={registrationNeeded ? enterKeyRegistration : enterKeyLogin}
+							endAdornment={
+								<InputAdornment position="end">
+									<IconButton aria-label="toggle password visibility" onClick={handleShowPasswordClick} edge="end">
+										{showPassword ? <Visibility /> : <VisibilityOff />}
+									</IconButton>
+								</InputAdornment>
+							}
+						/>
+					</FormControl>
+				</div>
+				<div className={registrationNeeded && validPassword === false ? styles.textFieldErrorMsg : styles.textFieldErrorMsgInactive}>
+					<ErrorOutlineIcon sx={{ margin: "1rem 0.5rem" }} fontSize="large" />
+					<p>
+						{registrationNeeded && validPassword === false
+							? "Password must have at least 1 lower-case alphabet, upper-case alphabet, number & special character. Must be min 8 & max 24 characters"
+							: ""}
+					</p>
+				</div>
+
 				{/* Register or login button */}
 				<div className={styles.button}>
 					<Button

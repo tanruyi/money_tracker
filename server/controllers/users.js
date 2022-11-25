@@ -40,7 +40,13 @@ const createUser = async (req, res) => {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	try {
+    try {
+        // Username must start with an alphabet and end with any combination of alphabets, numbers, hyphens & underscores between 3 to 19 characters.
+        // Username can have min 4 characters & max 20 characters
+        const userRegex = /^[A-Za-z][a-zA-Z0-9-_]{3,19}$/
+        // Username can be a combination of alphabets, numbers & special characters, and must be min 8 & max 24 characters
+        const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,24}$/
+
 		// check if the username already exists
 		const userExists = await prisma.users.findUnique({
 			where: {

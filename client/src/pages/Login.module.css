@@ -35,6 +35,19 @@
 	margin: 0.5rem auto;
 }
 
+.textFieldErrorMsgInactive {
+	display: none;
+}
+
+.textFieldErrorMsg {
+    display: flex;
+	width: 25vw;
+	margin: 0.5rem auto;
+	padding: 0 1rem;
+	background-color: var(--emphasise);
+	border-radius: 1rem;
+}
+
 .button {
 	margin: 2rem auto;
 }
