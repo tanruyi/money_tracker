@@ -47,7 +47,7 @@ const adminRouter = require("./router/admin");
 // Allows only cross-origin requests from specified URL
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: process.env.ALLOWED_ORIGINS,
 	})
 );
 
