@@ -11,6 +11,8 @@ import Budget from "./pages/Budget";
 import Analyse from "./pages/Analyse";
 import Admin from "./pages/Admin";
 import CalendarView from "./pages/CalendarView";
+import Unauthorised from "./pages/Unauthorised";
+import Missing from "./pages/Missing";
 
 function App() {
 	/* ====================================================
@@ -28,11 +30,22 @@ function App() {
 		setCurrentViewPage(page);
 	};
 
+	// Login page
 	const defaultPages = (
 		<Routes>
 			<Route path="/" element={<Login />} />
+			<Route path="/calendar" element={<Unauthorised />} />
+			<Route path="/budget" element={<Unauthorised />} />
+			<Route path="/analyse" element={<Unauthorised />} />
+			<Route path="/settings" element={<Unauthorised />} />
+			<Route path="/admin" element={<Unauthorised />} />
+
+			{/* Catch all */}
+			<Route path="/*" element={<Missing />} />
 		</Routes>
 	);
+
+	// Pages available only after log in
 	const mainPages = (
 		<>
 			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
@@ -41,7 +54,12 @@ function App() {
 				<Route path="/budget" element={<Budget />} />
 				<Route path="/analyse" element={<Analyse />} />
 				<Route path="/settings" element={<Settings />} />
-				{currentUser.role === "admin" ? <Route path="/admin" element={<Admin />} /> : ""}
+
+				{/* Admin page only for users with role admin */}
+				<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} />
+
+				{/* Catch all */}
+				<Route path="/*" element={<Missing />} />
 			</Routes>{" "}
 		</>
 	);

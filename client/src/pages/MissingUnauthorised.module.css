@@ -1,0 +1,16 @@
+/** @format */
+
+.container {
+	background-color: var(--color10);
+	width: 100vw;
+	height: 100vh;
+}
+
+.container h1 {
+	text-align: center;
+	margin: 0;
+	padding-top: 25vh;
+	font-size: 5rem;
+	color: var(--emphasise);
+	text-transform: uppercase;
+}
