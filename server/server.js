@@ -48,6 +48,7 @@ const adminRouter = require("./router/admin");
 app.use(
 	cors({
 		origin: process.env.ALLOWED_ORIGINS,
+		credentials: true,
 	})
 );
 

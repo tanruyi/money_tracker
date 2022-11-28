@@ -61,7 +61,7 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 	// Context
 	==================================================== */
 
-	const { currentUserId, categories, refreshData } = useCurrentUserContext();
+	const { categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Error State

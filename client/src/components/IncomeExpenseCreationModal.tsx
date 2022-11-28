@@ -5,7 +5,22 @@ import dayjs, { Dayjs } from "dayjs";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createIncomeAPI } from "../apis/income";
 import { createExpenseAPI } from "../apis/expenses";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField, InputAdornment, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	TextField,
+	InputAdornment,
+	Stack,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -46,7 +61,7 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 	// Context
 	==================================================== */
 
-	const { currentUserId, categories, refreshData } = useCurrentUserContext();
+	const { currentUser, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Create new category modal
@@ -162,7 +177,7 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 	// Runs on click of create button
 	const handleCreateRecord = async () => {
 		let data: newRecordData = {
-			userId: currentUserId,
+			userId: currentUser.id,
 			date: newRecordInput.date,
 			categoryId: newRecordInput.categoryId,
 			amount: Number(newRecordInput.amount),
@@ -266,7 +281,11 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 						{/* Dropdown for record type */}
 						<FormControl>
 							<InputLabel htmlFor="income-or-expense">Record Type</InputLabel>
-							<Select value={newRecordInput.recordType} onChange={handleRecordType} input={<OutlinedInput label="Record Type" id="income-or-expense" />}>
+							<Select
+								value={newRecordInput.recordType}
+								onChange={handleRecordType}
+								input={<OutlinedInput label="Record Type" id="income-or-expense" />}
+							>
 								<MenuItem value={"Income"}>Income</MenuItem>
 								<MenuItem value={"Expenses"}>Expenses</MenuItem>
 							</Select>
@@ -274,18 +293,34 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 						{/* Dropdown for category name */}
 						<FormControl>
 							<InputLabel htmlFor="categoryName">Category Name</InputLabel>
-							<Select value={newRecordInput.categoryName} onChange={handleCategoryName} input={<OutlinedInput label="Category Name" id="categoryName" />}>
+							<Select
+								value={newRecordInput.categoryName}
+								onChange={handleCategoryName}
+								input={<OutlinedInput label="Category Name" id="categoryName" />}
+							>
 								{categoryNamesToDisplay}
 							</Select>
 						</FormControl>
 						{/* Date picker */}
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
-							<DesktopDatePicker label="date" inputFormat="DD/MM/YYYY" value={newRecordInput.date} onChange={handleDate} renderInput={(params) => <TextField {...params} />} />
+							<DesktopDatePicker
+								label="date"
+								inputFormat="DD/MM/YYYY"
+								value={newRecordInput.date}
+								onChange={handleDate}
+								renderInput={(params) => <TextField {...params} />}
+							/>
 						</LocalizationProvider>
 						{/* Amount text field */}
 						<FormControl>
 							<InputLabel htmlFor="amount">Amount</InputLabel>
-							<OutlinedInput id="amount" label="Amount" value={newRecordInput.amount} onChange={handleAmount} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+							<OutlinedInput
+								id="amount"
+								label="Amount"
+								value={newRecordInput.amount}
+								onChange={handleAmount}
+								startAdornment={<InputAdornment position="start">$</InputAdornment>}
+							/>
 						</FormControl>
 						{/* Detail text field */}
 						<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />

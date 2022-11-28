@@ -59,7 +59,7 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 	// Context
 	==================================================== */
 
-	const { currentUserId, categories, refreshData } = useCurrentUserContext();
+	const { currentUser, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Error State
@@ -163,7 +163,7 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
     ==================================================== */
 	const handleCreateRecord = async () => {
 		let data: newBudgetData = {
-			userId: currentUserId,
+			userId: currentUser.id,
 			categoryId: newBudgetInput.categoryId,
 			amount: Number(newBudgetInput.amount),
 			recordId: newBudgetInput.recordId,

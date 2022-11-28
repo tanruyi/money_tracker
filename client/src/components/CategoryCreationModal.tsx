@@ -33,7 +33,7 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
     // Context
     ==================================================== */
 
-	const { currentUserId, refreshData } = useCurrentUserContext();
+	const { currentUser, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Error State
@@ -70,7 +70,7 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 		}
 
 		let data: newCategoryData = {
-			userId: currentUserId,
+			userId: currentUser.id,
 			recordId: newRecordType,
 			categoryName: categoryName,
 		};

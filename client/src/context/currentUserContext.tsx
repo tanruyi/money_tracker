@@ -11,8 +11,13 @@ import { getAllBudgetAPI } from "../apis/budget";
 // Type Declaration
 ==================================================== */
 
-// For state currentUserId
-type UserId = number;
+// For state user
+interface User {
+	accessToken: string;
+	id: number;
+	role: "user" | "admin" | "";
+	username: string;
+}
 
 // For state categories
 export interface Category {
@@ -49,12 +54,8 @@ interface CurrentUserContextProviderProps {
 }
 
 interface CurrentUserContextType {
-	currentUserId: UserId;
-	updateCurrentUser: (id: number) => void;
-	currentUserRole: "user" | "admin";
-	updateCurrentUserRole: (roleId: number) => void;
-	currentUsername: string;
-	updateUsername: (username: string) => void;
+	currentUser: User;
+	updateCurrentUser: (userInfo: any) => void;
 	refreshData: () => void;
 	categories: Category[];
 	incomeRecords: IncomeExpense[];
@@ -90,26 +91,31 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		setRefreshCurrentUserData((prevState) => (prevState += 1));
 	};
 
-	// This stores the id of the current logged in user
-	const [currentUserId, setCurrentUserId] = useState<UserId>(0);
+    // Logged in user info
+	const [currentUser, setCurrentUser] = useState<User>({
+		accessToken: "",
+		id: 0,
+		role: "",
+		username: "",
+	});
 
-	const updateCurrentUser = (id: number) => setCurrentUserId(id);
+    // To save info of logged in user
+	const updateCurrentUser = (userInfo: any) => {
+		let role: "user" | "admin" | "" = "";
 
-	// This stores the role of the current logged in user
-	const [currentUserRole, setCurrentUserRole] = useState<"user" | "admin">("user");
-
-	const updateCurrentUserRole = (roleId: number) => {
-		if (roleId === 1) {
-			setCurrentUserRole("user");
-		} else if (roleId === 2) {
-			setCurrentUserRole("admin");
+		if (userInfo.roleId === 1) {
+			role = "user";
+		} else if (userInfo.roleId === 2) {
+			role = "admin";
 		}
-	};
 
-	const [currentUsername, setCurrentUsername] = useState("");
-
-	const updateUsername = (username: string) => {
-		setCurrentUsername(username);
+		setCurrentUser({
+			...currentUser,
+			accessToken: userInfo.access,
+			id: userInfo.id,
+			role: role,
+			username: userInfo.username,
+		});
 	};
 
 	// The states below store the API data for the current logged in user
@@ -123,20 +129,20 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	async function getAllUserData() {
 		// get categories data
-		const allCategoriesResponse = getAllCategoriesAPI(currentUserId);
+		const allCategoriesResponse = getAllCategoriesAPI(currentUser.id);
 
 		setCategories((await allCategoriesResponse).data);
 
 		// get income data
-		const allIncomeResponse = getAllIncomeAPI(currentUserId);
+		const allIncomeResponse = getAllIncomeAPI(currentUser.id);
 		setIncomeRecords((await allIncomeResponse).data);
 
 		// get expenses data
-		const allExpensesResponse = getAllExpensesAPI(currentUserId);
+		const allExpensesResponse = getAllExpensesAPI(currentUser.id);
 		setExpenseRecords((await allExpensesResponse).data);
 
 		// get budget data
-		const allBudgetResponse = getAllBudgetAPI(currentUserId);
+		const allBudgetResponse = getAllBudgetAPI(currentUser.id);
 		setBudgets((await allBudgetResponse).data);
 	}
 
@@ -150,17 +156,13 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 				setError(err.message);
 			}
 		}
-	}, [currentUserId, refreshCurrentUserData]);
+	}, [currentUser, refreshCurrentUserData]);
 
 	return (
 		<CurrentUserContext.Provider
 			value={{
-				currentUserId,
+				currentUser,
 				updateCurrentUser,
-				currentUserRole,
-				updateCurrentUserRole,
-				currentUsername,
-				updateUsername,
 				refreshData,
 				categories,
 				incomeRecords,

@@ -21,7 +21,7 @@ const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
-	const { currentUserRole, currentUsername } = useCurrentUserContext();
+	const { currentUser } = useCurrentUserContext();
 
 	/* ====================================================
     // Saves current page
@@ -41,7 +41,7 @@ const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
 			{/* Title */}
 			<h1 className={styles.title}>Money Tracker</h1>
 			{/* Username */}
-			<h3 className={styles.username}>User: {currentUsername}</h3>
+			<h3 className={styles.username}>User: {currentUser.username}</h3>
 			{/* Container for nav links */}
 			<div className={styles.pageLinkContainer}>
 				{/* Links to different pages */}
@@ -87,7 +87,7 @@ const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
 				</div>
 
 				{/* Admin link is only available to admins */}
-				{currentUserRole === "admin" ? adminLink : ""}
+				{currentUser.role === "admin" ? adminLink : ""}
 			</div>
 		</div>
 	);

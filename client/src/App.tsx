@@ -16,7 +16,7 @@ function App() {
 	/* ====================================================
     // Context
     ==================================================== */
-	const { currentUserId, currentUserRole } = useCurrentUserContext();
+	const { currentUser } = useCurrentUserContext();
 
 	/* ====================================================
     // HTML Components
@@ -41,12 +41,12 @@ function App() {
 				<Route path="/budget" element={<Budget />} />
 				<Route path="/analyse" element={<Analyse />} />
 				<Route path="/settings" element={<Settings />} />
-				{currentUserRole === "admin" ? <Route path="/admin" element={<Admin />} /> : ""}
+				{currentUser.role === "admin" ? <Route path="/admin" element={<Admin />} /> : ""}
 			</Routes>{" "}
 		</>
 	);
 
-	return <>{currentUserId === 0 ? defaultPages : mainPages}</>;
+	return <>{currentUser.id === 0 ? defaultPages : mainPages}</>;
 }
 
 export default App;

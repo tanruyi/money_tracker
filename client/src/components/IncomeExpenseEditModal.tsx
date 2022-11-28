@@ -63,7 +63,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 	// Context
 	==================================================== */
 
-	const { currentUserId, categories, refreshData } = useCurrentUserContext();
+	const { categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Edit record modal
