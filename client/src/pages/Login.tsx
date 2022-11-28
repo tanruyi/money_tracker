@@ -174,7 +174,7 @@ const Home = () => {
 
 		try {
 			// Check if username & pw is provided before proceeding
-			if (username && password) {
+			if (validUsername && validPassword) {
 				const response = registrationAPI(data);
 
 				// Upon success confirmation from API, inform user, reset username & pw states, and change back to display login box
@@ -186,7 +186,7 @@ const Home = () => {
 					createDefaultCategories((await response).data.userId);
 				}
 			} else {
-				window.alert("Username or password is empty.");
+				window.alert("Username or password requirements not met.");
 			}
 		} catch (err) {
 			if (typeof err === "string") {
