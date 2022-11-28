@@ -44,8 +44,12 @@ const adminRouter = require("./router/admin");
 // MIDDLEWARE
 ============================================== */
 
-// Enables all CORS requests
-app.use(cors());
+// Allows only cross-origin requests from specified URL
+app.use(
+	cors({
+		origin: "http://localhost:3000",
+	})
+);
 
 // Parses all incoming req.body from JSON to JavaScript Object
 app.use(bodyParser.urlencoded({ extended: true }));
