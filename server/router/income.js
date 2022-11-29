@@ -18,21 +18,24 @@ const { createIncomeRecord, getIncomeRecords, updateIncomeRecord, deleteIncomeRe
 // Import validation middleware
 const { validateCreateIncomeRecord, validateGetIncomeRecords, validateUpdateIncomeRecord, validateDeleteIncomeRecord } = require("../validation/income");
 
+// Import authentication middleware
+const verifyAccessToken = require("../middleware/verifyAccessToken");
+
 /* =========================================
 // ROUTER
 ========================================= */
 
 // Create new income record
-incomeRouter.post("/create", validateCreateIncomeRecord, createIncomeRecord);
+incomeRouter.post("/create", verifyAccessToken, validateCreateIncomeRecord, createIncomeRecord);
 
 // Get all income records for a user based on userId
-incomeRouter.get("/:userId", validateGetIncomeRecords, getIncomeRecords);
+incomeRouter.get("/:userId", verifyAccessToken, validateGetIncomeRecords, getIncomeRecords);
 
 // Update a income record
-incomeRouter.put("/:incomeId", validateUpdateIncomeRecord, updateIncomeRecord);
+incomeRouter.put("/:incomeId", verifyAccessToken, validateUpdateIncomeRecord, updateIncomeRecord);
 
 // Delete a income record
-incomeRouter.delete("/delete", validateDeleteIncomeRecord, deleteIncomeRecord);
+incomeRouter.delete("/delete", verifyAccessToken, validateDeleteIncomeRecord, deleteIncomeRecord);
 
 /* =========================================
 // EXPORTS

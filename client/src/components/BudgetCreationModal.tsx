@@ -173,7 +173,7 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 
 		if (data.userId || data.categoryId || data.amount || data.recordId || data.startMonth || data.endMonth) {
 			try {
-				const response = await createBudgetAPI(data);
+				const response = await createBudgetAPI(data, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();

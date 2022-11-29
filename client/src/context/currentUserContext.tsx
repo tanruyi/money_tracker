@@ -91,7 +91,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		setRefreshCurrentUserData((prevState) => (prevState += 1));
 	};
 
-    // Logged in user info
+	// Logged in user info
 	const [currentUser, setCurrentUser] = useState<User>({
 		accessToken: "",
 		id: 0,
@@ -99,7 +99,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 		username: "",
 	});
 
-    // To save info of logged in user
+	// To save info of logged in user
 	const updateCurrentUser = (userInfo: any) => {
 		let role: "user" | "admin" | "" = "";
 
@@ -129,20 +129,20 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	async function getAllUserData() {
 		// get categories data
-		const allCategoriesResponse = getAllCategoriesAPI(currentUser.id);
+		const allCategoriesResponse = getAllCategoriesAPI(currentUser.id, currentUser.accessToken);
 
 		setCategories((await allCategoriesResponse).data);
 
 		// get income data
-		const allIncomeResponse = getAllIncomeAPI(currentUser.id);
+		const allIncomeResponse = getAllIncomeAPI(currentUser.id, currentUser.accessToken);
 		setIncomeRecords((await allIncomeResponse).data);
 
 		// get expenses data
-		const allExpensesResponse = getAllExpensesAPI(currentUser.id);
+		const allExpensesResponse = getAllExpensesAPI(currentUser.id, currentUser.accessToken);
 		setExpenseRecords((await allExpensesResponse).data);
 
 		// get budget data
-		const allBudgetResponse = getAllBudgetAPI(currentUser.id);
+		const allBudgetResponse = getAllBudgetAPI(currentUser.id, currentUser.accessToken);
 		setBudgets((await allBudgetResponse).data);
 	}
 

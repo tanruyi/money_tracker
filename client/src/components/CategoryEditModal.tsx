@@ -38,7 +38,7 @@ const CategoryEditModal = ({ category, openModal, handleClose }: CategoryEditMod
     // Context
     ==================================================== */
 
-	const { refreshData } = useCurrentUserContext();
+	const { currentUser, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Error State
@@ -102,7 +102,7 @@ const CategoryEditModal = ({ category, openModal, handleClose }: CategoryEditMod
 		// Check if there is anything to update, if yes run API
 		if (data) {
 			try {
-				const response = await updateCategoryAPI(category.id, data);
+				const response = await updateCategoryAPI(category.id, data, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();
@@ -130,7 +130,7 @@ const CategoryEditModal = ({ category, openModal, handleClose }: CategoryEditMod
 		};
 
 		try {
-			const response = await deleteCategoryAPI(requestBody);
+			const response = await deleteCategoryAPI(requestBody, currentUser.accessToken);
 
 			// Refreshes the data on page
 			refreshData();

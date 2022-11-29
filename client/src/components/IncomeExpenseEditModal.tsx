@@ -63,7 +63,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 	// Context
 	==================================================== */
 
-	const { categories, refreshData } = useCurrentUserContext();
+	const { currentUser, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Edit record modal
@@ -191,7 +191,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 		if (id || data.date || data.categoryId || data.amount) {
 			if (newRecordInput.recordType === "Income") {
 				try {
-					const response = await updateIncomeAPI(id, data);
+					const response = await updateIncomeAPI(id, data, currentUser.accessToken);
 
 					// Refreshes the data on page
 					refreshData();
@@ -207,7 +207,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 				}
 			} else if (newRecordInput.recordType === "Expenses") {
 				try {
-					const response = await updateExpenseAPI(id, data);
+					const response = await updateExpenseAPI(id, data, currentUser.accessToken);
 
 					// Refreshes the data on page
 					refreshData();
@@ -234,7 +234,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 
 		if (newRecordInput.recordType === "Income") {
 			try {
-				const response = await deleteIncomeAPI(requestBody);
+				const response = await deleteIncomeAPI(requestBody, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();
@@ -250,7 +250,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 			}
 		} else if (newRecordInput.recordType === "Expenses") {
 			try {
-				const response = await deleteExpenseAPI(requestBody);
+				const response = await deleteExpenseAPI(requestBody, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();

@@ -31,16 +31,6 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
     // Row Header - Date
     ==================================================== */
 
-	// const [refreshPage, setRefreshPage] = useState(0);
-
-	// const handleRefresh = () => {
-	// 	setRefreshPage((prevState) => (prevState += 1));
-	// };
-
-	/* ====================================================
-    // Row Header - Date
-    ==================================================== */
-
 	const dateHeader = dayjs(date).format("DD MMM YYYY");
 
 	/* ====================================================
@@ -105,7 +95,13 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 						<EditIcon fontSize="large" />
 					</IconButton>
 					{/* Form dialog for edit of record - opens on click of edit button */}
-					<IncomeExpenseEditModal openModal={openModal} handleClose={handleClose} record={record} categoryRecord={categoryRecord} displayRecord={displayRecord} />
+					<IncomeExpenseEditModal
+						openModal={openModal}
+						handleClose={handleClose}
+						record={record}
+						categoryRecord={categoryRecord}
+						displayRecord={displayRecord}
+					/>
 				</div>
 			</div>
 		);

@@ -24,6 +24,9 @@ const {
 	validateDeleteCategory,
 } = require("../validation/categories");
 
+// Import authentication middleware
+const verifyAccessToken = require("../middleware/verifyAccessToken");
+
 /* =========================================
 // ROUTER
 ========================================= */
@@ -32,16 +35,16 @@ const {
 categoriesRouter.post("/create_multiple", validateCreateDefaultCategories, createDefaultCategories);
 
 // Create new category
-categoriesRouter.post("/create", validateCreateCategory, createCategory);
+categoriesRouter.post("/create", verifyAccessToken, validateCreateCategory, createCategory);
 
 // Get all categories for a user based on userId
-categoriesRouter.get("/:userId", validateGetCategories, getCategories);
+categoriesRouter.get("/:userId", verifyAccessToken, validateGetCategories, getCategories);
 
 // Update a category
-categoriesRouter.put("/:categoryId", validateUpdateCategory, updateCategory);
+categoriesRouter.put("/:categoryId", verifyAccessToken, validateUpdateCategory, updateCategory);
 
 // Delete a category
-categoriesRouter.delete("/delete", validateDeleteCategory, deleteCategory);
+categoriesRouter.delete("/delete", verifyAccessToken, validateDeleteCategory, deleteCategory);
 
 /* =========================================
 // EXPORTS

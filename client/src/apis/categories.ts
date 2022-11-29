@@ -1,6 +1,6 @@
 /** @format */
 
-import axiosInstance from "./axiosInstance";
+import { axiosInstance, axiosInstanceRefresh } from "./axiosInstance";
 
 /* ====================================================
 // Default categories creation during registration
@@ -19,25 +19,24 @@ export const createDefaultCategoriesAPI = async (data: any) => {
 // Create new category for a user
 ==================================================== */
 
-export const createCategoryAPI = async (data: any) => {
+export const createCategoryAPI = async (data: any, accessToken: string) => {
 	// categories creation URL to append to base URL
 	const categoryCreationURL = "/categories/create";
 
-	const response = await axiosInstance.post(categoryCreationURL, data);
+	const response = await axiosInstanceRefresh(accessToken).post(categoryCreationURL, data);
 
 	return response;
 };
-
 
 /* ====================================================
 // Get all categories for logged in user
 ==================================================== */
 
-export const getAllCategoriesAPI = async (currentUserId: number) => {
+export const getAllCategoriesAPI = async (currentUserId: number, accessToken: string) => {
 	// get categories URL to append to base URL
 	const getCategoriesURL = `/categories/${currentUserId.toString()}`;
 
-	const response = await axiosInstance.get(getCategoriesURL);
+	const response = await axiosInstanceRefresh(accessToken).get(getCategoriesURL);
 
 	return response;
 };
@@ -45,11 +44,11 @@ export const getAllCategoriesAPI = async (currentUserId: number) => {
 /* ====================================================
 // Update a category for logged in user
 ==================================================== */
-export const updateCategoryAPI = async (categoryId: number, data: any) => {
+export const updateCategoryAPI = async (categoryId: number, data: any, accessToken: string) => {
 	// update category URL to append to base URL
 	const updateCategoryURL = `/categories/${categoryId.toString()}`;
 
-	const response = await axiosInstance.put(updateCategoryURL, data);
+	const response = await axiosInstanceRefresh(accessToken).put(updateCategoryURL, data);
 
 	return response;
 };
@@ -57,11 +56,11 @@ export const updateCategoryAPI = async (categoryId: number, data: any) => {
 /* ====================================================
 // Delete a category for logged in user
 ==================================================== */
-export const deleteCategoryAPI = async (requestBody: any) => {
+export const deleteCategoryAPI = async (requestBody: any, accessToken: string) => {
 	// delete category URL to append to base URL
 	const deleteCategoryURL = "/categories/delete";
 
-	const response = await axiosInstance.delete(deleteCategoryURL, requestBody);
+	const response = await axiosInstanceRefresh(accessToken).delete(deleteCategoryURL, requestBody);
 
 	return response;
 };

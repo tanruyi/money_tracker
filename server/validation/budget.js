@@ -24,9 +24,7 @@ const validateCreateBudget = [
 	check("recordId", "recordId is required").not().isEmpty(),
 	check("recordId", "recordId must be integer").isInt(),
 	check("startMonth", "startMonth is required").not().isEmpty(),
-	check("startMonth", "startMonth must be date").isDate(),
 	check("endMonth", "endMonth is required").not().isEmpty(),
-	check("endMonth", "endMonth must be date").isDate(),
 ];
 
 // Get all budget records for a user
@@ -39,8 +37,6 @@ const validateUpdateBudgetRecord = [
 	check("categoryId", "categoryId must be integer").isInt().optional(),
 	check("amount", "amount must be float").isFloat().optional(),
 	check("recordId", "recordId must be integer").isInt().optional(),
-	check("startMonth", "startMonth must be date").isDate().optional(),
-	check("endMonth", "endMonth must be date").isDate().optional(),
 ];
 
 // Delete a budget record

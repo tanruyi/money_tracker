@@ -4,8 +4,15 @@ import { Button, TextField, Box, TableContainer, Table, TableHead, TableRow, Tab
 import React, { useState } from "react";
 import styles from "./Admin.module.css";
 import { findAccountAPI, deleteAccountAPI } from "../apis/admin";
+import { useCurrentUserContext } from "../context/currentUserContext";
 
 const Admin = () => {
+	/* ====================================================
+    // Context
+    ==================================================== */
+
+	const { currentUser } = useCurrentUserContext();
+
 	/* ====================================================
 	// Control Username Search Input
 	==================================================== */
@@ -35,7 +42,7 @@ const Admin = () => {
 	const handleSearchButton = async () => {
 		if (usernameToSearch) {
 			try {
-				const response = await findAccountAPI(usernameToSearch);
+				const response = await findAccountAPI(usernameToSearch, currentUser.accessToken);
 
 				setAccountFound(response.data);
 			} catch (err) {
@@ -65,7 +72,7 @@ const Admin = () => {
 			};
 
 			try {
-				const response = await deleteAccountAPI(requestBody);
+				const response = await deleteAccountAPI(requestBody, currentUser.accessToken);
 
 				setUsernameToSearch("");
 				setAccountFound({});

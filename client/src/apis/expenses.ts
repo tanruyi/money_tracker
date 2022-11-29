@@ -1,16 +1,16 @@
 /** @format */
 
-import axiosInstance from "./axiosInstance";
+import { axiosInstance, axiosInstanceRefresh } from "./axiosInstance";
 
 /* ====================================================
 // Create new expense for a user
 ==================================================== */
 
-export const createExpenseAPI = async (data: any) => {
+export const createExpenseAPI = async (data: any, accessToken: string) => {
 	// expense creation URL to append to base URL
 	const expenseCreationURL = "/expense/create";
 
-	const response = await axiosInstance.post(expenseCreationURL, data);
+	const response = await axiosInstanceRefresh(accessToken).post(expenseCreationURL, data);
 
 	return response;
 };
@@ -19,11 +19,11 @@ export const createExpenseAPI = async (data: any) => {
 // Get all expense for logged in user
 ==================================================== */
 
-export const getAllExpensesAPI = async (currentUserId: number) => {
+export const getAllExpensesAPI = async (currentUserId: number, accessToken: string) => {
 	// get expense URL to append to base URL
 	const getExpenseURL = `/expense/${currentUserId.toString()}`;
 
-	const response = await axiosInstance.get(getExpenseURL);
+	const response = await axiosInstanceRefresh(accessToken).get(getExpenseURL);
 
 	return response;
 };
@@ -31,11 +31,11 @@ export const getAllExpensesAPI = async (currentUserId: number) => {
 /* ====================================================
 // Update a expense for logged in user
 ==================================================== */
-export const updateExpenseAPI = async (expenseId: number, data: any) => {
+export const updateExpenseAPI = async (expenseId: number, data: any, accessToken: string) => {
 	// update expense URL to append to base URL
 	const updateExpenseURL = `/expense/${expenseId.toString()}`;
 
-	const response = await axiosInstance.put(updateExpenseURL, data);
+	const response = await axiosInstanceRefresh(accessToken).put(updateExpenseURL, data);
 
 	return response;
 };
@@ -43,11 +43,11 @@ export const updateExpenseAPI = async (expenseId: number, data: any) => {
 /* ====================================================
 // Delete a expense for logged in user
 ==================================================== */
-export const deleteExpenseAPI = async (requestBody: any) => {
+export const deleteExpenseAPI = async (requestBody: any, accessToken: string) => {
 	// delete expense URL to append to base URL
 	const deleteExpenseURL = "/expense/delete";
 
-	const response = await axiosInstance.delete(deleteExpenseURL, requestBody);
+	const response = await axiosInstanceRefresh(accessToken).delete(deleteExpenseURL, requestBody);
 
 	return response;
 };

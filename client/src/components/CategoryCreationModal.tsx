@@ -77,7 +77,7 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 
 		if (data.userId || data.recordId !== 0 || data.categoryName) {
 			try {
-				const response = await createCategoryAPI(data);
+				const response = await createCategoryAPI(data, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();

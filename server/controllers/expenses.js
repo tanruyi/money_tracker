@@ -25,6 +25,7 @@ const createExpenseRecord = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -57,6 +58,7 @@ const getExpenseRecords = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -84,6 +86,7 @@ const updateExpenseRecord = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -121,6 +124,7 @@ const deleteExpenseRecord = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 

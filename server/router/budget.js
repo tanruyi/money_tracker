@@ -18,21 +18,24 @@ const { createBudget, getBudgetRecords, updateBudgetRecord, deleteBudgetRecord }
 // Import validation middleware
 const { validateCreateBudget, validateGetBudgetRecords, validateUpdateBudgetRecord, validateDeleteBudgetRecord } = require("../validation/budget");
 
+// Import authentication middleware
+const verifyAccessToken = require("../middleware/verifyAccessToken");
+
 /* =========================================
 // ROUTER
 ========================================= */
 
 // Create new budget record
-budgetRouter.post("/create", validateCreateBudget, createBudget);
+budgetRouter.post("/create", verifyAccessToken, validateCreateBudget, createBudget);
 
 // Get all budget records for a user based on userId
-budgetRouter.get("/:userId", validateGetBudgetRecords, getBudgetRecords);
+budgetRouter.get("/:userId", verifyAccessToken, validateGetBudgetRecords, getBudgetRecords);
 
 // Update a budget record
-budgetRouter.put("/:budgetId", validateUpdateBudgetRecord, updateBudgetRecord);
+budgetRouter.put("/:budgetId", verifyAccessToken, validateUpdateBudgetRecord, updateBudgetRecord);
 
 // Delete a budget record
-budgetRouter.delete("/delete", validateDeleteBudgetRecord, deleteBudgetRecord);
+budgetRouter.delete("/delete", verifyAccessToken, validateDeleteBudgetRecord, deleteBudgetRecord);
 
 /* =========================================
 // EXPORTS

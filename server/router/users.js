@@ -18,6 +18,9 @@ const { createUser, logIn, refreshAccessToken } = require("../controllers/users"
 // Import validation middleware
 const { validateCreateUser, validateLogIn } = require("../validation/users");
 
+// Import authentication middleware
+const verifyAccessToken = require("../middleware/verifyAccessToken");
+
 /* =========================================
 // ROUTER
 ========================================= */

@@ -61,7 +61,7 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 	// Context
 	==================================================== */
 
-	const { categories, refreshData } = useCurrentUserContext();
+	const { currentUser, categories, refreshData } = useCurrentUserContext();
 
 	/* ====================================================
     // Error State
@@ -176,7 +176,7 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 
 		if (data.categoryId || data.amount || data.recordId || data.startMonth || data.endMonth) {
 			try {
-				const response = await updateBudgetAPI(id, data);
+				const response = await updateBudgetAPI(id, data, currentUser.accessToken);
 
 				// Refreshes the data on page
 				refreshData();
@@ -205,7 +205,7 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 		};
 
 		try {
-			const response = await deleteBudgetAPI(requestBody);
+			const response = await deleteBudgetAPI(requestBody, currentUser.accessToken);
 
 			// Refreshes the data on page
 			refreshData();

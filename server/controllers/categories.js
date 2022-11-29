@@ -25,6 +25,7 @@ const createDefaultCategories = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -47,6 +48,7 @@ const createCategory = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -73,6 +75,7 @@ const getCategories = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -100,6 +103,7 @@ const updateCategory = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -131,6 +135,7 @@ const deleteCategory = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 

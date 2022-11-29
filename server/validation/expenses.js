@@ -18,7 +18,6 @@ const validateCreateExpenseRecord = [
 	check("userId", "userId is required").not().isEmpty(),
 	check("userId", "userId must be integer").isInt(),
 	check("date", "date is required").not().isEmpty(),
-	check("date", "date must be date").isDate(),
 	check("categoryId", "categoryId is required").not().isEmpty(),
 	check("categoryId", "categoryId must be integer").isInt(),
 	check("amount", "amount is required").not().isEmpty(),
@@ -33,7 +32,6 @@ const validateGetExpenseRecords = [check("userId", "userId must be integer").isI
 // Update a expense record for a user
 const validateUpdateExpenseRecord = [
 	check("incomeId", "incomeId must be integer").isInt(),
-	check("date", "date must be date").isDate().optional(),
 	check("categoryId", "categoryId must be integer").isInt().optional(),
 	check("amount", "amount must be float").isFloat().optional(),
 	check("detail", "detail must be max 50 characters").isLength({ min: 0, max: 50 }).optional(),

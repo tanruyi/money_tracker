@@ -37,15 +37,16 @@ const createUser = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-    try {
-        // Username must start with an alphabet and end with any combination of alphabets, numbers, hyphens & underscores between 3 to 19 characters.
-        // Username can have min 4 characters & max 20 characters
-        const userRegex = /^[A-Za-z][a-zA-Z0-9-_]{3,19}$/
-        // Username can be a combination of alphabets, numbers & special characters, and must be min 8 & max 24 characters
-        const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,24}$/
+	try {
+		// Username must start with an alphabet and end with any combination of alphabets, numbers, hyphens & underscores between 3 to 19 characters.
+		// Username can have min 4 characters & max 20 characters
+		const userRegex = /^[A-Za-z][a-zA-Z0-9-_]{3,19}$/;
+		// Username can be a combination of alphabets, numbers & special characters, and must be min 8 & max 24 characters
+		const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,24}$/;
 
 		// check if the username already exists
 		const userExists = await prisma.users.findUnique({
@@ -84,6 +85,7 @@ const logIn = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -114,6 +116,7 @@ const logIn = async (req, res) => {
 		const payload = {
 			id: user.id,
 			username: user.username,
+			roleId: user.roleId,
 		};
 
 		// Create JWT access token
@@ -128,13 +131,25 @@ const logIn = async (req, res) => {
 			jwtid: uuidv4(),
 		});
 
+		// Save refresh token in db
+		const updatedUser = await prisma.users.update({
+			where: {
+				id: user.id,
+			},
+			data: {
+				refreshToken: refresh,
+			},
+		});
+
+		// Create secure cookie containing refresh token to be sent back to client, expires in 24 hours
+		res.cookie("jwt", refresh, { httpOnly: true, secure: true, sameSite: "None", maxAge: 24 * 60 * 60 * 1000 });
+
 		// Send back the JWT access & refresh tokens
 		const response = {
 			access,
-			refresh,
 			id: user.id,
-			roleId: user.roleId,
 			username: user.username,
+			roleId: user.roleId,
 		};
 
 		console.log(`login success for ${user.username} id: ${user.id}`);
@@ -146,20 +161,40 @@ const logIn = async (req, res) => {
 };
 
 // Refresh JWT access token
-const refreshAccessToken = (req, res) => {
-	// Checks whether refresh is provided, if not throw error
-	if (!req?.body?.refresh) {
-		return res.status(400).json({ status: "error", message: "req.body.refresh is required" });
+const refreshAccessToken = async (req, res) => {
+	// Checks whether refresh token is provided, if not throw error
+	if (!req.cookies?.jwt) {
+		return res.status(401).json({ status: "error", message: "no refresh token in cookies" });
+	}
+
+	// Find user in db with same refresh token
+	const user = await prisma.users.findFirst({
+		where: {
+			refreshToken: req.cookies.jwt,
+		},
+	});
+
+	if (!user) {
+		res.status(403).json({ status: "error", message: "refresh token invalid" });
 	}
 
 	try {
 		// Check that refresh token is correct
-		const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+		const decoded = jwt.verify(req.cookies.jwt, process.env.REFRESH_SECRET);
+
+		// If username in decoded JWT payload does not match username of user found in db, throw error
+		if (user.username !== decoded.username) {
+			res.status(403).json({
+				status: "error",
+				message: "unauthorised",
+			});
+		}
 
 		// Create payload for new access token
 		const payload = {
 			id: decoded.id,
 			username: decoded.username,
+			roleId: decoded.roleId,
 		};
 
 		// Create new access token
@@ -168,9 +203,12 @@ const refreshAccessToken = (req, res) => {
 			jwtid: uuidv4(),
 		});
 
-		// Send back the new JWT access tokens
+		// Send back the new JWT access token
 		const response = {
 			access,
+			id: decoded.id,
+			username: decoded.username,
+			roleId: decoded.roleId,
 		};
 
 		console.log(`refresh success for ${payload.username}`);

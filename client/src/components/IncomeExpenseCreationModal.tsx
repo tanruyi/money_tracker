@@ -188,7 +188,7 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 		if (data.userId || data.date || data.categoryId || data.amount) {
 			if (newRecordInput.recordType === "Income") {
 				try {
-					const response = await createIncomeAPI(data);
+					const response = await createIncomeAPI(data, currentUser.accessToken);
 
 					// Refreshes the data on page
 					refreshData();
@@ -218,7 +218,7 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				}
 			} else if (newRecordInput.recordType === "Expenses") {
 				try {
-					const response = await createExpenseAPI(data);
+					const response = await createExpenseAPI(data, currentUser.accessToken);
 
 					// Refreshes the data on page
 					refreshData();

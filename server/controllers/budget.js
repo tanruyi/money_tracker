@@ -25,6 +25,7 @@ const createBudget = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -54,6 +55,7 @@ const getBudgetRecords = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -81,6 +83,7 @@ const updateBudgetRecord = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 
@@ -115,6 +118,7 @@ const deleteBudgetRecord = async (req, res) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
+		console.log(errors.array());
 		return res.status(400).json({ errors: errors.array() });
 	}
 

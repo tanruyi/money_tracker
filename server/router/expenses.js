@@ -18,21 +18,24 @@ const { createExpenseRecord, getExpenseRecords, updateExpenseRecord, deleteExpen
 // Import validation middleware
 const { validateCreateExpenseRecord, validateGetExpenseRecords, validateUpdateExpenseRecord, validateDeleteExpenseRecord } = require("../validation/expenses");
 
+// Import authentication middleware
+const verifyAccessToken = require("../middleware/verifyAccessToken");
+
 /* =========================================
 // ROUTER
 ========================================= */
 
 // Create new expense record
-expenseRouter.post("/create", validateCreateExpenseRecord, createExpenseRecord);
+expenseRouter.post("/create", verifyAccessToken, validateCreateExpenseRecord, createExpenseRecord);
 
 // Get all expense records for a user based on userId
-expenseRouter.get("/:userId", validateGetExpenseRecords, getExpenseRecords);
+expenseRouter.get("/:userId", verifyAccessToken, validateGetExpenseRecords, getExpenseRecords);
 
 // Update a expense record
-expenseRouter.put("/:expenseId", validateUpdateExpenseRecord, updateExpenseRecord);
+expenseRouter.put("/:expenseId", verifyAccessToken, validateUpdateExpenseRecord, updateExpenseRecord);
 
 // Delete a expense record
-expenseRouter.delete("/delete", validateDeleteExpenseRecord, deleteExpenseRecord);
+expenseRouter.delete("/delete", verifyAccessToken, validateDeleteExpenseRecord, deleteExpenseRecord);
 
 /* =========================================
 // EXPORTS

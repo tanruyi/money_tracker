@@ -9,18 +9,20 @@
 // For .env files
 require("dotenv").config();
 
+// Import Express
+const express = require("express");
+
+// Instantiates a express server
+const app = express();
+
 // Imports CORS
 const cors = require("cors");
 
 // Imports body-parser
 const bodyParser = require("body-parser");
 
-// Import Express
-const express = require("express");
-const { response } = require("express");
-
-// Instantiates a express server
-const app = express();
+// Import cookie-parser
+const cookieParser = require("cookie-parser");
 
 // Import users router
 const usersRouter = require("./router/users");
@@ -55,6 +57,9 @@ app.use(
 // Parses all incoming req.body from JSON to JavaScript Object
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Parse incoming cookies
+app.use(cookieParser());
 
 /* ==============================================
 // ROUTES
