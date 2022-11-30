@@ -101,6 +101,7 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 
 	// To save info of logged in user
 	const updateCurrentUser = (userInfo: any) => {
+		console.log("userInfo:", userInfo);
 		let role: "user" | "admin" | "" = "";
 
 		if (userInfo.roleId === 1) {
