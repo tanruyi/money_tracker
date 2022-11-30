@@ -130,7 +130,6 @@ export function CurrentUserContextProvider({ children }: CurrentUserContextProvi
 	async function getAllUserData() {
 		// get categories data
 		const allCategoriesResponse = getAllCategoriesAPI(currentUser.id, currentUser.accessToken);
-
 		setCategories((await allCategoriesResponse).data);
 
 		// get income data

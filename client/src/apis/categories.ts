@@ -34,6 +34,7 @@ export const createCategoryAPI = async (data: any, accessToken: string) => {
 
 export const getAllCategoriesAPI = async (currentUserId: number, accessToken: string) => {
 	// get categories URL to append to base URL
+	console.log("currentUserId: ", currentUserId);
 	const getCategoriesURL = `/categories/${currentUserId.toString()}`;
 
 	const response = await axiosInstanceRefresh(accessToken).get(getCategoriesURL);
