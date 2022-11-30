@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export const axiosInstance = axios.create({
-	baseURL: "https://money-tracker-api.onrender.com",
+	baseURL: "baseURL",
 	timeout: 5000,
 	headers: {
 		"Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const axiosInstance = axios.create({
 
 export const axiosInstanceRefresh = (accessToken: string) =>
 	axios.create({
-		baseURL: "https://money-tracker-api.onrender.com",
+		baseURL: "baseURL",
 		timeout: 5000,
 		headers: {
 			"Content-Type": "application/json",
