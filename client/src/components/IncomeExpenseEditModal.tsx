@@ -59,6 +59,7 @@ interface IncomeExpenseEditModalProps {
 }
 
 const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord, displayRecord }: IncomeExpenseEditModalProps) => {
+	console.log("IncomeExpenseEditModal record:", record);
 	/* ====================================================
 	// Context
 	==================================================== */

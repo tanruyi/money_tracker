@@ -40,7 +40,8 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	// Opens dialog
-	const handleClickOpen = () => {
+    const handleClickOpen = () => {
+        console.log("handleClickOpen run...")
 		setOpenModal(true);
 	};
 
