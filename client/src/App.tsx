@@ -64,7 +64,7 @@ function App() {
 		</>
 	);
 
-    // Render log in page if user not logged in, otherwise render pages available after log in
+	// Render log in page if user not logged in, otherwise render pages available after log in
 	return <>{currentUser.id === 0 ? defaultPages : mainPages}</>;
 }
 

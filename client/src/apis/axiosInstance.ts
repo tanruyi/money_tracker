@@ -3,8 +3,15 @@
 import axios from "axios";
 
 // For requests where access token does not need to be provided - i.e. registration & login
+
+let baseURL: any = process.env.REACT_APP_BASE_URL_PROD_MODE;
+
+if (process.env.NODE_ENV === "development") {
+	baseURL = process.env.REACT_APP_BASE_URL_DEV_MODE;
+}
+
 export const axiosInstance = axios.create({
-	baseURL: "http://127.0.0.1:5001",
+	baseURL: baseURL,
 	timeout: 5000,
 	headers: {
 		"Content-Type": "application/json",
@@ -14,7 +21,7 @@ export const axiosInstance = axios.create({
 
 export const axiosInstanceRefresh = (accessToken: string) =>
 	axios.create({
-		baseURL: "http://127.0.0.1:5001",
+		baseURL: baseURL,
 		timeout: 5000,
 		headers: {
 			"Content-Type": "application/json",
