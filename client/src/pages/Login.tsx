@@ -98,8 +98,6 @@ const Home = () => {
 
 				// On login, updates user id as context
 				if ((await response).status === 200) {
-					console.log("response.data:", (await response).data);
-
 					updateCurrentUser((await response).data);
 
 					// Navigates to monthly view page on log in
