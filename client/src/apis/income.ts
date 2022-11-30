@@ -20,6 +20,7 @@ export const createIncomeAPI = async (data: any, accessToken: string) => {
 ==================================================== */
 
 export const getAllIncomeAPI = async (currentUserId: number, accessToken: string) => {
+	console.log("currentUserId: ", currentUserId);
 	// get income URL to append to base URL
 	const getIncomeURL = `/income/${currentUserId.toString()}`;
 
