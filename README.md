@@ -20,6 +20,8 @@ Features:
 
 This is a full-stack website done as part of the course requirements for General Assembly's Software Engineering Immersive program.
 
+Back-end repository: https://github.com/tanruyi/money_tracker-back-end
+
 ## Technologies Used:
 
 -   Front-end:
