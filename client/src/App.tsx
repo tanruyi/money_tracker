@@ -1,11 +1,11 @@
 /** @format */
 
 import React, { useState } from "react";
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useCurrentUserContext } from "./context/currentUserContext";
+import "./App.css";
 import Navbar from "./common/Navbar";
 import Login from "./pages/Login";
-import { useCurrentUserContext } from "./context/currentUserContext";
 import Settings from "./pages/Settings";
 import Budget from "./pages/Budget";
 import Analyse from "./pages/Analyse";
