@@ -16,6 +16,11 @@
 	--color8: #248277;
 	--color9: #14746f;
 	--color10: #036666;
+    --lightGrey: #f3f4f6;
+    --medGrey: #95a1b1;
+    --darkGrey: #4d5863;
+    --purple: #7f00ff;
+    --pink: #e100ff;
 }
 
 * {
