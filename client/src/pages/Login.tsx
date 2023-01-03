@@ -53,7 +53,7 @@ const Home = () => {
 	const [validUsername, setValidUsername] = useState(false);
 	const [validPassword, setValidPassword] = useState(false);
 
-	// EVent handlers for changes in input fields
+	// Event handlers for changes in input fields
 	const handleUsernameInput = (e: any) => {
 		setUsername(e.target.value);
 	};
