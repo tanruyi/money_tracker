@@ -9,6 +9,7 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 import styles from "./Welcome.module.css";
 import { loginAPI, registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
+import LoginRegistrationBox from "../components/LoginRegistrationBox";
 
 /* ====================================================
 // Type Declaration
@@ -202,15 +203,15 @@ const Home = () => {
 	};
 
 	return (
-		<div className={styles.background}>
+		<div className={styles.welcomeBackground}>
 			{/* Website Title */}
-			<h1 className={styles.websiteTitle}>Money Tracker</h1>
+			<h1 className={styles.welcomeTitle}>Money Tracker</h1>
 			{/* Login or Registration Box */}
 			<div className={styles.box}>
 				{/* Name for box */}
-				<h2>{registrationNeeded ? "Register" : "Login"}</h2>
+				{/* <h2>{registrationNeeded ? "Register" : "Login"}</h2> */}
 				{/* Input fields */}
-				<div className={styles.textField}>
+				{/* <div className={styles.textField}>
 					<TextField
 						required
 						label="Username"
@@ -257,26 +258,27 @@ const Home = () => {
 							? "Password must have at least 1 lower-case alphabet, upper-case alphabet, number & special character. Must be min 8 & max 24 characters"
 							: ""}
 					</p>
-				</div>
+				</div> */}
 
 				{/* Register or login button */}
-				<div className={styles.button}>
+				{/* <div className={styles.button}>
 					<Button
 						variant="contained"
 						size="large"
-						sx={{ fontSize: "1.3rem", fontWeight: "bold" }}
+						sx={{ fontSize: "1.3rem", fontWeight: "bold", backgroundColor: "var(--purple)" }}
 						onClick={registrationNeeded ? handleRegistration : handleLogInClick}
 					>
 						{registrationNeeded ? "Register" : "Login"}
 					</Button>
-				</div>
+				</div> */}
 				{/* Hyperlink to toggle between login & registration */}
-				<div>
+				{/* <div>
 					<h3 className={styles.toggleLink} onClick={toggleLoginRegisterDisplay}>
 						{registrationNeeded ? "Click here to login" : "Not a registered user? Click here to register"}
 					</h3>
-				</div>
-			</div>
+				</div> */}
+                    <LoginRegistrationBox />
+                </div>
 		</div>
 	);
 };
