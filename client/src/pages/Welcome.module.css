@@ -1,15 +1,15 @@
 /** @format */
 
-.container {
-	background-color: var(--color9);
+.background {
+	background-color: var(--lightGrey);
 	height: 100vh;
 	width: 100vw;
 	padding: 2vh 0;
 }
 
-.title {
-	font-family: "League Spartan", sans-serif;
-	color: var(--base);
+.websiteTitle {
+	font-family: 'Poppins', sans-serif;
+	color: var(--purple);
 	text-align: center;
 	font-size: 6rem;
 }

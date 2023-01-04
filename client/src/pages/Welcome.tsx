@@ -6,7 +6,7 @@ import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedIn
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import styles from "./Login.module.css";
+import styles from "./Welcome.module.css";
 import { loginAPI, registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
 
@@ -202,9 +202,9 @@ const Home = () => {
 	};
 
 	return (
-		<div className={styles.container}>
-			{/* Title */}
-			<h1 className={styles.title}>Money Tracker</h1>
+		<div className={styles.background}>
+			{/* Website Title */}
+			<h1 className={styles.websiteTitle}>Money Tracker</h1>
 			{/* Login or Registration Box */}
 			<div className={styles.box}>
 				{/* Name for box */}

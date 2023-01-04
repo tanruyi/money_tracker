@@ -18,7 +18,7 @@ import {
 	TextField,
 	Stack,
 } from "@mui/material";
-import { newCategoryData } from "../pages/Login";
+import { newCategoryData } from "../pages/Welcome";
 
 /* ====================================================
 // Type Declaration
