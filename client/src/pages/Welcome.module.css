@@ -1,28 +1,17 @@
 /** @format */
 
-.background {
+.welcomeBackground {
 	background-color: var(--lightGrey);
 	height: 100vh;
 	width: 100vw;
 	padding: 2vh 0;
 }
 
-.websiteTitle {
+.welcomeTitle {
 	font-family: 'Poppins', sans-serif;
 	color: var(--purple);
 	text-align: center;
 	font-size: 6rem;
-}
-
-.box {
-	width: 40vw;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 3rem;
-	background-color: var(--base);
-	border-radius: 1rem;
-	display: flex;
-	flex-direction: column;
 }
 
 .box h2 {

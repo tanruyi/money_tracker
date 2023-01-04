@@ -1,6 +1,5 @@
 /** @format */
 
-import React from "react";
 import styles from "./LoginRegistrationBox.module.css";
 
 const LoginRegistrationBox = () => {
