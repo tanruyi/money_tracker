@@ -1,14 +1,14 @@
 /** @format */
 
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import styles from "./Login.module.css";
-import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, registrationAPI } from "../apis/users";
-import { createDefaultCategoriesAPI } from "../apis/categories";
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useCurrentUserContext } from "../context/currentUserContext";
+import styles from "./Login.module.css";
+import { loginAPI, registrationAPI } from "../apis/users";
+import { createDefaultCategoriesAPI } from "../apis/categories";
 
 /* ====================================================
 // Type Declaration
