@@ -21,26 +21,31 @@
 
 .loginRegistrationBoxHeader {
 	display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 80%;
-    margin-left: auto;
+	justify-content: space-between;
+	align-items: baseline;
+	width: 80%;
+	margin-left: auto;
 	margin-right: auto;
-    font-family: "Poppins", sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 
 .loginRegistrationBoxHeaderText {
-    font-weight: bold;
-    font-size: 1.8rem;
+	font-weight: bold;
+	font-size: 1.8rem;
 }
 
 .loginRegistrationBoxBackButton {
-    color: var(--purple);
+	color: var(--purple);
+	cursor: pointer;
+}
+
+.loginRegistrationBoxBackButton:hover {
+    color: var(--pink);
 }
 
 .loginRegistrationBoxButton {
 	display: block;
-	width: 80%;
+	width: 60%;
 	background-color: var(--purple);
 	border: none;
 	border-radius: 1rem;
@@ -50,4 +55,9 @@
 	font-family: "Poppins", sans-serif;
 	font-size: 1.5rem;
 	color: white;
+	cursor: pointer;
+}
+
+.loginRegistrationBoxButton:hover {
+	background-color: var(--pink);
 }

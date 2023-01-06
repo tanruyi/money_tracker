@@ -85,7 +85,7 @@ const Home = () => {
     ==================================================== */
 
 	// Sends login credentials to API
-	const handleLogInClick = async () => {
+	const handleLogInClick = async (username:string, password: string) => {
 		const data = {
 			username,
 			password,
@@ -105,7 +105,7 @@ const Home = () => {
 					navigate("/calendar");
 				}
 			} else {
-				window.alert("Username or password is empty. Please try again.");
+				window.alert("Username and/or password is empty. Please try again.");
 			}
 		} catch (err) {
 			if (typeof err === "string") {
@@ -118,7 +118,7 @@ const Home = () => {
 
 	const enterKeyLogin = (e: any) => {
 		if (e.key === "Enter") {
-			handleLogInClick();
+			// handleLogInClick();
 		}
 	};
 
@@ -277,7 +277,7 @@ const Home = () => {
 						{registrationNeeded ? "Click here to login" : "Not a registered user? Click here to register"}
 					</h3>
 				</div> */}
-                    <LoginRegistrationBox />
+                <LoginRegistrationBox handleLogInClick={handleLogInClick} />
                 </div>
 		</div>
 	);
