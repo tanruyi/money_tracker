@@ -14,37 +14,40 @@
 	font-size: 6rem;
 }
 
-.box h2 {
-	font-size: 4rem;
-	text-align: center;
-	color: var(--contrast);
-}
-
-.textField {
-	margin: 0.5rem auto;
-}
-
-.textFieldErrorMsgInactive {
-	display: none;
-}
-
-.textFieldErrorMsg {
-    display: flex;
-	width: 25vw;
-	margin: 0.5rem auto;
-	padding: 0 1rem;
-	background-color: var(--emphasise);
+.welcomeContainer {
+	display: flex;
+	flex-direction: column;
+	width: 40vw;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 3rem;
+	background-color: white;
 	border-radius: 1rem;
 }
 
-.button {
-	margin: 2rem auto;
+.welcomeHeadline {
+	font-weight: bold;
+	font-family: "Poppins", sans-serif;
+	font-size: 1.5rem;
+	color: black;
+	text-align: center;
 }
 
-.toggleLink {
+.welcomeButton {
+	display: block;
+	width: 60%;
+	background-color: var(--purple);
+	border: none;
+	border-radius: 1rem;
+	margin: 1.5rem auto;
+	padding: 1rem;
+	font-weight: bold;
+	font-family: "Poppins", sans-serif;
+	font-size: 1.5rem;
+	color: white;
 	cursor: pointer;
 }
 
-.toggleLink:hover {
-	color: var(--color3);
+.welcomeButton:hover {
+	background-color: var(--pink);
 }

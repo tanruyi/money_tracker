@@ -11,14 +11,6 @@
 	border-radius: 1rem;
 }
 
-.loginRegistrationBoxHeadline {
-	font-weight: bold;
-	font-family: "Poppins", sans-serif;
-	font-size: 1.5rem;
-	color: black;
-	text-align: center;
-}
-
 .loginRegistrationBoxHeader {
 	display: flex;
 	justify-content: space-between;

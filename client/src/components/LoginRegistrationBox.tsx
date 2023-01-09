@@ -7,15 +7,12 @@ import styles from "./LoginRegistrationBox.module.css";
 
 interface LoginRegistrationBoxProps {
 	handleLogInClick: (username: string, password: string) => void;
+	handleRegistration: (username: string, password: string) => void;
+	changeDisplay: (newDisplay: "Default" | "Login" | "Registration") => void;
+	boxHeader: string;
 }
 
-const LoginRegistrationBox = ({ handleLogInClick}: LoginRegistrationBoxProps) => {
-    const [display, setDisplay] = useState<"Default" | "Login" | "Registration">("Default");
-    
-    const changeDisplay = (newDisplay: "Default" | "Login" | "Registration") => {
-        setDisplay(newDisplay)
-    }
-
+const LoginRegistrationBox = ({ handleLogInClick, handleRegistration, changeDisplay, boxHeader }: LoginRegistrationBoxProps) => {
 	/* ====================================================
     // Controlled Inputs
     ==================================================== */
@@ -33,6 +30,10 @@ const LoginRegistrationBox = ({ handleLogInClick}: LoginRegistrationBoxProps) =>
 		setPassword(e.target.value);
 	};
 
+	/* ====================================================
+    // Toggle password visibility
+    ==================================================== */
+
 	// Saves boolean whether password is currently visible
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -42,26 +43,24 @@ const LoginRegistrationBox = ({ handleLogInClick}: LoginRegistrationBoxProps) =>
 	};
 
 	/* ====================================================
-    // JSX: Default Display on web page load
+    // Direct button click event to correct function
     ==================================================== */
 
-	const defaultDisplay = (
-		<div className={styles.loginRegistrationBoxContainer}>
-			<p className={styles.loginRegistrationBoxHeadline}>Welcome back</p>
-			<button className={styles.loginRegistrationBoxButton} onClick={() => changeDisplay("Login")}>Login</button>
-			<button className={styles.loginRegistrationBoxButton} onClick={() => changeDisplay("Registration")}>Create account</button>
-		</div>
-	);
+	const handleButtonClick = (username: string, password: string) => {
+		if (boxHeader === "Login") {
+			handleLogInClick(username, password);
+		} else {
+			handleRegistration(username, password);
+		}
+	};
 
-	/* ====================================================
-    // JSX: Login
-    ==================================================== */
-
-	const loginRegistrationDisplay = (
+	return (
 		<div className={styles.loginRegistrationBoxContainer}>
 			<div className={styles.loginRegistrationBoxHeader}>
-				<p className={styles.loginRegistrationBoxHeaderText}>Login</p>
-				<p className={styles.loginRegistrationBoxBackButton} onClick={() => changeDisplay("Default")}>Back</p>
+				<p className={styles.loginRegistrationBoxHeaderText}>{boxHeader}</p>
+				<p className={styles.loginRegistrationBoxBackButton} onClick={() => changeDisplay("Default")}>
+					Back
+				</p>
 			</div>
 			<TextField
 				required
@@ -89,12 +88,11 @@ const LoginRegistrationBox = ({ handleLogInClick}: LoginRegistrationBoxProps) =>
 					}
 				/>
 			</FormControl>
-			<button className={styles.loginRegistrationBoxButton} onClick={() => handleLogInClick(username, password)}>
-				Login
+			<button className={styles.loginRegistrationBoxButton} onClick={() => handleButtonClick(username, password)}>
+				{boxHeader}
 			</button>
 		</div>
 	);
-	return <>{display === "Default" ? defaultDisplay : loginRegistrationDisplay}</>;
 };
 
 export default LoginRegistrationBox;
