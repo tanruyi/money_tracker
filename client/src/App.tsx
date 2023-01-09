@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useCurrentUserContext } from "./context/currentUserContext";
 import "./App.css";
@@ -65,7 +65,13 @@ function App() {
 	);
 
 	// Render log in page if user not logged in, otherwise render pages available after log in
-	return <>{currentUser.id === 0 ? defaultPages : mainPages}</>;
+	return (
+        <>
+            {/* TODO: remove temp changes */}
+			{/* {currentUser.id === 0 ? defaultPages : mainPages} */}
+			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
+		</>
+	);
 }
 
 export default App;
