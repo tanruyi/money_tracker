@@ -1,0 +1,15 @@
+/** @format */
+
+.dashboardContainer {
+	width: 80vw;
+	height: 90vh;
+	background-color: var(--lightGrey);
+}
+
+.dashboardChartHeader {
+	margin: 0;
+	padding-left: 3rem;
+	padding-top: 2rem;
+    font-family: "Poppins", sans-serif;
+
+}
