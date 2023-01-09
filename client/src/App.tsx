@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import CalendarView from "./pages/CalendarView";
 import Unauthorised from "./pages/Unauthorised";
 import Missing from "./pages/Missing";
+import Userbar from "./common/Userbar";
 
 function App() {
 	/* ====================================================
@@ -66,11 +67,12 @@ function App() {
 
 	// Render log in page if user not logged in, otherwise render pages available after log in
 	return (
-        <>
+        <div className="appContainer">
             {/* TODO: remove temp changes */}
 			{/* {currentUser.id === 0 ? defaultPages : mainPages} */}
-			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
-		</>
+            <Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
+            <Userbar />
+		</div>
 	);
 }
 

@@ -1,0 +1,19 @@
+/** @format */
+
+.userbarContainer {
+	background-color: var(--base);
+	width: 80vw;
+	height: 10vh;
+}
+
+.userbarContainer p {
+	height: 10vh;
+	padding-left: 3rem;
+	padding-top: 0.8rem;
+	font-size: 1.3rem;
+	font-family: "Poppins", sans-serif;
+}
+
+.userbarContainer p span {
+	font-weight: bold;
+}
