@@ -3,6 +3,8 @@
 .navbarContainer,
 .navbarPageLinksContainer {
 	width: 20vw;
+	position: fixed;
+	overflow: auto;
 }
 
 .navbarContainer {
