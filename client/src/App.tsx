@@ -15,6 +15,7 @@ import Unauthorised from "./pages/Unauthorised";
 import Missing from "./pages/Missing";
 import Userbar from "./common/Userbar";
 import Dashboard from "./pages/Dashboard";
+import Footer from "./common/Footer";
 
 function App() {
 	/* ====================================================
@@ -76,6 +77,7 @@ function App() {
 			<div className="rightContainer">
 				<Userbar />
 				<Dashboard />
+				<Footer />
 			</div>
 		</div>
 	);

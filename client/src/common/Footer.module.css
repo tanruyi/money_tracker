@@ -1,0 +1,23 @@
+/** @format */
+
+.footerContainer {
+	background-color: var(--darkGrey);
+	height: 20%;
+	width: 100%;
+	font-family: "Poppins", sans-serif;
+	font-weight: bold;
+	color: var(--base);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.footerGithubContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.footerGithubImg {
+	height: 3rem;
+	margin-right: 1rem;
+}
