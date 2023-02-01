@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { useCurrentUserContext } from "./context/currentUserContext";
 import "./App.css";
 import Navbar from "./common/Navbar";
-import Login from "./pages/Welcome";
+import Welcome from "./pages/Welcome";
 import Settings from "./pages/Settings";
 import Budget from "./pages/Budget";
 import Analyse from "./pages/Analyse";
@@ -36,7 +36,7 @@ function App() {
 	// Login page
 	const defaultPages = (
 		<Routes>
-			<Route path="/" element={<Login />} />
+			<Route path="/" element={<Welcome />} />
 			<Route path="/calendar" element={<Unauthorised />} />
 			<Route path="/budget" element={<Unauthorised />} />
 			<Route path="/analyse" element={<Unauthorised />} />
