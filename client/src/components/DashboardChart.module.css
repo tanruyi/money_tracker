@@ -1,0 +1,23 @@
+/** @format */
+
+.container {
+	/* color: var(--pink); */
+	font-family: "Poppins", sans-serif;
+	grid-column: 2 / 3;
+}
+
+.container h1 {
+	text-align: center;
+}
+
+.chartContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.chartBox {
+	width: 50vw;
+	height: 40vh;
+	background-color: white;
+}

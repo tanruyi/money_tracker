@@ -1,15 +1,24 @@
 /** @format */
 
 .dashboardContainer {
-	width: 80vw;
-	height: 90vh;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
 	background-color: var(--lightGrey);
+}
+
+.dashboardChartContainer {
+	display: grid;
+	height: 40%;
+	grid-template-columns: 10% auto 12%;
+	grid-template-rows: 5% auto;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
 }
 
 .dashboardChartHeader {
 	margin: 0;
 	padding-left: 3rem;
 	padding-top: 2rem;
-    font-family: "Poppins", sans-serif;
-
+	font-family: "Poppins", sans-serif;
 }
