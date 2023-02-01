@@ -12,7 +12,9 @@
 	align-items: center;
 }
 
-.footerGithubContainer {
+.footerGithubLink {
+	text-decoration: none;
+	color: var(--base);
 	display: flex;
 	flex-direction: row;
 }

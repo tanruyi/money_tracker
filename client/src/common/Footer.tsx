@@ -10,12 +10,12 @@ const Footer = () => {
 				Made with ♡ <br />
 				By Ru Yi
 			</p>
-			<div className={styles.footerGithubContainer}>
+			<a className={styles.footerGithubLink} href="https://github.com/tanruyi/money_tracker-front-end" target="_blank">
 				<img src={githubLogo} alt="GitHub" className={styles.footerGithubImg} />
 				<p>
 					Click here to access the <br /> GitHub repository
 				</p>
-			</div>
+			</a>
 		</div>
 	);
 };
