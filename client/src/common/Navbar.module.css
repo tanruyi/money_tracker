@@ -3,13 +3,13 @@
 .navbarContainer,
 .navbarPageLinksContainer {
 	width: 20%;
-	position: fixed;
-	overflow: auto;
 }
 
 .navbarContainer {
 	height: 100%;
 	background-color: var(--purple);
+	position: fixed;
+	overflow: auto;
 }
 
 .navbarTitle {
