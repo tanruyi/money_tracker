@@ -73,7 +73,7 @@ function App() {
 			{/* TODO: remove temp changes */}
 			{/* {currentUser.id === 0 ? defaultPages : mainPages} */}
 			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
-			<div>
+			<div className="rightContainer">
 				<Userbar />
 				<Dashboard />
 			</div>
