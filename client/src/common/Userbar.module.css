@@ -2,8 +2,8 @@
 
 .userbarContainer {
 	background-color: var(--base);
-	width: 80vw;
-	height: 10vh;
+	width: 100%;
+	height: 10%;
 }
 
 .userbarContainer p {
