@@ -24,6 +24,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
+import StyledButton from "./styledMUI/Button";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================
@@ -225,7 +226,9 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Budget Record</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Create Budget Record
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -285,9 +288,9 @@ const BudgetCreationModal = ({ openModal, handleClose }: BudgetCreationModalProp
 			</DialogContent>
 			{/* Create button */}
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleCreateRecord}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateRecord}>
 					Create
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

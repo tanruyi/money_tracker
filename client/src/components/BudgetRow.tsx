@@ -72,28 +72,24 @@ const BudgetRow = ({ record, type }: BudgetRowProps) => {
 	return (
 		<div className={styles.rowContainer}>
 			{/* Icon */}
-			<div className={styles.rowIcon}>
-				<img src={icon} alt="icon" />
-			</div>
+			<img src={icon} alt="icon" />
 			{/* Category name & budget period */}
 			<div className={styles.rowInfo}>
-				<h2>{categoryName}</h2>
-				<h3>
+				<h3>{categoryName}</h3>
+				<p>
 					{startMonthToDisplay} - {endMonthToDisplay}
-				</h3>
+				</p>
 			</div>
 			{/* Budget amount */}
 			<div className={styles.rowAmount}>
-				<h2>{amountToDisplay}</h2>
+				<h3>{amountToDisplay}</h3>
 			</div>
-			<div className={styles.rowButton}>
-				{/* Edit button */}
-				<IconButton onClick={handleClickOpen}>
-					<EditIcon fontSize="large" />
-				</IconButton>
-				{/* Form dialog for edit of record - opens on click of edit button */}
-				<BudgetEditModal openModal={openModal} handleClose={handleClose} record={record} categoryRecord={categoryRecord} type={type} />
-			</div>
+			{/* Edit button */}
+			<IconButton onClick={handleClickOpen}>
+				<EditIcon fontSize="large" />
+			</IconButton>
+			{/* Form dialog for edit of record - opens on click of edit button */}
+			<BudgetEditModal openModal={openModal} handleClose={handleClose} record={record} categoryRecord={categoryRecord} type={type} />
 		</div>
 	);
 };

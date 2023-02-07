@@ -275,7 +275,9 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle sx={{fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem"}}>Create Income or Expense Record</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Create Income or Expense Record
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -333,7 +335,9 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				</Box>
 			</DialogContent>
 			<DialogActions>
-                <StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateRecord}>Create</StyledButton>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateRecord}>
+					Create
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

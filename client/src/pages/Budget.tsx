@@ -5,12 +5,19 @@ import styles from "./Budget.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
 import BudgetDashboard from "../components/BudgetDashboard";
+import { ToggleButtonGroup, IconButton } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BudgetRow from "../components/BudgetRow";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import StyledButton from "../components/styledMUI/Button";
+import StyledToggleButton from "../components/styledMUI/ToggleButton";
+import BudgetCreationModal from "../components/BudgetCreationModal";
+
 dayjs.extend(isBetween, CustomParseFormat);
 dayjs.extend(isSameOrBefore, isSameOrAfter);
 
@@ -24,18 +31,13 @@ const Budget = () => {
 	/* ====================================================
     // Current period to be displayed to be displayed
     ==================================================== */
-	const [currentPeriodView, setCurrentPeriodView] = useState<"Monthly" | "YTD">("Monthly");
+	const [periodType, setPeriodType] = useState<"Monthly" | "YTD">("Monthly");
 
-	/* ====================================================
-    // Handle Clicks on Monthly or YTD Tabs
-    ==================================================== */
-	const handleMonthlyClick = () => {
-		setCurrentPeriodView("Monthly");
-	};
-
-	const handleYTDClick = () => {
-		setCurrentPeriodView("YTD");
-	};
+	function handlePeriodTypeChange(e: React.MouseEvent<HTMLElement>, newPeriodType: "Monthly" | "YTD") {
+		if (newPeriodType !== null) {
+			setPeriodType(newPeriodType);
+		}
+	}
 
 	/* ====================================================
     // Date for display
@@ -44,17 +46,17 @@ const Budget = () => {
 	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
 
 	const handleBackArrow = () => {
-		if (currentPeriodView === "Monthly") {
+		if (periodType === "Monthly") {
 			setDateToDisplay((prevState) => prevState.subtract(1, "month"));
-		} else if (currentPeriodView === "YTD") {
+		} else if (periodType === "YTD") {
 			setDateToDisplay((prevState) => prevState.subtract(1, "year"));
 		}
 	};
 
 	const handleForwardArrow = () => {
-		if (currentPeriodView === "Monthly") {
+		if (periodType === "Monthly") {
 			setDateToDisplay((prevState) => prevState.add(1, "month"));
-		} else if (currentPeriodView === "YTD") {
+		} else if (periodType === "YTD") {
 			setDateToDisplay((prevState) => prevState.add(1, "year"));
 		}
 	};
@@ -78,12 +80,12 @@ const Budget = () => {
 	let totalIncome = 0;
 
 	// Calculate the total for the mth
-	if (currentPeriodView === "Monthly") {
+	if (periodType === "Monthly") {
 		for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
 			totalIncome += Number(budgetIncomeRecordsToDisplay[i].amount);
 		}
 		// Calculate total for YTD
-	} else if (currentPeriodView === "YTD") {
+	} else if (periodType === "YTD") {
 		for (let i = 0; i < budgetIncomeRecordsToDisplay.length; i++) {
 			// Get the start & end mth of the record in dayjs
 			const startMth = dayjs(budgetIncomeRecordsToDisplay[i].startMonth);
@@ -144,11 +146,11 @@ const Budget = () => {
 	let totalExpenses = 0;
 
 	// Calculate the total for the mth
-	if (currentPeriodView === "Monthly") {
+	if (periodType === "Monthly") {
 		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
 			totalExpenses += Number(budgetExpenseRecordsToDisplay[i].amount);
 		}
-	} else if (currentPeriodView === "YTD") {
+	} else if (periodType === "YTD") {
 		for (let i = 0; i < budgetExpenseRecordsToDisplay.length; i++) {
 			// Get the start & end mth of the record in dayjs
 			const startMth = dayjs(budgetExpenseRecordsToDisplay[i].startMonth);
@@ -191,39 +193,72 @@ const Budget = () => {
 
 	const expenseRecordRows = budgetExpenseRecordsToDisplay.map((record, index) => <BudgetRow key={index} record={record} type={"Expenses"} />);
 
+	/* ====================================================
+    // Handle HTML text to display for title
+    ==================================================== */
+	let dateHeader = "";
+
+	if (periodType === "Monthly") {
+		dateHeader = dateToDisplay.format("MMM YYYY");
+	} else if (periodType === "YTD") {
+		dateHeader = `Year ${dateToDisplay.year()}`;
+	}
+
+	/* ====================================================
+    // Handle budget creation modal
+    ==================================================== */
+
+	const [openModal, setOpenModal] = useState<boolean>(false);
+
+	// Opens dialog
+	const handleClickOpen = () => {
+		setOpenModal(true);
+	};
+
+	// Closes dialog
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 	return (
-		<div>
-			{/* Dashboard */}
-			<BudgetDashboard
-				currentPeriodView={currentPeriodView}
-				dateToDisplay={dateToDisplay}
-				handleBackArrow={handleBackArrow}
-				handleForwardArrow={handleForwardArrow}
-				totalIncome={totalIncome}
-				totalExpenses={totalExpenses}
-			/>
-			{/* Monthly or YTD Tab */}
-			<div className={styles.tabContainer}>
-				<div className={currentPeriodView === "Monthly" ? styles.tabActive : styles.tab} onClick={handleMonthlyClick}>
-					<h1>Monthly</h1>
-				</div>
-				<div className={currentPeriodView === "YTD" ? styles.tabActive : styles.tab} onClick={handleYTDClick}>
-					<h1>YTD</h1>
-				</div>
+		<div className={styles.budgetContainer}>
+			<div className={styles.budgetButtons}>
+				<ToggleButtonGroup exclusive value={periodType} onChange={handlePeriodTypeChange}>
+					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
+					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
+				</ToggleButtonGroup>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
+					Create budget
+				</StyledButton>{" "}
+				{/* Form dialog for new record - opens on click of new record button */}
+				<BudgetCreationModal openModal={openModal} handleClose={handleClose} />
 			</div>
+			<div className={styles.budgetPeriodDisplay}>
+				{/* To change info displayed to previous month or year */}
+				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
+					<ArrowBackIosNewIcon />
+				</IconButton>
+
+				<h1>{dateHeader}</h1>
+				{/* To change info displayed to next month or year */}
+				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
+					<ArrowForwardIosIcon />
+				</IconButton>
+			</div>
+
 			{/* Budget Records */}
 			<div className={styles.budgetRowsContainer}>
 				<div className={styles.budgetRowsColumn}>
 					<div className={styles.header}>
-						<h1>Income</h1>
-						<h1>{totalIncomeString}</h1>
+						<h2>Income</h2>
+						<h2>{totalIncomeString}</h2>
 					</div>
 					{budgetIncomeRows}
 				</div>
 				<div className={styles.budgetRowsColumn}>
 					<div className={styles.header}>
-						<h1>Expenses</h1>
-						<h1>{totalExpensesString}</h1>
+						<h2>Expenses</h2>
+						<h2>{totalExpensesString}</h2>
 					</div>
 					{expenseRecordRows}
 				</div>

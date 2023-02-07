@@ -1,53 +1,42 @@
 /** @format */
 
-.tabContainer,
-.tab {
-	height: 5vh;
-}
-
-.tabContainer {
-	display: flex;
+.budgetContainer {
 	width: 100%;
-	background-color: var(--base);
+	min-height: 41.2rem;
+	height: auto;
+	background-color: var(--lightGrey);
 }
 
-.tab,
-.tab:hover,
-.tabActive {
-	width: 50%;
-	text-align: center;
-	border-radius: 2rem 2rem 0 0;
-	cursor: pointer;
+.budgetButtons {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rem 3rem;
 }
 
-.tab {
-	background-color: var(--color8);
-	color: var(--base);
+.budgetPeriodDisplay {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.tab:hover,
-.tabActive {
-	background-color: var(--color3);
-	color: var(--contrast);
-}
-
-.tab h1 {
-	line-height: 5vh;
+.budgetPeriodDisplay h1 {
 	margin: 0;
+	font-family: "Poppins", sans-serif;
 }
 
 .budgetRowsContainer {
-	background-color: var(--color3);
 	width: 100%;
-	min-height: 47vh;
-	padding: 6vh;
+	min-height: 30rem;
+	padding: 3rem 4rem;
 	display: flex;
 	justify-content: space-between;
 }
 
 .budgetRowsColumn {
 	background-color: var(--base);
-	width: 40vw;
+	width: 40rem;
 	padding: 1rem 4rem;
 	border-radius: 1rem;
 }
@@ -55,4 +44,8 @@
 .header {
 	display: flex;
 	justify-content: space-between;
+}
+
+.header h2 {
+	font-family: "Poppins", sans-serif;
 }

@@ -24,6 +24,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
+import StyledButton from "./styledMUI/Button";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================
@@ -245,7 +246,9 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Edit Budget Record</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Edit Budget Record
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -305,13 +308,14 @@ const BudgetEditModal = ({ openModal, handleClose, record, categoryRecord, type 
 			</DialogContent>
 			<DialogActions>
 				{/* Update button */}
-				<Button variant="contained" size="large" onClick={handleUpdateBudget}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleUpdateBudget}>
 					Update
-				</Button>
+				</StyledButton>
+
 				{/* Delete button */}
-				<Button variant="contained" size="large" onClick={handleDeleteBudget}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleDeleteBudget}>
 					Delete
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

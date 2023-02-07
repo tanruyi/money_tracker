@@ -1,44 +1,30 @@
 /** @format */
 
-.container {
-	min-height: 20vh;
-	width: 80vw;
-	margin: 0 auto 1rem;
-	padding: 1vh 3vh 2vh;
-	background-color: var(--base);
-}
-
-.header {
-	display: flex;
-	justify-content: space-between;
-}
-
 .rowContainer {
-	height: 12vh;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 2vh;
+	height: 6rem;
+	margin: 1rem auto;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	font-family: "Poppins", sans-serif;
 }
 
-.rowIcon img {
-	width: 3vw;
+.rowContainer img {
+	width: 3rem;
 }
 
 .rowInfo {
-	width: 50%;
-	text-align: left;
+	width: 15rem;
 	margin-left: 1rem;
 }
 
-.rowAmount {
-	width: 20%;
-	text-align: right;
+.rowInfo h3,
+.rowInfo p {
+	margin: 0;
 }
 
-.rowButton {
-	width: 10%;
+.rowAmount {
+	width: 10rem;
+	text-align: right;
+	margin-right: 1rem;
 }
