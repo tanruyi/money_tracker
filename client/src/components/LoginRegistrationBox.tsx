@@ -4,6 +4,7 @@ import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Icon
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import styles from "./LoginRegistrationBox.module.css";
+import { StyledButton } from "./styledMUI/button";
 
 interface LoginRegistrationBoxProps {
 	handleLogInClick: (username: string, password: string) => void;
@@ -88,9 +89,12 @@ const LoginRegistrationBox = ({ handleLogInClick, handleRegistration, changeDisp
 					}
 				/>
 			</FormControl>
-			<button className={styles.loginRegistrationBoxButton} onClick={() => handleButtonClick(username, password)}>
+			{/* <button className={styles.loginRegistrationBoxButton} onClick={() => handleButtonClick(username, password)}>
 				{boxHeader}
-			</button>
+			</button> */}
+			<StyledButton variant="contained" sx={{ width: "60%", margin: "1.5rem auto" }} onClick={() => handleButtonClick(username, password)}>
+				{boxHeader}
+			</StyledButton>
 		</div>
 	);
 };

@@ -32,24 +32,5 @@
 }
 
 .loginRegistrationBoxBackButton:hover {
-    color: var(--pink);
-}
-
-.loginRegistrationBoxButton {
-	display: block;
-	width: 60%;
-	background-color: var(--purple);
-	border: none;
-	border-radius: 1rem;
-	margin: 1.5rem auto;
-	padding: 1rem;
-	font-weight: bold;
-	font-family: "Poppins", sans-serif;
-	font-size: 1.5rem;
-	color: white;
-	cursor: pointer;
-}
-
-.loginRegistrationBoxButton:hover {
-	background-color: var(--pink);
+	color: var(--pink);
 }

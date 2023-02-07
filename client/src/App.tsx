@@ -16,6 +16,7 @@ import Missing from "./pages/Missing";
 import Userbar from "./common/Userbar";
 import Dashboard from "./pages/Dashboard";
 import Footer from "./common/Footer";
+import Transactions from "./pages/Transactions";
 
 function App() {
 	/* ====================================================
@@ -52,31 +53,39 @@ function App() {
 	const mainPages = (
 		<>
 			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
-			<Userbar />
-			<Routes>
-				<Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
-				<Route path="/budget" element={<Budget />} />
-				<Route path="/analyse" element={<Analyse />} />
-				<Route path="/settings" element={<Settings />} />
+			<div className="rightContainer">
+				<Userbar />
+				<Routes>
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
+					<Route path="/budget" element={<Budget />} />
+					<Route path="/analyse" element={<Analyse />} />
+					<Route path="/settings" element={<Settings />} />
 
-				{/* Admin page only for users with role admin */}
-				<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} />
+					{/* Admin page only for users with role admin */}
+					<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} />
 
-				{/* Catch all */}
-				<Route path="/*" element={<Missing />} />
-			</Routes>{" "}
+					{/* Catch all */}
+					<Route path="/*" element={<Missing />} />
+				</Routes>
+				<Footer />
+			</div>
 		</>
 	);
 
 	// Render log in page if user not logged in, otherwise render pages available after log in
 	return (
 		<div className="appContainer">
+			{/* {defaultPages} */}
 			{/* TODO: remove temp changes */}
 			{/* {currentUser.id === 0 ? defaultPages : mainPages} */}
 			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
 			<div className="rightContainer">
 				<Userbar />
-				<Dashboard />
+				<Routes>
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/transactions" element={<Transactions />} />
+				</Routes>
 				<Footer />
 			</div>
 		</div>

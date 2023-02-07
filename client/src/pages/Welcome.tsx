@@ -8,6 +8,7 @@ import { loginAPI, registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
 import LoginRegistrationBox from "../components/LoginRegistrationBox";
 import axios from "axios";
+import { StyledButton } from "../components/styledMUI/button";
 
 /* ====================================================
 // Type Declaration
@@ -71,17 +72,17 @@ const Home = () => {
 				window.alert("Username and/or password is empty. Please try again.");
 			}
 		} catch (err) {
-            let message;
-            
-            // if error is axiosError type and response key exists on err, save message key to message variable
+			let message;
+
+			// if error is axiosError type and response key exists on err, save message key to message variable
 			if (axios.isAxiosError(err) && err.response) {
 				message = err.response.data.message;
-            } else {
-                // otherwise, save err as string to message variable
+			} else {
+				// otherwise, save err as string to message variable
 				message = String(err);
-            }
-            
-            window.alert(message)
+			}
+
+			window.alert(message);
 			setError(message);
 		}
 	};
@@ -115,17 +116,17 @@ const Home = () => {
 				window.alert("Default categories created. You can customise these in settings.");
 			}
 		} catch (err) {
-            let message;
-            
-            // if error is axiosError type and response key exists on err, save message key to message variable
+			let message;
+
+			// if error is axiosError type and response key exists on err, save message key to message variable
 			if (axios.isAxiosError(err) && err.response) {
 				message = err.response.data.message;
-            } else {
-                // otherwise, save err as string to message variable
+			} else {
+				// otherwise, save err as string to message variable
 				message = String(err);
-            }
-            
-            window.alert(message)
+			}
+
+			window.alert(message);
 			setError(message);
 		}
 	};
@@ -153,17 +154,17 @@ const Home = () => {
 				window.alert("Username and/or password is empty. Please try again.");
 			}
 		} catch (err) {
-            let message;
-            
-            // if error is axiosError type and response key exists on err, save message key to message variable
+			let message;
+
+			// if error is axiosError type and response key exists on err, save message key to message variable
 			if (axios.isAxiosError(err) && err.response) {
 				message = err.response.data.message;
-            } else {
-                // otherwise, save err as string to message variable
+			} else {
+				// otherwise, save err as string to message variable
 				message = String(err);
-            }
-            
-            window.alert(message)
+			}
+
+			window.alert(message);
 			setError(message);
 		}
 	};
@@ -175,12 +176,12 @@ const Home = () => {
 	const defaultDisplay = (
 		<div className={styles.welcomeContainer}>
 			<p className={styles.welcomeHeadline}>Welcome back</p>
-			<button className={styles.welcomeButton} onClick={() => changeDisplay("Login")}>
+			<StyledButton variant="contained" sx={{ width: "60%", margin: "1.5rem auto" }} onClick={() => changeDisplay("Login")}>
 				Login
-			</button>
-			<button className={styles.welcomeButton} onClick={() => changeDisplay("Registration")}>
+			</StyledButton>
+			<StyledButton variant="contained" sx={{ width: "60%", margin: "1.5rem auto" }} onClick={() => changeDisplay("Registration")}>
 				Create account
-			</button>
+			</StyledButton>
 		</div>
 	);
 
