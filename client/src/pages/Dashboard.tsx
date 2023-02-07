@@ -24,9 +24,9 @@ const Dashboard = () => {
 					onChange={handleIncomeChartType}
 					sx={{
 						gridColumn: "3",
-						height: "4vh",
-						marginTop: "1vh",
-						width: "1vw",
+						height: "2.5rem",
+						marginTop: "1rem",
+						width: "10rem",
 					}}
 				>
 					<ToggleButton value="Monthly">Monthly</ToggleButton>
@@ -42,9 +42,9 @@ const Dashboard = () => {
 					onChange={handleIncomeChartType}
 					sx={{
 						gridColumn: "3",
-						height: "4vh",
-						display: "flex",
-						marginTop: "1vh",
+						height: "2.5rem",
+						marginTop: "1rem",
+						width: "10rem",
 					}}
 				>
 					<ToggleButton value="Monthly">Monthly</ToggleButton>
