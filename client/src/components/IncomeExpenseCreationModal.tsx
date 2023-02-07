@@ -333,9 +333,6 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				{/* <Button variant="contained" size="large" onClick={handleCreateRecord}>
-					Create
-                </Button> */}
                 <StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateRecord}>Create</StyledButton>
 			</DialogActions>
 		</Dialog>

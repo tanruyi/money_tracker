@@ -24,6 +24,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import StyledButton from "./styledMUI/Button";
 
 /* ====================================================
 // Type Declaration
@@ -292,7 +293,9 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Edit Income or Expense Record</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Edit Income or Expense Record
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -342,20 +345,20 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 						</FormControl>
 						{/* Detail text field */}
 						<TextField id="detail" label="Detail" variant="outlined" sx={{ width: "100%" }} value={newRecordInput.detail} onChange={handleDetail} />
-						<p>{newRecordInput.detailCharacterCount}/50</p>
+						<p style={{ textAlign: "right" }}>{newRecordInput.detailCharacterCount}/50 characters left</p>
 						{/* Note text field */}
 						<TextField label="Note" multiline minRows={5} value={newRecordInput.note} onChange={handleNote} />
-						<p>{newRecordInput.noteCharacterCount}/200</p>
+						<p style={{ textAlign: "right" }}>{newRecordInput.noteCharacterCount}/200 characters left</p>
 					</Stack>
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleUpdateRecord}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleUpdateRecord}>
 					Update
-				</Button>
-				<Button variant="contained" size="large" onClick={handleDeleteRecord}>
+				</StyledButton>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleDeleteRecord}>
 					Delete
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);
