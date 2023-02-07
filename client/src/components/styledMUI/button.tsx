@@ -2,7 +2,7 @@
 
 import { Button, styled } from "@mui/material";
 
-export const StyledButton = styled(Button)({
+const StyledButton = styled(Button)({
 	backgroundColor: "var(--purple)",
 	fontFamily: "Poppins, sans-serif",
 	fontSize: "1.5rem",
@@ -14,3 +14,5 @@ export const StyledButton = styled(Button)({
 		backgroundColor: "var(--pink)",
 	},
 });
+
+export default StyledButton;

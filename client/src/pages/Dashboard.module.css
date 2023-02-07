@@ -7,18 +7,14 @@
 	background-color: var(--lightGrey);
 }
 
-.dashboardChartContainer {
-	display: grid;
+.dashboardChartHeaderContainer {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem 3rem 0 3rem;
 	height: 40%;
-	grid-template-columns: 10% auto 12%;
-	grid-template-rows: 5% auto;
-	padding-top: 3rem;
-	padding-bottom: 3rem;
 }
 
 .dashboardChartHeader {
 	margin: 0;
-	padding-left: 3rem;
-	padding-top: 2rem;
 	font-family: "Poppins", sans-serif;
 }

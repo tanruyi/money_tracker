@@ -3,6 +3,7 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useState } from "react";
 import DashboardChart from "../components/DashboardChart";
+import StyledToggleButton from "../components/styledMUI/ToggleButton";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -16,42 +17,25 @@ const Dashboard = () => {
 
 	return (
 		<div className={styles.dashboardContainer}>
-			<div className={styles.dashboardChartContainer}>
+			<div className={styles.dashboardChartHeaderContainer}>
 				<h2 className={styles.dashboardChartHeader}>Income</h2>
-				<ToggleButtonGroup
-					exclusive
-					value={chartPeriodType}
-					onChange={handleIncomeChartType}
-					sx={{
-						gridColumn: "3",
-						height: "2.5rem",
-						marginTop: "1rem",
-						width: "10rem",
-					}}
-				>
-					<ToggleButton value="Monthly">Monthly</ToggleButton>
-					<ToggleButton value="YTD">YTD</ToggleButton>
+				<ToggleButtonGroup exclusive value={chartPeriodType} onChange={handleIncomeChartType}>
+					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
+					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
 				</ToggleButtonGroup>
-				<DashboardChart recordType={"Income"} periodType={chartPeriodType} />
 			</div>
-			<div className={styles.dashboardChartContainer}>
+
+			<DashboardChart recordType={"Income"} periodType={chartPeriodType} />
+
+			<div className={styles.dashboardChartHeaderContainer}>
 				<h2 className={styles.dashboardChartHeader}>Expenses</h2>
-				<ToggleButtonGroup
-					exclusive
-					value={chartPeriodType}
-					onChange={handleIncomeChartType}
-					sx={{
-						gridColumn: "3",
-						height: "2.5rem",
-						marginTop: "1rem",
-						width: "10rem",
-					}}
-				>
-					<ToggleButton value="Monthly">Monthly</ToggleButton>
-					<ToggleButton value="YTD">YTD</ToggleButton>
+				<ToggleButtonGroup exclusive value={chartPeriodType} onChange={handleIncomeChartType}>
+					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
+					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
 				</ToggleButtonGroup>
-				<DashboardChart recordType={"Expenses"} periodType={chartPeriodType} />
 			</div>
+
+			<DashboardChart recordType={"Expenses"} periodType={chartPeriodType} />
 		</div>
 	);
 };

@@ -8,7 +8,7 @@ import { loginAPI, registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
 import LoginRegistrationBox from "../components/LoginRegistrationBox";
 import axios from "axios";
-import { StyledButton } from "../components/styledMUI/button";
+import StyledButton from "../components/styledMUI/Button";
 
 /* ====================================================
 // Type Declaration

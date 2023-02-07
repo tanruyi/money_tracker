@@ -1,0 +1,36 @@
+/** @format */
+
+.transactionsContainer {
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	background-color: var(--lightGrey);
+}
+
+.transactionsPeriodDisplay {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding-top: 3rem;
+}
+
+.transactionsPeriodDisplay h1 {
+	margin: 0;
+}
+
+.transactionsToggleButtonsContainer {
+	display: flex;
+	justify-content: space-around;
+}
+
+.transactionHeaderContainer {
+	display: flex;
+	margin: 2rem 3rem;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.transactionHeader {
+	margin: 0;
+	font-family: "Poppins", sans-serif;
+}
