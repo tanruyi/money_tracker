@@ -57,13 +57,15 @@ function App() {
 				<Userbar />
 				<Routes>
 					<Route path="/dashboard" element={<Dashboard />} />
-					<Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
+					<Route path="/transactions" element={<Transactions />} />
+
+					{/* <Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
 					<Route path="/budget" element={<Budget />} />
 					<Route path="/analyse" element={<Analyse />} />
-					<Route path="/settings" element={<Settings />} />
+					<Route path="/settings" element={<Settings />} /> */}
 
 					{/* Admin page only for users with role admin */}
-					<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} />
+					{/* <Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} /> */}
 
 					{/* Catch all */}
 					<Route path="/*" element={<Missing />} />
@@ -78,8 +80,8 @@ function App() {
 		<div className="appContainer">
 			{/* {defaultPages} */}
 			{/* TODO: remove temp changes */}
-			{/* {currentUser.id === 0 ? defaultPages : mainPages} */}
-			<Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
+			{currentUser.id === 0 ? defaultPages : mainPages}
+			{/* <Navbar currentViewPage={currentViewPage} updateCurrentViewPage={updateCurrentViewPage} />
 			<div className="rightContainer">
 				<Userbar />
 				<Routes>
@@ -87,7 +89,7 @@ function App() {
 					<Route path="/transactions" element={<Transactions />} />
 				</Routes>
 				<Footer />
-			</div>
+			</div> */}
 		</div>
 	);
 }

@@ -66,7 +66,7 @@ const Home = () => {
 					updateCurrentUser((await response).data);
 
 					// Navigates to monthly view page on log in
-					navigate("/calendar");
+					navigate("/dashboard");
 				}
 			} else {
 				window.alert("Username and/or password is empty. Please try again.");

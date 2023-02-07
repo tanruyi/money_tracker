@@ -34,14 +34,13 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	const dateHeader = dayjs(date).format("DD MMM YYYY");
 
 	/* ====================================================
-    // Handle category creation modal
+    // Handle transaction update modal
     ==================================================== */
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	// Opens dialog
-    const handleClickOpen = () => {
-        console.log("handleClickOpen run...")
+	const handleClickOpen = () => {
 		setOpenModal(true);
 	};
 
@@ -51,7 +50,7 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	};
 
 	/* ====================================================
-    // Row Expense Line HTML Component
+    // JSX to Display For Every Transaction Under Given Date
     ==================================================== */
 
 	// Filter records to those that match the date to be displayed
@@ -73,37 +72,29 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 		const categoryName = categoryRecord.categoryName;
 
 		// This is the amount to display, will show "-" sign if expenses
-		let amountToDisplay = `$${intToCurrencyString(record.amount)}`;
-
-		if (displayRecord === "Expenses") {
-			amountToDisplay = `-$${intToCurrencyString(record.amount)}`;
-		}
+		let amountToDisplay = displayRecord === "Income" ? `$${intToCurrencyString(record.amount)}` : `-$${intToCurrencyString(record.amount)}`;
 
 		return (
 			<div className={styles.rowContainer}>
-				<div className={styles.rowIcon}>
-					<img src={icon} alt="icon" />
-				</div>
+				<img src={icon} alt="icon" />
 				<div className={styles.rowInfo}>
-					<h2>{record.detail}</h2>
-					<h3>{categoryName}</h3>
+					<h3>{record.detail}</h3>
+					<p>{categoryName}</p>
 				</div>
 				<div className={styles.rowAmount}>
-					<h2>{amountToDisplay}</h2>
+					<h3>{amountToDisplay}</h3>
 				</div>
-				<div className={styles.rowButton}>
-					<IconButton onClick={handleClickOpen}>
-						<EditIcon fontSize="large" />
-					</IconButton>
-					{/* Form dialog for edit of record - opens on click of edit button */}
-					<IncomeExpenseEditModal
-						openModal={openModal}
-						handleClose={handleClose}
-						record={record}
-						categoryRecord={categoryRecord}
-						displayRecord={displayRecord}
-					/>
-				</div>
+				<IconButton onClick={handleClickOpen}>
+					<EditIcon fontSize="large" />
+				</IconButton>
+				{/* Form dialog for edit of record - opens on click of edit button */}
+				<IncomeExpenseEditModal
+					openModal={openModal}
+					handleClose={handleClose}
+					record={record}
+					categoryRecord={categoryRecord}
+					displayRecord={displayRecord}
+				/>
 			</div>
 		);
 	});
@@ -128,8 +119,11 @@ const IncomeExpenseRow = ({ date, recordsToDisplay, displayRecord }: IncomeExpen
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
-				<h1>{dateHeader}</h1>
-				<h1>{totalAmountForDateString}</h1>
+				<div className={styles.headerDate}>
+					<h2>{dateHeader}</h2>
+					<hr />
+				</div>
+				<h2 className={styles.headerAmount}>{totalAmountForDateString}</h2>
 			</div>
 
 			{recordsLines}

@@ -10,6 +10,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import StyledButton from "../components/styledMUI/Button";
 import StyledToggleButton from "../components/styledMUI/ToggleButton";
 import TransactionRows from "../components/TransactionRows";
+import IncomeExpenseCreationModal from "../components/IncomeExpenseCreationModal";
 dayjs.extend(isBetween);
 
 const Transactions = () => {
@@ -66,6 +67,21 @@ const Transactions = () => {
 		dateHeader = `Year ${dateToDisplay.year()}`;
 	}
 
+	/* ====================================================
+    // Handle transaction creation modal
+    ==================================================== */
+	const [openModal, setOpenModal] = useState<boolean>(false);
+
+	// Opens dialog
+	const handleClickOpen = () => {
+		setOpenModal(true);
+	};
+
+	// Closes dialog
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 	return (
 		<div className={styles.transactionsContainer}>
 			<div className={styles.transactionsPeriodDisplay}>
@@ -92,11 +108,12 @@ const Transactions = () => {
 			</div>
 			<div className={styles.transactionHeaderContainer}>
 				<h2 className={styles.transactionHeader}>Transactions</h2>
-				<StyledButton variant="contained" sx={{ fontSize: "1rem" }}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
 					Create transaction
 				</StyledButton>
+				<IncomeExpenseCreationModal openModal={openModal} handleClose={handleClose} />
 			</div>
-			<TransactionRows />
+			<TransactionRows recordType={recordType} periodType={periodType} dateToDisplay={dateToDisplay} />
 		</div>
 	);
 };
