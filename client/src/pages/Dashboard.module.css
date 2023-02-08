@@ -7,6 +7,18 @@
 	background-color: var(--lightGrey);
 }
 
+.dashBoardToggleButtonsContainer {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem 3rem 0 3rem;
+}
+
+.dashboardDateContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .dashboardChartHeaderContainer {
 	display: flex;
 	justify-content: space-between;

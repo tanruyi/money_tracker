@@ -7,7 +7,7 @@ import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { IconButton } from "@mui/material";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
@@ -24,10 +24,11 @@ interface Data {
 
 interface DashboardChartProps {
 	recordType: "Income" | "Expenses";
-	periodType: "Monthly" | "YTD";
+    periodType: "Monthly" | "YTD";
+    dateToDisplay: Dayjs;
 }
 
-const DashboardChart = ({ recordType, periodType }: DashboardChartProps) => {
+const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChartProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -39,23 +40,23 @@ const DashboardChart = ({ recordType, periodType }: DashboardChartProps) => {
     ==================================================== */
 
 	// This is the dayjs object for today's date
-	const [dateToDisplay, setDateToDisplay] = useState(dayjs());
+	// const [dateToDisplay, setDateToDisplay] = useState(dayjs());
 
-	const handleBackArrow = () => {
-		if (periodType === "Monthly") {
-			setDateToDisplay((prevState) => prevState.subtract(1, "month"));
-		} else if (periodType === "YTD") {
-			setDateToDisplay((prevState) => prevState.subtract(1, "year"));
-		}
-	};
+	// const handleBackArrow = () => {
+	// 	if (periodType === "Monthly") {
+	// 		setDateToDisplay((prevState) => prevState.subtract(1, "month"));
+	// 	} else if (periodType === "YTD") {
+	// 		setDateToDisplay((prevState) => prevState.subtract(1, "year"));
+	// 	}
+	// };
 
-	const handleForwardArrow = () => {
-		if (periodType === "Monthly") {
-			setDateToDisplay((prevState) => prevState.add(1, "month"));
-		} else if (periodType === "YTD") {
-			setDateToDisplay((prevState) => prevState.add(1, "year"));
-		}
-	};
+	// const handleForwardArrow = () => {
+	// 	if (periodType === "Monthly") {
+	// 		setDateToDisplay((prevState) => prevState.add(1, "month"));
+	// 	} else if (periodType === "YTD") {
+	// 		setDateToDisplay((prevState) => prevState.add(1, "year"));
+	// 	}
+	// };
 
 	/* ====================================================
     // Filtered Categories to be displayed
@@ -207,24 +208,24 @@ const DashboardChart = ({ recordType, periodType }: DashboardChartProps) => {
 	/* ====================================================
     // Handle HTML text to display for title
     ==================================================== */
-	let dateHeader = "";
+	// let dateHeader = "";
 
-	if (periodType === "Monthly") {
-		dateHeader = dateToDisplay.format("MMM YYYY");
-	} else if (periodType === "YTD") {
-		dateHeader = `Year ${dateToDisplay.year()}`;
-	}
+	// if (periodType === "Monthly") {
+	// 	dateHeader = dateToDisplay.format("MMM YYYY");
+	// } else if (periodType === "YTD") {
+	// 	dateHeader = `Year ${dateToDisplay.year()}`;
+	// }
 
 	return (
 		<div className={styles.container}>
 			{/* Bar chart header */}
-			<h1>{dateHeader}</h1>
+			{/* <h1>{dateHeader}</h1> */}
 			{/* Bar chart container */}
 			<div className={styles.chartContainer}>
 				{/* To change info displayed to previous month or year */}
-				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
+				{/* <IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
 					<ArrowBackIosNewIcon />
-				</IconButton>
+				</IconButton> */}
 				{/* Bar chart */}
 				<div className={styles.chartBox}>
 					<ResponsiveContainer height="100%" width="100%">
@@ -242,9 +243,9 @@ const DashboardChart = ({ recordType, periodType }: DashboardChartProps) => {
 					</ResponsiveContainer>
 				</div>
 				{/* To change info displayed to next month or year */}
-				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
+				{/* <IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
 					<ArrowForwardIosIcon />
-				</IconButton>
+				</IconButton> */}
 			</div>
 		</div>
 	);

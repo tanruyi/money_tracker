@@ -17,7 +17,7 @@ const TransactionRows = ({ recordType, periodType, dateToDisplay }: TransactionR
     // Context
     ==================================================== */
 
-	const { incomeRecords, expenseRecords, budgets } = useCurrentUserContext();
+	const { incomeRecords, expenseRecords } = useCurrentUserContext();
 
 	/* ====================================================
     // Filtered Records for Period to Display
@@ -29,13 +29,13 @@ const TransactionRows = ({ recordType, periodType, dateToDisplay }: TransactionR
 	let recordsToDisplay: IncomeExpense[] = [];
 
 	if (periodType === "YTD") {
-		recordsToDisplay = incomeRecords.filter((record) => {
+		recordsToDisplay = recordsToFilter.filter((record) => {
 			const dateToCompare = dayjs(record.date);
 
 			return dateToDisplay.isSame(dateToCompare, "year");
 		});
 	} else {
-		recordsToDisplay = incomeRecords.filter((record) => {
+		recordsToDisplay = recordsToFilter.filter((record) => {
 			const dateToCompare = dayjs(record.date);
 
 			return dateToDisplay.isSame(dateToCompare, "month");
