@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useCurrentUserContext, Category } from "../context/currentUserContext";
 import { updateCategoryAPI, deleteCategoryAPI } from "../apis/categories";
+import StyledButton from "./styledMUI/Button";
 
 /* ====================================================
 // Type Declaration
@@ -148,7 +149,9 @@ const CategoryEditModal = ({ category, openModal, handleClose }: CategoryEditMod
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Edit Category</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Edit Category
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<FormControl sx={{ width: "100%", marginBottom: "1rem" }}>
@@ -169,12 +172,12 @@ const CategoryEditModal = ({ category, openModal, handleClose }: CategoryEditMod
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleUpdate}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleUpdate}>
 					Update
-				</Button>
-				<Button variant="contained" size="large" onClick={handleDelete}>
+				</StyledButton>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleDelete}>
 					Delete
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

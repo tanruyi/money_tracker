@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import styles from "./Budget.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { intToCurrencyString } from "../utilities/utilityFunctions";
-import BudgetDashboard from "../components/BudgetDashboard";
 import { ToggleButtonGroup, IconButton } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -244,7 +243,7 @@ const Budget = () => {
 				<h2>Budget</h2>
 				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
 					Create budget
-				</StyledButton>{" "}
+				</StyledButton>
 				{/* Form dialog for new record - opens on click of new record button */}
 				<BudgetCreationModal openModal={openModal} handleClose={handleClose} />
 			</div>
