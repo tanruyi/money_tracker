@@ -73,16 +73,9 @@ const Dashboard = () => {
 					<ArrowForwardIosIcon />
 				</IconButton>
 			</div>
-			<div className={styles.dashboardChartHeaderContainer}>
-				<h2 className={styles.dashboardChartHeader}>Income</h2>
-			</div>
-
+			<h2 className={styles.dashboardChartHeader}>Income</h2>
 			<DashboardChart recordType={"Income"} periodType={periodType} dateToDisplay={dateToDisplay} />
-
-			<div className={styles.dashboardChartHeaderContainer}>
-				<h2 className={styles.dashboardChartHeader}>Expenses</h2>
-			</div>
-
+			<h2 className={styles.dashboardChartHeader}>Expenses</h2>
 			<DashboardChart recordType={"Expenses"} periodType={periodType} dateToDisplay={dateToDisplay} />
 		</div>
 	);

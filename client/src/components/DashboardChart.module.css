@@ -1,9 +1,9 @@
 /** @format */
 
 .container {
-	/* color: var(--pink); */
 	font-family: "Poppins", sans-serif;
 	grid-column: 2 / 3;
+	padding: 2rem 0;
 }
 
 .container h1 {

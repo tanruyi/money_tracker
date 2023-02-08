@@ -1,12 +1,8 @@
 /** @format */
 
-import React, { useState } from "react";
 import styles from "./DashboardChart.module.css";
 import { useCurrentUserContext, Budget, Category, IncomeExpense } from "../context/currentUserContext";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { IconButton } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
@@ -34,29 +30,6 @@ const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChar
     ==================================================== */
 
 	const { categories, budgets, incomeRecords, expenseRecords } = useCurrentUserContext();
-
-	/* ====================================================
-    // Date to display
-    ==================================================== */
-
-	// This is the dayjs object for today's date
-	// const [dateToDisplay, setDateToDisplay] = useState(dayjs());
-
-	// const handleBackArrow = () => {
-	// 	if (periodType === "Monthly") {
-	// 		setDateToDisplay((prevState) => prevState.subtract(1, "month"));
-	// 	} else if (periodType === "YTD") {
-	// 		setDateToDisplay((prevState) => prevState.subtract(1, "year"));
-	// 	}
-	// };
-
-	// const handleForwardArrow = () => {
-	// 	if (periodType === "Monthly") {
-	// 		setDateToDisplay((prevState) => prevState.add(1, "month"));
-	// 	} else if (periodType === "YTD") {
-	// 		setDateToDisplay((prevState) => prevState.add(1, "year"));
-	// 	}
-	// };
 
 	/* ====================================================
     // Filtered Categories to be displayed
@@ -218,14 +191,7 @@ const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChar
 
 	return (
 		<div className={styles.container}>
-			{/* Bar chart header */}
-			{/* <h1>{dateHeader}</h1> */}
-			{/* Bar chart container */}
 			<div className={styles.chartContainer}>
-				{/* To change info displayed to previous month or year */}
-				{/* <IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
-					<ArrowBackIosNewIcon />
-				</IconButton> */}
 				{/* Bar chart */}
 				<div className={styles.chartBox}>
 					<ResponsiveContainer height="100%" width="100%">
@@ -242,10 +208,6 @@ const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChar
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
-				{/* To change info displayed to next month or year */}
-				{/* <IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
-					<ArrowForwardIosIcon />
-				</IconButton> */}
 			</div>
 		</div>
 	);
