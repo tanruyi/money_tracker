@@ -59,18 +59,11 @@ function App() {
 					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/transactions" element={<Transactions />} />
 					<Route path="/budget" element={<Budget />} />
+					<Route path="/analyse" element={<Analyse />} />
 					<Route path="/settings" element={<Settings />} />
+
 					{/* Admin page only for users with role admin */}
 					<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} />
-
-					{/* <Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
-					<Route path="/budget" element={<Budget />} />
-					<Route path="/analyse" element={<Analyse />} />
-					<Route path="/settings" element={<Settings />} /> */}
-
-					{/* Admin page only for users with role admin */}
-					{/* <Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : <Unauthorised />} /> */}
-
 					{/* Catch all */}
 					<Route path="/*" element={<Missing />} />
 				</Routes>

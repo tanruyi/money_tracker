@@ -12,6 +12,10 @@ import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
 const Dashboard = () => {
+	/* ====================================================
+    // Current period to be displayed
+    ==================================================== */
+
 	const [periodType, setPeriodType] = useState<"Monthly" | "YTD">("Monthly");
 
 	function handleIncomeChartType(e: React.MouseEvent<HTMLElement>, newPeriodType: "Monthly" | "YTD") {
