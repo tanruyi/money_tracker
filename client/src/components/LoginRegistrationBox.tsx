@@ -89,9 +89,6 @@ const LoginRegistrationBox = ({ handleLogInClick, handleRegistration, changeDisp
 					}
 				/>
 			</FormControl>
-			{/* <button className={styles.loginRegistrationBoxButton} onClick={() => handleButtonClick(username, password)}>
-				{boxHeader}
-			</button> */}
 			<StyledButton variant="contained" sx={{ width: "60%", margin: "1.5rem auto" }} onClick={() => handleButtonClick(username, password)}>
 				{boxHeader}
 			</StyledButton>
