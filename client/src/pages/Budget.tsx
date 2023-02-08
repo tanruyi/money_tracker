@@ -222,28 +222,31 @@ const Budget = () => {
 
 	return (
 		<div className={styles.budgetContainer}>
-			<div className={styles.budgetButtons}>
-				<ToggleButtonGroup exclusive value={periodType} onChange={handlePeriodTypeChange}>
-					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
-					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
-				</ToggleButtonGroup>
-				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
-					Create budget
-				</StyledButton>{" "}
-				{/* Form dialog for new record - opens on click of new record button */}
-				<BudgetCreationModal openModal={openModal} handleClose={handleClose} />
-			</div>
 			<div className={styles.budgetPeriodDisplay}>
 				{/* To change info displayed to previous month or year */}
 				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
 					<ArrowBackIosNewIcon />
 				</IconButton>
-
 				<h1>{dateHeader}</h1>
 				{/* To change info displayed to next month or year */}
 				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
 					<ArrowForwardIosIcon />
 				</IconButton>
+			</div>
+
+			<div className={styles.budgetToggleButtons}>
+				<ToggleButtonGroup exclusive value={periodType} onChange={handlePeriodTypeChange}>
+					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
+					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
+				</ToggleButtonGroup>
+			</div>
+			<div className={styles.budgetHeader}>
+				<h2>Budget</h2>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
+					Create budget
+				</StyledButton>{" "}
+				{/* Form dialog for new record - opens on click of new record button */}
+				<BudgetCreationModal openModal={openModal} handleClose={handleClose} />
 			</div>
 
 			{/* Budget Records */}

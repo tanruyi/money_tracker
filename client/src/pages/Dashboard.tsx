@@ -56,12 +56,6 @@ const Dashboard = () => {
 
 	return (
 		<div className={styles.dashboardContainer}>
-			<div className={styles.dashBoardToggleButtonsContainer}>
-				<ToggleButtonGroup exclusive value={periodType} onChange={handleIncomeChartType}>
-					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
-					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
-				</ToggleButtonGroup>
-			</div>
 			<div className={styles.dashboardDateContainer}>
 				{/* To change info displayed to previous month or year */}
 				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginRight: "1rem" }} onClick={handleBackArrow}>
@@ -72,6 +66,12 @@ const Dashboard = () => {
 				<IconButton sx={{ color: "var(--pink)", height: "3rem", width: "3rem", marginLeft: "1rem" }} onClick={handleForwardArrow}>
 					<ArrowForwardIosIcon />
 				</IconButton>
+			</div>
+			<div className={styles.dashBoardToggleButtonsContainer}>
+				<ToggleButtonGroup exclusive value={periodType} onChange={handleIncomeChartType}>
+					<StyledToggleButton value="Monthly">Monthly</StyledToggleButton>
+					<StyledToggleButton value="YTD">YTD</StyledToggleButton>
+				</ToggleButtonGroup>
 			</div>
 			<h2 className={styles.dashboardChartHeader}>Income</h2>
 			<DashboardChart recordType={"Income"} periodType={periodType} dateToDisplay={dateToDisplay} />

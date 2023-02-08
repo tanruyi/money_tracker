@@ -59,6 +59,7 @@ function App() {
 					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/transactions" element={<Transactions />} />
 					<Route path="/budget" element={<Budget />} />
+					<Route path="/settings" element={<Settings />} />
 
 					{/* <Route path="/calendar" element={<CalendarView currentViewPage={currentViewPage} />} />
 					<Route path="/budget" element={<Budget />} />

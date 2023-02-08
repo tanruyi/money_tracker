@@ -7,23 +7,33 @@
 	background-color: var(--lightGrey);
 }
 
-.budgetButtons {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 2rem 3rem;
-}
-
 .budgetPeriodDisplay {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	padding-top: 3rem;
 }
 
 .budgetPeriodDisplay h1 {
 	margin: 0;
 	font-family: "Poppins", sans-serif;
+}
+
+.budgetToggleButtons {
+	margin: 2rem 3rem;
+}
+
+.budgetHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rem 3rem;
+	font-family: "Poppins", sans-serif;
+}
+
+.budgetHeader h2 {
+	margin: 0;
 }
 
 .budgetRowsContainer {
