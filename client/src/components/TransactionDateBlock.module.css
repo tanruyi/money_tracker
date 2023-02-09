@@ -23,7 +23,7 @@
 }
 
 .headerDate hr {
-	width: 60rem;
+	width: 50rem;
 	height: 2px;
 	background-color: var(--contrast);
 	margin-left: 2rem;
