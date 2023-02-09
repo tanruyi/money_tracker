@@ -26,7 +26,7 @@ const Analyse = () => {
     // Context
     ==================================================== */
 
-	const { categories, budgets, incomeRecords, expenseRecords } = useCurrentUserContext();
+	const { categories, incomeRecords, expenseRecords } = useCurrentUserContext();
 
 	/* ====================================================
     // Current period to be displayed

@@ -1,7 +1,7 @@
 /** @format */
 
-import React, { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import { useState } from "react";
+import { Dayjs } from "dayjs";
 import { useCurrentUserContext, IncomeExpense, Category } from "../context/currentUserContext";
 import { updateIncomeAPI, deleteIncomeAPI } from "../apis/income";
 import { updateExpenseAPI, deleteExpenseAPI } from "../apis/expenses";
@@ -59,8 +59,8 @@ interface TransactionEditModalProps {
 }
 
 const TransactionEditModal = ({ openModal, handleClose, record, categoryRecord, recordType }: TransactionEditModalProps) => {
-    console.log("TransactionEditModal record:", record);
-    console.log("recordType:", recordType);
+	console.log("TransactionEditModal record:", record);
+	console.log("recordType:", recordType);
 
 	/* ====================================================
 	// Context

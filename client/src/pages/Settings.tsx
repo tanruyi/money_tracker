@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import CategoryRow from "../components/CategoryRow";
 import CategoryCreationModal from "../components/CategoryCreationModal";
 import styles from "./Settings.module.css";

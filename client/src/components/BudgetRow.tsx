@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./BudgetRow.module.css";
 import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";

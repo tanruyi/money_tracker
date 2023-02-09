@@ -1,11 +1,10 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createCategoryAPI } from "../apis/categories";
 import {
 	Box,
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,

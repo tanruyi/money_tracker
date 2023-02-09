@@ -8,7 +8,6 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 // Type Declaration
 ==================================================== */
 
-
 const Navbar = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -84,32 +83,6 @@ const Navbar = () => {
 					</p>
 				</div>
 			</div>
-
-			{/*                TODO: to remove below 
-                <div className={styles.pageLink} onClick={() => updateCurrentViewPage("Daily")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Daily" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>Daily</h1>
-					</Link>
-				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Weekly")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Weekly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
-							Weekly
-						</h1>
-					</Link>
-				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Monthly")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Monthly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
-							Monthly
-						</h1>
-					</Link>
-				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("YTD")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "YTD" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>YTD</h1>
-					</Link>
-				</div> */}
 		</div>
 	);
 };

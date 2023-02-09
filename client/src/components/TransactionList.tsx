@@ -4,7 +4,6 @@ import dayjs, { Dayjs } from "dayjs";
 import styles from "./TransactionList.module.css";
 import { useCurrentUserContext, IncomeExpense } from "../context/currentUserContext";
 import TransactionDateBlock from "./TransactionDateBlock";
-import { useState } from "react";
 
 interface TransactionListProps {
 	recordType: "Income" | "Expenses";

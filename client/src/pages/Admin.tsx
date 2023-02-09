@@ -16,7 +16,7 @@ import {
 	IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./Admin.module.css";
 import { findAccountAPI, deleteAccountAPI } from "../apis/admin";
 import { registrationAPI } from "../apis/users";

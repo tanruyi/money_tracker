@@ -1,6 +1,5 @@
 /** @format */
 
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useCurrentUserContext } from "./context/currentUserContext";
 import "./App.css";

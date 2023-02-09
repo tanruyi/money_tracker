@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./TransactionRow.module.css";
 import icon from "../assets/money.svg";
 import { useCurrentUserContext, IncomeExpense } from "../context/currentUserContext";

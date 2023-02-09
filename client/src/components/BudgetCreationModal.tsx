@@ -1,11 +1,10 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createBudgetAPI } from "../apis/budget";
 import {
 	Box,
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
