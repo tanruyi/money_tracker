@@ -97,11 +97,11 @@ One major hurdle with this project is that there is a significant amount of date
 
 ## Database Model
 
-[database model](https://drawsql.app/teams/ruyi/diagrams/money-tracker)
+[Database model](https://drawsql.app/teams/ruyi/diagrams/money-tracker)
 
 ## Wireframes
 
-Figma for wireframe available here: https://www.figma.com/file/jc8MRa50oIz3elnkF2c4nX/Money-Tracker---Redesign?node-id=0%3A1&t=xPQcycpR5qHfXLKg-1
+[Figma wireframe ](https://www.figma.com/file/jc8MRa50oIz3elnkF2c4nX/Money-Tracker---Redesign?node-id=0%3A1&t=xPQcycpR5qHfXLKg-1)
 
 # Acknowledgements & Credits
 
