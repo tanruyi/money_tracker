@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./CategoryRow.module.css";
 import icon from "../assets/money.svg";
 import EditIcon from "@mui/icons-material/Edit";
@@ -35,19 +35,13 @@ const CategoryRow = ({ category }: CategoryRowProps) => {
 
 	return (
 		<div id={"categoryId" + category.id.toString()} className={styles.rowContainer}>
-			<div className={styles.rowIcon}>
-				<img src={icon} alt="icon" />
-			</div>
-			<div className={styles.rowInfo}>
-				<h2>{category.categoryName}</h2>
-			</div>
-			<div className={styles.rowButton}>
-				<IconButton onClick={handleClickOpen}>
-					<EditIcon fontSize="large" />
-				</IconButton>
-				{/* Form Dialog, only visible when open */}
-				<CategoryEditModal category={category} openModal={openModal} handleClose={handleClose} />
-			</div>
+			<img src={icon} alt="icon" />
+			<h3>{category.categoryName}</h3>
+			<IconButton onClick={handleClickOpen}>
+				<EditIcon fontSize="large" />
+			</IconButton>
+			{/* Form Dialog, only visible when open */}
+			<CategoryEditModal category={category} openModal={openModal} handleClose={handleClose} />
 		</div>
 	);
 };

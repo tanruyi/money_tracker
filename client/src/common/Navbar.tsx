@@ -1,93 +1,87 @@
 /** @format */
 
-import React from "react";
 import styles from "./Navbar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import { useLocation } from "react-router-dom";
 
 /* ====================================================
 // Type Declaration
 ==================================================== */
 
-interface NavbarProps {
-	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
-	updateCurrentViewPage: (page: "Daily" | "Weekly" | "Monthly" | "YTD") => void;
-}
-
-const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
+const Navbar = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	/* ====================================================
     // Context
     ==================================================== */
-	const { currentUser } = useCurrentUserContext();
+	const { currentUser, updateCurrentUser } = useCurrentUserContext();
 
 	/* ====================================================
     // Saves current page
     ==================================================== */
 
 	const adminLink = (
-		<div className={styles.pageLink}>
+		<div className={styles.navbarPageLink}>
 			<Link to="/admin">
-				<h1 className={location.pathname === "/admin" ? styles.pageTitleActive : styles.pageTitle}>Admin</h1>
+				<p className={location.pathname === "/admin" ? styles.pageTitleActive : styles.pageTitle}>Admin</p>
 			</Link>
 		</div>
 	);
 
+	/* ====================================================
+    // Handle log out
+    ==================================================== */
+
+	const handleLogOut = () => {
+		updateCurrentUser(0);
+		navigate("/");
+	};
+
 	return (
 		// Holding container
-		<div className={styles.container}>
+		<div className={styles.navbarContainer}>
 			{/* Title */}
-			<h1 className={styles.title}>Money Tracker</h1>
-			{/* Username */}
-			<h3 className={styles.username}>User: {currentUser.username}</h3>
+			<h1 className={styles.navbarTitle}>Money Tracker</h1>
 			{/* Container for nav links */}
-			<div className={styles.pageLinkContainer}>
+			<div className={styles.navbarPageLinksContainer}>
 				{/* Links to different pages */}
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Daily")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Daily" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>Daily</h1>
+				<div className={styles.navbarPageLink}>
+					<Link to="/dashboard">
+						<p className={location.pathname === "/dashboard" ? styles.pageTitleActive : styles.pageTitle}>Dashboard</p>
 					</Link>
 				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Weekly")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Weekly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
-							Weekly
-						</h1>
+				<div className={styles.navbarPageLink}>
+					<Link to="/transactions">
+						<p className={location.pathname === "/transactions" ? styles.pageTitleActive : styles.pageTitle}>Transactions</p>
 					</Link>
 				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("Monthly")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "Monthly" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>
-							Monthly
-						</h1>
-					</Link>
-				</div>
-				<div className={styles.pageLink} onClick={() => updateCurrentViewPage("YTD")}>
-					<Link to="/calendar">
-						<h1 className={currentViewPage === "YTD" && location.pathname === "/calendar" ? styles.pageTitleActive : styles.pageTitle}>YTD</h1>
-					</Link>
-				</div>
-
-				<div className={styles.pageLink}>
+				<div className={styles.navbarPageLink}>
 					<Link to="/budget">
-						<h1 className={location.pathname === "/budget" ? styles.pageTitleActive : styles.pageTitle}>Budget</h1>
+						<p className={location.pathname === "/budget" ? styles.pageTitleActive : styles.pageTitle}>Budget</p>
 					</Link>
 				</div>
-				<div className={styles.pageLink}>
+				<div className={styles.navbarPageLink}>
 					<Link to="/analyse">
-						<h1 className={location.pathname === "/analyse" ? styles.pageTitleActive : styles.pageTitle}>Analyse</h1>
+						<p className={location.pathname === "/analyse" ? styles.pageTitleActive : styles.pageTitle}>Analyse</p>
 					</Link>
 				</div>
-				<div className={styles.pageLink}>
+				<div className={styles.navbarPageLink}>
 					<Link to="/settings">
-						<h1 className={location.pathname === "/settings" ? styles.pageTitleActive : styles.pageTitle}>Settings</h1>
+						<p className={location.pathname === "/settings" ? styles.pageTitleActive : styles.pageTitle}>Settings</p>
 					</Link>
 				</div>
+			</div>
 
+			<div className={styles.navbarOtherLinksContainer}>
 				{/* Admin link is only available to admins */}
 				{currentUser.role === "admin" ? adminLink : ""}
+
+				<div className={styles.navbarPageLink}>
+					<p className={styles.pageTitle} onClick={handleLogOut}>
+						Logout
+					</p>
+				</div>
 			</div>
 		</div>
 	);

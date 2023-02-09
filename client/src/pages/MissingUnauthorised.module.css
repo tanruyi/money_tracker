@@ -1,16 +1,17 @@
 /** @format */
 
 .container {
-	background-color: var(--color10);
+	background-color: var(--base);
 	width: 100vw;
 	height: 100vh;
 }
 
-.container h1 {
+.container h2 {
+	font-family: "Poppins", sans-serif;
 	text-align: center;
 	margin: 0;
 	padding-top: 25vh;
 	font-size: 5rem;
-	color: var(--emphasise);
+	color: var(--pink);
 	text-transform: uppercase;
 }

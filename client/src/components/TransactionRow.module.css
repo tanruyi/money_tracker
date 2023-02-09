@@ -1,8 +1,11 @@
 /** @format */
 
 .rowContainer {
+	background-color: var(--base);
 	height: 6rem;
+	width: 40rem;
 	margin: 1rem auto;
+	padding: 1rem 3rem;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -15,7 +18,7 @@
 
 .rowInfo {
 	width: 15rem;
-	margin-left: 1rem;
+	margin-left: 2rem;
 }
 
 .rowInfo h3,

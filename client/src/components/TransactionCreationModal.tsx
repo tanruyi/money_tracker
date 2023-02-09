@@ -1,13 +1,12 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createIncomeAPI } from "../apis/income";
 import { createExpenseAPI } from "../apis/expenses";
 import {
 	Box,
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
@@ -24,6 +23,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import StyledButton from "./styledMUI/Button";
 
 /* ====================================================
 // Type Declaration
@@ -274,7 +274,9 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Income or Expense Record</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Create Income or Expense Record
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -332,9 +334,9 @@ const IncomeExpenseCreationModal = ({ openModal, handleClose }: IncomeExpenseCre
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleCreateRecord}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateRecord}>
 					Create
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

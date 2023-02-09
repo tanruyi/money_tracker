@@ -4,6 +4,8 @@
 
 Money Tracker
 
+Deployed website: https://money-tracker-4pjc.onrender.com
+
 # Project Description
 
 This is a website that users can use to track their income & expenses, as well as set budgets. Bar charts are also available for users to compare their actual vs budgeted income or expense.
@@ -21,8 +23,6 @@ Features:
 This is a full-stack website done as part of the course requirements for General Assembly's Software Engineering Immersive program.
 
 Back-end repository: https://github.com/tanruyi/money_tracker-back-end
-
-Deployed website: https://money-tracker-4pjc.onrender.com
 
 ## Technologies Used:
 

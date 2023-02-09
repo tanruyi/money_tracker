@@ -1,13 +1,14 @@
 /** @format */
 
-.analyseContainer {
+.dashboardContainer {
 	width: 100%;
 	min-height: 43.2rem;
 	height: auto;
 	background-color: var(--lightGrey);
+	padding-bottom: 5rem;
 }
 
-.analyseDateContainer {
+.dashboardDateContainer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,27 +16,19 @@
 	padding-top: 3rem;
 }
 
-.analyseDateContainer h1 {
+.dashboardDateContainer h1 {
 	margin: 0;
 }
 
-.analyseToggleButtonsContainer {
+.dashBoardToggleButtonsContainer {
 	display: flex;
 	justify-content: space-between;
 	margin: 2rem 3rem;
 }
 
-.analyseChartsContainer {
-	margin: 2rem 3rem;
-	width: 100%;
-	display: flex;
-}
-
-.analyseChartColumn {
-	width: 50%;
-}
-
-.analyseChartColumn h2 {
-	font-family: "Poppins", sans-serif;
+.dashboardChartHeader {
 	margin: 0;
+	font-family: "Poppins", sans-serif;
+	margin: 2rem 3rem;
+	padding: 1rem 0;
 }

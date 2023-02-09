@@ -1,14 +1,12 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import CategoryRow from "../components/CategoryRow";
 import CategoryCreationModal from "../components/CategoryCreationModal";
 import styles from "./Settings.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import whyMeme from "../assets/confused-white-persian-guardian.gif";
-import { Divider, Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import StyledButton from "../components/styledMUI/Button";
 
 const Settings = () => {
 	const navigate = useNavigate();
@@ -43,8 +41,7 @@ const Settings = () => {
 	// JSX if no categories for income or expenses
 	const toDisplayIfNoCategories = (
 		<div className={styles.thisIsEmpty}>
-			<h3>This is empty</h3>
-			<img src={whyMeme} alt="why-meme" />
+			<h3>You don't have any categories created. Please create one.</h3>
 		</div>
 	);
 
@@ -64,49 +61,32 @@ const Settings = () => {
 		setOpenModal(false);
 	};
 
-	/* ====================================================
-    // Handle log out
-    ==================================================== */
-
-	const handleLogOut = () => {
-		updateCurrentUser(0);
-		navigate("/");
-	};
-
 	return (
-		<div className={styles.container}>
+		<div className={styles.settingsContainer}>
+			<div className={styles.settingsCategoriesHeader}>
+				<h2>Categories</h2>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
+					Create category
+				</StyledButton>
+				{/* Form Dialog, only visible when open */}
+				<CategoryCreationModal openModal={openModal} handleClose={handleClose} />
+			</div>
+
 			{/* Categories List */}
-			<div className={styles.itemBox}>
-				<div className={styles.headerBox}>
-					<h1>Categories</h1>
-					<Fab sx={{ marginLeft: "75vw", bgcolor: "var(--emphasise)" }} onClick={handleClickOpen}>
-						<AddIcon />
-					</Fab>
-				</div>
-				<div className={styles.categoriesList}>
-					<div className={styles.typeContainer}>
+			<div className={styles.settingsCategoriesContainer}>
+				<div className={styles.settingsCategoriesColumn}>
+					<div className={styles.header}>
 						<h2>Income</h2>
-						{incomeCategories.length > 0 ? incomeCategoriesToDisplay : toDisplayIfNoCategories}
 					</div>
-					<div className={styles.typeContainer}>
-						<h2>Expense</h2>
-						{expenseCategories.length > 0 ? expenseCategoriesToDisplay : toDisplayIfNoCategories}
+					{incomeCategories.length > 0 ? incomeCategoriesToDisplay : toDisplayIfNoCategories}
+				</div>
+				<div className={styles.settingsCategoriesColumn}>
+					<div className={styles.header}>
+						<h2>Expenses</h2>
 					</div>
+					{expenseCategories.length > 0 ? expenseCategoriesToDisplay : toDisplayIfNoCategories}
 				</div>
 			</div>
-
-			<Divider />
-
-			{/* Log Out */}
-			<div className={styles.itemBox}>
-				<h1>Log Out</h1>
-				<h2 className={styles.logOutLink} onClick={handleLogOut}>
-					Click here to log out
-				</h2>
-			</div>
-
-			{/* Form Dialog, only visible when open */}
-			<CategoryCreationModal openModal={openModal} handleClose={handleClose} />
 		</div>
 	);
 };

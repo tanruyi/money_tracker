@@ -1,16 +1,31 @@
 /** @format */
 
-.container {
-	background-color: var(--base);
-	height: 92vh;
-	padding-top: 2rem;
-    color: var(--color8);
+.adminContainer {
+	width: 100%;
+	min-height: 43.2rem;
+	height: auto;
+	background-color: var(--lightGrey);
+    font-family: "Poppins", sans-serif;
+
 }
 
-.block {
-	width: 80vw;
-	height: 50vh;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 1rem;
+.adminContainer h2 {
+	margin: 2rem 3rem;
 }
+
+.adminCreateBlock {
+    background-color: white;
+    margin: 2rem 3rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.adminSearchBlock {
+    background-color: white;
+    margin: 2rem 3rem;
+    padding: 2rem;
+    border-radius: 2rem;
+}
+

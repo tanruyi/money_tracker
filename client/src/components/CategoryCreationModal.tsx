@@ -1,11 +1,10 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { createCategoryAPI } from "../apis/categories";
 import {
 	Box,
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
@@ -18,7 +17,8 @@ import {
 	TextField,
 	Stack,
 } from "@mui/material";
-import { newCategoryData } from "../pages/Login";
+import { newCategoryData } from "../pages/Welcome";
+import StyledButton from "./styledMUI/Button";
 
 /* ====================================================
 // Type Declaration
@@ -100,7 +100,9 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 
 	return (
 		<Dialog open={openModal} fullWidth onClose={handleClose} sx={{ marginLeft: "auto", marginRight: "auto" }}>
-			<DialogTitle>Create Category</DialogTitle>
+			<DialogTitle sx={{ fontWeight: "bold", fontFamily: "Poppins, sans-serif", paddingTop: "2rem", color: "var(--purple)", fontSize: "1.5rem" }}>
+				Create Category
+			</DialogTitle>
 			<DialogContent>
 				<Box component="form" sx={{ marginTop: "1rem" }}>
 					<Stack spacing={3}>
@@ -123,9 +125,9 @@ const CategoryCreationModal = ({ openModal, handleClose }: CategoryCreationModal
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" size="large" onClick={handleCreateCategory}>
+				<StyledButton variant="contained" sx={{ fontSize: "1rem", width: "8rem", height: "3rem" }} onClick={handleCreateCategory}>
 					Create
-				</Button>
+				</StyledButton>
 			</DialogActions>
 		</Dialog>
 	);

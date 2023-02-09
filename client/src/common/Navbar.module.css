@@ -1,54 +1,53 @@
 /** @format */
 
-.container,
-.pageLinkContainer {
-	height: 8vh;
+.navbarContainer,
+.navbarPageLinksContainer {
+	width: 20%;
 }
 
-.container {
-	background-color: var(--color10);
-	display: flex;
-	justify-content: space-between;
+.navbarContainer {
+	height: 100%;
+	background-color: var(--purple);
+	position: fixed;
+	overflow: auto;
 }
 
-.title {
-	font-family: "League Spartan", sans-serif;
+.navbarTitle {
+	font-family: "Poppins", sans-serif;
 	color: var(--base);
-	margin: auto 3rem;
+	margin: 0 2rem;
+	padding-top: 2rem;
 }
 
-.username {
-	color: var(--base);
-	margin: auto 1rem;
-	text-align: left;
-}
-
-.pageLinkContainer {
+.navbarPageLinksContainer,
+.navbarOtherLinksContainer {
 	display: flex;
-	justify-content: space-around;
+	flex-direction: column;
+	margin-top: 5rem;
 }
 
-.pageLink {
-	margin: auto 1rem;
+.navbarPageLink {
+	margin: 0.5rem 2rem;
 }
 
-.pageLink a {
+.navbarPageLink a {
 	text-decoration: none;
 }
 
 .pageTitle,
 .pageTitleActive {
-	color: var(--base);
-	height: 100%;
-	margin: auto 1rem;
+	margin: 0;
 	cursor: pointer;
+	font-size: 1.5rem;
+	font-family: "Poppins", sans-serif;
+	font-weight: bold;
 }
 
 .pageTitle {
-	color: var(--base);
+	color: var(--contrast);
 }
 
 .pageTitle:hover,
 .pageTitleActive {
-	color: var(--emphasise);
+	color: var(--base);
 }

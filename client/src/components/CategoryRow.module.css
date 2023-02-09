@@ -1,25 +1,20 @@
 /** @format */
 
 .rowContainer {
-	height: 8vh;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 2vh;
+	height: 5rem;
+	margin: 1rem auto;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	font-family: "Poppins", sans-serif;
 }
 
-.rowIcon img {
-	width: 3vw;
-	margin: 1vw;
+.rowContainer img {
+	width: 3rem;
 }
 
-.rowInfo {
-	width: 30vw;
-}
-
-.rowButton {
-	width: 5vw;
+.rowContainer h3 {
+	width: 15rem;
+	margin-left: 1rem;
+	margin: 0;
 }
