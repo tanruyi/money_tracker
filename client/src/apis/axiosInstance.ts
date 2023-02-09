@@ -9,7 +9,7 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
 	baseURL: "https://money-tracker-api.onrender.com",
-	timeout: 5000,
+	timeout: 10000,
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -19,7 +19,7 @@ export const axiosInstance = axios.create({
 export const axiosInstanceRefresh = (accessToken: string) =>
 	axios.create({
 		baseURL: "https://money-tracker-api.onrender.com",
-		timeout: 5000,
+		timeout: 10000,
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
