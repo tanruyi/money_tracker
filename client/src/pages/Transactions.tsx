@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import styles from "./Transactions.module.css";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Button, IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { IconButton, ToggleButtonGroup } from "@mui/material";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import StyledButton from "../components/styledMUI/Button";
 import StyledToggleButton from "../components/styledMUI/ToggleButton";
-import TransactionRows from "../components/TransactionRows";
-import IncomeExpenseCreationModal from "../components/IncomeExpenseCreationModal";
+import TransactionList from "../components/TransactionList";
+import TransactionCreationModal from "../components/TransactionCreationModal";
 dayjs.extend(isBetween);
 
 const Transactions = () => {
@@ -111,9 +111,9 @@ const Transactions = () => {
 				<StyledButton variant="contained" sx={{ fontSize: "1rem" }} onClick={handleClickOpen}>
 					Create transaction
 				</StyledButton>
-				<IncomeExpenseCreationModal openModal={openModal} handleClose={handleClose} />
+				<TransactionCreationModal openModal={openModal} handleClose={handleClose} />
 			</div>
-			<TransactionRows recordType={recordType} periodType={periodType} dateToDisplay={dateToDisplay} />
+			<TransactionList recordType={recordType} periodType={periodType} dateToDisplay={dateToDisplay} />
 		</div>
 	);
 };

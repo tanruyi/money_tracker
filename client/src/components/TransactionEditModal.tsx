@@ -7,7 +7,6 @@ import { updateIncomeAPI, deleteIncomeAPI } from "../apis/income";
 import { updateExpenseAPI, deleteExpenseAPI } from "../apis/expenses";
 import {
 	Box,
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
@@ -51,16 +50,18 @@ interface newRecordData {
 	note: string;
 }
 
-interface IncomeExpenseEditModalProps {
+interface TransactionEditModalProps {
 	openModal: boolean;
 	handleClose: () => void;
 	record: IncomeExpense;
 	categoryRecord: Category;
-	displayRecord: string;
+	recordType: string;
 }
 
-const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord, displayRecord }: IncomeExpenseEditModalProps) => {
-	console.log("IncomeExpenseEditModal record:", record);
+const TransactionEditModal = ({ openModal, handleClose, record, categoryRecord, recordType }: TransactionEditModalProps) => {
+    console.log("TransactionEditModal record:", record);
+    console.log("recordType:", recordType);
+
 	/* ====================================================
 	// Context
 	==================================================== */
@@ -75,7 +76,7 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 
 	// Controls inputs
 	const [newRecordInput, setNewRecordInput] = useState<newRecordInputState>({
-		recordType: displayRecord,
+		recordType: recordType,
 		recordId: categoryRecord.recordId,
 		categoryName: categoryRecord.categoryName,
 		categoryId: record.categoryId,
@@ -364,4 +365,4 @@ const IncomeExpenseEditModal = ({ openModal, handleClose, record, categoryRecord
 	);
 };
 
-export default IncomeExpenseEditModal;
+export default TransactionEditModal;

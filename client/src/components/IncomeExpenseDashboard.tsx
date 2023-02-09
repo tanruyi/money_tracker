@@ -6,7 +6,7 @@ import { Fab, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import IncomeExpenseCreationModal from "./IncomeExpenseCreationModal";
+import IncomeExpenseCreationModal from "./TransactionCreationModal";
 import dayjs, { Dayjs } from "dayjs";
 import WeekofYear from "dayjs/plugin/weekOfYear";
 dayjs.extend(WeekofYear);

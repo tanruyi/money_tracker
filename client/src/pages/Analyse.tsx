@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./Analyse.module.css";
 import { useCurrentUserContext, Category, IncomeExpense } from "../context/currentUserContext";
-import { Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { IconButton, ToggleButtonGroup } from "@mui/material";
@@ -175,6 +175,12 @@ const Analyse = () => {
 		dateHeader = `Year ${dateToDisplay.year()}`;
 	}
 
+	/* ====================================================
+    // Color palette for pie chart
+    ==================================================== */
+
+	const pieChartColours = ["#7f00ff", "#fc00b4", "#ff006a", "#ff6030", "#ffa600"];
+
 	return (
 		<div className={styles.analyseContainer}>
 			<div className={styles.analyseDateContainer}>
@@ -197,18 +203,26 @@ const Analyse = () => {
 			<div className={styles.analyseChartsContainer}>
 				<div className={styles.analyseChartColumn}>
 					<h2>Income</h2>
-					<ResponsiveContainer height={250} width={730}>
+					<ResponsiveContainer height={300} width={730}>
 						<PieChart>
-							<Pie data={incomeDataForChartArray} nameKey={"Category"} dataKey={"Actual"} label />
+							<Pie data={incomeDataForChartArray} nameKey={"Category"} dataKey={"Actual"} label>
+								{incomeDataForChartArray.map((entry, index) => (
+									<Cell fill={pieChartColours[index % pieChartColours.length]} />
+								))}
+							</Pie>
 							<Tooltip />
 						</PieChart>
 					</ResponsiveContainer>
 				</div>
 				<div className={styles.analyseChartColumn}>
 					<h2>Expenses</h2>
-					<ResponsiveContainer height={250} width={730}>
+					<ResponsiveContainer height={300} width={730}>
 						<PieChart>
-							<Pie data={expensesDataForChartArray} nameKey={"Category"} dataKey={"Actual"} label />
+							<Pie data={expensesDataForChartArray} nameKey={"Category"} dataKey={"Actual"} label>
+								{expensesDataForChartArray.map((entry, index) => (
+									<Cell fill={pieChartColours[index % pieChartColours.length]} />
+								))}
+							</Pie>
 							<Tooltip />
 						</PieChart>
 					</ResponsiveContainer>

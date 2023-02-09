@@ -20,8 +20,8 @@ interface Data {
 
 interface DashboardChartProps {
 	recordType: "Income" | "Expenses";
-    periodType: "Monthly" | "YTD";
-    dateToDisplay: Dayjs;
+	periodType: "Monthly" | "YTD";
+	dateToDisplay: Dayjs;
 }
 
 const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChartProps) => {
@@ -178,31 +178,20 @@ const DashboardChart = ({ recordType, periodType, dateToDisplay }: DashboardChar
 		dataForChartArray.push(newDataObject);
 	}
 
-	/* ====================================================
-    // Handle HTML text to display for title
-    ==================================================== */
-	// let dateHeader = "";
-
-	// if (periodType === "Monthly") {
-	// 	dateHeader = dateToDisplay.format("MMM YYYY");
-	// } else if (periodType === "YTD") {
-	// 	dateHeader = `Year ${dateToDisplay.year()}`;
-	// }
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.chartContainer}>
 				{/* Bar chart */}
 				<div className={styles.chartBox}>
 					<ResponsiveContainer height="100%" width="100%">
-						<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 20, left: 20 }}>
-							<XAxis dataKey="Category" label={{ value: "Categories", position: "bottom" }} />
-							<YAxis label={{ value: "Amount", angle: -90, position: "left" }} />
+						<BarChart data={dataForChartArray} margin={{ top: 50, right: 20, bottom: 50, left: 50 }}>
+							<XAxis dataKey="Category" label={{ value: "Categories", position: "bottom", offset: 20 }} />
+							<YAxis label={{ value: "Amount", angle: -90, position: "left", offset: 20 }} />
 							<Tooltip />
-							<Bar dataKey="Actual" fill="var(--emphasise)">
+							<Bar dataKey="Actual" fill="var(--pink)">
 								<LabelList dataKey="Actual" position="top" />
 							</Bar>
-							<Bar dataKey="Budget" fill="var(--color5)">
+							<Bar dataKey="Budget" fill="var(--medGrey)">
 								<LabelList dataKey="Budget" position="top" />
 							</Bar>
 						</BarChart>

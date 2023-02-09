@@ -1,18 +1,18 @@
 /** @format */
 
 import dayjs, { Dayjs } from "dayjs";
-import React from "react";
-import styles from "./TransactionRows.module.css";
+import styles from "./TransactionList.module.css";
 import { useCurrentUserContext, IncomeExpense } from "../context/currentUserContext";
-import IncomeExpenseRow from "../components/IncomeExpenseRow";
+import TransactionDateBlock from "./TransactionDateBlock";
+import { useState } from "react";
 
-interface TransactionRowsProps {
+interface TransactionListProps {
 	recordType: "Income" | "Expenses";
 	periodType: "Monthly" | "YTD";
 	dateToDisplay: Dayjs;
 }
 
-const TransactionRows = ({ recordType, periodType, dateToDisplay }: TransactionRowsProps) => {
+const TransactionList = ({ recordType, periodType, dateToDisplay }: TransactionListProps) => {
 	/* ====================================================
     // Context
     ==================================================== */
@@ -65,15 +65,13 @@ const TransactionRows = ({ recordType, periodType, dateToDisplay }: TransactionR
 		return Number(date2Object) - Number(date1Object);
 	});
 
-	/* ====================================================
-    // JSX to Display For Every Date With Transactions
-    ==================================================== */
-
-	const recordRowsForDisplay = datesWithRecordsSorted.map((date, index) => (
-		<IncomeExpenseRow key={index} date={date} recordsToDisplay={recordsToDisplay} displayRecord={recordType} />
-	));
-
-	return <div className={styles.transactionsRowsContainer}>{recordRowsForDisplay}</div>;
+	return (
+		<div className={styles.transactionsRowsContainer}>
+			{datesWithRecordsSorted.map((date, index) => (
+				<TransactionDateBlock key={index} date={date} recordsToDisplay={recordsToDisplay} recordType={recordType} />
+			))}
+		</div>
+	);
 };
 
-export default TransactionRows;
+export default TransactionList;

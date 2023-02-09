@@ -1,0 +1,33 @@
+/** @format */
+
+.rowContainer {
+	background-color: var(--base);
+	height: 6rem;
+	width: 40rem;
+	margin: 1rem auto;
+	padding: 1rem 3rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	font-family: "Poppins", sans-serif;
+}
+
+.rowContainer img {
+	width: 3rem;
+}
+
+.rowInfo {
+	width: 15rem;
+	margin-left: 2rem;
+}
+
+.rowInfo h3,
+.rowInfo p {
+	margin: 0;
+}
+
+.rowAmount {
+	width: 10rem;
+	text-align: right;
+	margin-right: 1rem;
+}
