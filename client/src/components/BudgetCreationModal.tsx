@@ -23,7 +23,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import isSameOfAfter from "dayjs/plugin/isSameOrAfter";
-import StyledButton from "./styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 dayjs.extend(isSameOfAfter);
 
 /* ====================================================

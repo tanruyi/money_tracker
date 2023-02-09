@@ -5,7 +5,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React, { useState } from "react";
 import DashboardChart from "../components/DashboardChart";
-import StyledToggleButton from "../components/styledMUI/ToggleButton";
+import StyledToggleButton from "../styledMUI/ToggleButton";
 import styles from "./Dashboard.module.css";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";

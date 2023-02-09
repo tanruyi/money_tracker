@@ -13,8 +13,8 @@ import isBetween from "dayjs/plugin/isBetween";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import StyledButton from "../components/styledMUI/Button";
-import StyledToggleButton from "../components/styledMUI/ToggleButton";
+import StyledButton from "../styledMUI/Button";
+import StyledToggleButton from "../styledMUI/ToggleButton";
 import BudgetCreationModal from "../components/BudgetCreationModal";
 
 dayjs.extend(isBetween, CustomParseFormat);
