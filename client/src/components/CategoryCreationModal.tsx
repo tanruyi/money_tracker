@@ -18,7 +18,7 @@ import {
 	Stack,
 } from "@mui/material";
 import { newCategoryData } from "../pages/Welcome";
-import StyledButton from "./styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 
 /* ====================================================
 // Type Declaration

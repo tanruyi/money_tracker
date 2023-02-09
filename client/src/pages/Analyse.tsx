@@ -7,7 +7,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { IconButton, ToggleButtonGroup } from "@mui/material";
-import StyledToggleButton from "../components/styledMUI/ToggleButton";
+import StyledToggleButton from "../styledMUI/ToggleButton";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);

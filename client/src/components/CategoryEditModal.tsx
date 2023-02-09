@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
 import { useCurrentUserContext, Category } from "../context/currentUserContext";
 import { updateCategoryAPI, deleteCategoryAPI } from "../apis/categories";
-import StyledButton from "./styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 
 /* ====================================================
 // Type Declaration

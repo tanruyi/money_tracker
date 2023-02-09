@@ -4,7 +4,7 @@ import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Icon
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import styles from "./LoginRegistrationBox.module.css";
-import StyledButton from "./styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 
 interface LoginRegistrationBoxProps {
 	handleLogInClick: (username: string, password: string) => void;

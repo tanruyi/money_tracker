@@ -6,7 +6,7 @@ import CategoryCreationModal from "../components/CategoryCreationModal";
 import styles from "./Settings.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
 import { useNavigate } from "react-router-dom";
-import StyledButton from "../components/styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 
 const Settings = () => {
 	const navigate = useNavigate();

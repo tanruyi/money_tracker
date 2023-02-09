@@ -23,7 +23,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import StyledButton from "./styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 
 /* ====================================================
 // Type Declaration

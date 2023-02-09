@@ -22,7 +22,7 @@ import { findAccountAPI, deleteAccountAPI } from "../apis/admin";
 import { registrationAPI } from "../apis/users";
 import { createDefaultCategoriesAPI } from "../apis/categories";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import StyledButton from "../components/styledMUI/Button";
+import StyledButton from "../styledMUI/Button";
 import axios from "axios";
 
 /* ====================================================
