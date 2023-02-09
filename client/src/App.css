@@ -38,9 +38,3 @@ html {
 	display: flex;
 	background-color: var(--lightGrey);
 }
-
-.rightContainer {
-	margin-left: 20%;
-	width: 80%;
-	height: fit-content;
-}

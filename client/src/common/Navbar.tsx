@@ -8,12 +8,8 @@ import { useCurrentUserContext } from "../context/currentUserContext";
 // Type Declaration
 ==================================================== */
 
-interface NavbarProps {
-	currentViewPage: "Daily" | "Weekly" | "Monthly" | "YTD";
-	updateCurrentViewPage: (page: "Daily" | "Weekly" | "Monthly" | "YTD") => void;
-}
 
-const Navbar = ({ currentViewPage, updateCurrentViewPage }: NavbarProps) => {
+const Navbar = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
