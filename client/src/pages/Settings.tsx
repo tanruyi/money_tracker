@@ -5,7 +5,6 @@ import CategoryRow from "../components/CategoryRow";
 import CategoryCreationModal from "../components/CategoryCreationModal";
 import styles from "./Settings.module.css";
 import { useCurrentUserContext } from "../context/currentUserContext";
-import whyMeme from "../assets/confused-white-persian-guardian.gif";
 import { useNavigate } from "react-router-dom";
 import StyledButton from "../components/styledMUI/Button";
 
@@ -42,8 +41,7 @@ const Settings = () => {
 	// JSX if no categories for income or expenses
 	const toDisplayIfNoCategories = (
 		<div className={styles.thisIsEmpty}>
-			<h3>This is empty</h3>
-			<img src={whyMeme} alt="why-meme" />
+			<h3>You don't have any categories created. Please create one.</h3>
 		</div>
 	);
 
