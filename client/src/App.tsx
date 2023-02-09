@@ -46,6 +46,7 @@ function App() {
 	// Pages available only after log in
 	const mainPages = (
 		<Routes>
+			<Route path="/" element={<Welcome />} />
 			<Route element={<Layout />}>
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/transactions" element={<Transactions />} />
@@ -55,11 +56,10 @@ function App() {
 
 				{/* Admin page only for users with role admin */}
 				<Route path="/admin" element={currentUser.role === "admin" ? <Admin /> : ""} />
-				{/* Catch all */}
-				<Route path="/*" element={<Missing />} />
 			</Route>
+			{/* Catch all */}
+			<Route path="/*" element={<Missing />} />
 		</Routes>
-
 	);
 
 	// Render log in page if user not logged in, otherwise render pages available after log in
